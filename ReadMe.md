@@ -1,3 +1,0 @@
-### Twitclone - Server app
-
-Updating...

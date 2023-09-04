@@ -24,13 +24,22 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.use("/images", express.static(path.join(__dirname, "images")));
 app.get("/", (req, res) => {
   res.send({
     msg: "Working",
   });
 });
 
-app.use("/images", express.static(path.join(__dirname, "images")));
+// Necessary Routes
+// User actions routes
+app.use("/user/auth", require("./auth/auth"));
+
+// Tweet actions
+app.use("/tweetaction", require("./tweetActions/tweetActions"));
+
+// activate account   
+app.use("/activateAccount", require("./activateaccount/activateaccount"));
 
 app.listen(PORT, () => {
   console.log(`App is listening at http://localhost:${PORT}`);
