@@ -1,0 +1,151 @@
+.tweetcard_container {
+    transition: 0.3s;
+    width: 100%;
+    border-bottom: 1px solid var(--theme-hover-color);
+}
+
+.tweetcard_container:hover {
+    background-color: rgb(255, 255, 225, 0.03);
+    transition: 0.3s;
+}
+
+.tweet_content div {
+    cursor: pointer;
+}
+
+.tweetcard_content {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+}
+
+.tweet_media img {
+    object-fit: cover;
+}
+
+.tweetcard_user_profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    border: 1px solid var(--theme-hover-color);
+}
+
+.tweetcard_other_content {
+    display: grid;
+    gap: 10px;
+}
+
+.user_details_options {
+    display: flex;
+    gap: 4px;
+    justify-content: space-between;
+}
+
+.option_icon svg {
+    display: flex;
+    width: 25px;
+}
+
+.option_icon:hover {
+    cursor: pointer;
+    border-radius: 100%;
+    background-color: var(--theme-hover-color);
+}
+
+.tweetcard_userdetails {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.user_name {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.username,
+.posted_time {
+    font-size: 13px;
+    color: rgb(132, 131, 130);
+}
+
+.tweet_content {
+    width: 100%;
+    font-size: 15px;
+}
+
+@media (max-width:500px) {
+    .tweet_content {
+        width: 100%;
+        font-size: 15px;
+    }
+
+    .sidebar {
+        width: 0 !important;
+    }
+
+}
+
+.tweet_media {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.tweet_media .imgfirst-child {
+    max-width: 50%;
+    /* Adjust the max-width as needed */
+    border-radius: 20px;
+    border: 1px solid var(--theme-hover-color);
+}
+
+.tweet_media .imglast-child {
+    width: 100%;
+    border-radius: 20px;
+}
+
+.tweet_media .video {
+    max-width: 100% !important;
+    border-radius: 20px;
+    height: 290px;
+    /* border: 1px solid var(--theme-hover-color); */
+}
+
+@media (max-width:660px) {
+    .tweet_media .video {
+        max-width: 100% !important;
+        border-radius: 20px;
+        height: 100%;
+        border: 1px solid var(--theme-hover-color);
+    }
+}
+
+.tweet_interactions_options {
+    display: flex !important;
+    justify-content: space-between;
+}
+
+.svg_width svg {
+    width: 30px;
+    fill: var(--theme-color);
+    padding: 5px;
+}
+
+.svg_width svg:hover {
+    border-radius: 100%;
+    cursor: pointer;
+    background-color: var(--theme-hover-color);
+}
+
+.tweet_interactions_options div {
+    display: flex;
+    align-items: center;
+}
+
+.tweet_interactions_options div p {
+    font-size: 13px;
+    color: rgb(233, 233, 233);
+}

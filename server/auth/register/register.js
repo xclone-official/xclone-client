@@ -26,6 +26,7 @@ Router.get("/", (req, res) => {
 });
 Router.post("/", upload.single("profilepic"), async (req, res) => {
   try {
+    console.log(req.body);
     const {
       email,
       username,
@@ -48,8 +49,8 @@ Router.post("/", upload.single("profilepic"), async (req, res) => {
         email: email,
         username: username,
         password: password,
-        profilepicture: req.file.path,
-        coverpic: req.body.coverpic,
+        profilepicture: req.file.path || [],
+        coverpic: req.body.coverpic || "",
         bio: bio,
         location: location,
         website: website,
@@ -65,12 +66,12 @@ Router.post("/", upload.single("profilepic"), async (req, res) => {
         msg: "Account created successfully.",
       });
     } else if (isUserExist.email === email) {
-      res.status(400).send({
+      res.status(200).send({
         status: 0,
         msg: "Email already exists.",
       });
     } else {
-      res.status(400).send({
+      res.status(200).send({
         status: 2,
         msg: "Username already exists.",
       });

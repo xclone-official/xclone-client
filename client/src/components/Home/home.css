@@ -1,0 +1,93 @@
+.main_content {
+    width: 85%;
+    margin: auto;
+    height: 100vh;
+    background-color: #15202B !important;
+}
+
+@media (max-width:1400px) {
+    .main_content {
+        width: 90%;
+        margin: auto;
+        height: 100vh;
+        background-color: #15202B !important;
+    }
+}
+
+@media (max-width:1100px) {
+    .main_content {
+        width: 100%;
+        margin: auto;
+        height: 100vh;
+        background-color: #15202B !important;
+    }
+
+    .sidebar {
+        width: 10%;
+    }
+
+    .tweetfields {
+        width: 60%;
+        overflow-y: scroll;
+    }
+
+    .rightbar {
+        width: 40% !important;
+    }
+}
+
+.three_grid {
+    display: flex;
+    margin: auto;
+    width: 100%;
+    height: 100vh;
+    /* border: 1px solid var(--theme-hover-color); */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar {
+    width: 25%;
+    overflow-y: scroll;
+    border-right: 1px solid var(--theme-hover-color);
+    z-index: 100;
+}
+
+
+.sidebar::-webkit-scrollbar {
+    width: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(247, 249, 249, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+}
+
+
+::-webkit-scrollbar {
+    width: 10px;
+
+}
+
+.tweetfields {
+    width: 45%;
+    overflow-y: hidden;
+}
+
+.tweetfields::-webkit-scrollbar {
+    width: 0;
+}
+
+.rightbar {
+    width: 30%;
+    border-left: 1px solid var(--theme-hover-color);
+}
+
+/* Example styling for columns */
+.column {
+    /* border: 1px solid #ddd; */
+    margin-bottom: 10px;
+}

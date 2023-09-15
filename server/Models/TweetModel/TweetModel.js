@@ -21,9 +21,30 @@ const TweetModel = mongoose.Schema(
       type: String,
       required: true,
     },
-    likes: {
-      type: [String],
-    },
+    likes: [
+      {
+        name: {
+          type: String,
+          required: true,
+        },
+        bio: {
+          type: String,
+          required: true,
+        },
+        profile: {
+          type: String,
+          default: "",
+        },
+        username: {
+          type: String,
+          required: true,
+        },
+        id: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
     comments: [
       {
         commentUsername: {
@@ -42,9 +63,37 @@ const TweetModel = mongoose.Schema(
           type: String,
           default: "",
         },
-        commentLike: [String],
-        commentSeen: [String],
-        replies: [
+        commentLike: [
+          {
+            name: {
+              type: String,
+              required: true,
+            },
+            bio: {
+              type: String,
+              required: true,
+            },
+            profile: {
+              type: String,
+              default: "",
+            },
+            username: {
+              type: String,
+              required: true,
+            },
+            userid: {
+              type: String,
+              required: true,
+            },
+          },
+        ],
+        commentSeen: [
+          {
+            type: String,
+            required: true,
+          },
+        ],
+        commentreplies: [
           {
             repliesUsername: {
               type: String,
@@ -62,13 +111,50 @@ const TweetModel = mongoose.Schema(
               type: String,
               default: "",
             },
-            repliesLike: [String],
+            repliesLike: [
+              {
+                name: {
+                  type: String,
+                  required: true,
+                },
+                bio: {
+                  type: String,
+                  required: true,
+                },
+                profile: {
+                  type: String,
+                  default: "",
+                },
+                username: {
+                  type: String,
+                  required: true,
+                },
+                id: {
+                  type: String,
+                  required: true,
+                },
+              },
+            ],
+            repliesName: {
+              type: String,
+              required: true,
+            },
+            bio: {
+              type: String,
+              required: true,
+            },
             repliesSeen: [String],
           },
         ],
       },
     ],
     photos: [
+      {
+        type: String,
+        default: "",
+      },
+    ],
+    tweetSeen: [
       {
         type: String,
         default: "",

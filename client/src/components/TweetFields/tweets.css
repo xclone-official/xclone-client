@@ -1,0 +1,37 @@
+.home_btn {
+    padding: 20px 0 10px 10px;
+}
+
+.two_tab {
+    margin-top: 5px;
+    display: flex;
+    font-weight: 600;
+    border-bottom: 1px solid var(--theme-hover-color);
+    width: 100%;
+    color: rgb(139, 152, 165);
+}
+
+.for_you {
+    padding: 13px;
+    width: 50%;
+    text-align: center;
+}
+
+.following_tab {
+    padding: 13px;
+    width: 50%;
+    text-align: center;
+    color: rgb(94, 95, 96);
+}
+
+.for_you:hover,
+.following_tab:hover {
+    cursor: pointer;
+    background-color: var(--theme-hover-color);
+}
+
+.active1 {
+    border-bottom: 5px solid var(--theme-color);
+    margin: auto;
+    color: white !important;
+}

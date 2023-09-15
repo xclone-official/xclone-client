@@ -1,0 +1,139 @@
+.postfield_container {
+    width: 100%;
+    border-bottom: 1px solid var(--theme-hover-color);
+    max-height: 400px;
+    overflow-y: scroll;
+}
+
+.postfield_container::-webkit-scrollbar {
+    width: 0;
+}
+
+.choosen_img_1 {
+    display: flex;
+    margin-bottom: 10px;
+    margin: auto;
+    width: 80%;
+}
+
+.choose_images {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.delete_photo {
+    margin-left: -45px;
+    margin-top: 5px;
+    background-color: black;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.choose_images img {
+    border-radius: 20px;
+    width: 40%;
+    object-fit: cover;
+    border: 1px solid var(--theme-color);
+}
+
+.choose_images video {
+    border-radius: 20px;
+    width: 90%;
+    border: 1px solid black;
+}
+
+.img_textarea {
+    width: 100%;
+    display: flex;
+    padding: 10px;
+    gap: 10px;
+}
+
+.post_profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+}
+
+.textarea_ {
+    display: flex;
+    width: 100%;
+}
+
+.textarea_ textarea {
+    width: 100%;
+    resize: none;
+    padding: 5px;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+}
+
+.textarea_ textarea::placeholder {
+    color: rgb(83, 100, 113);
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+.line {
+    border: 1px solid var(--theme-hover-color);
+    width: 85%;
+    margin: auto;
+}
+
+.icons_btn {
+    display: flex;
+    justify-content: space-between;
+    width: 85%;
+    margin: -15px auto;
+    padding-top: 20px;
+}
+
+.post_icons {
+    display: flex;
+    gap: 5px;
+}
+
+.post_icon {
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+}
+
+.post_icon svg {
+    width: 20px;
+}
+
+.post_icon:hover {
+    background-color: var(--theme-hover-color);
+    border-radius: 100%;
+}
+
+.post_btn button {
+    padding: 5px;
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: var(--theme-color);
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    color: white;
+    width: 60px;
+    justify-content: center;
+    font-weight: 800;
+}

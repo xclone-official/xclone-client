@@ -58,8 +58,54 @@ const UserModel = mongoose.Schema(
       type: String,
       default: "",
     },
-    following: [String],
-    followers: [String],
+    following: [
+      {
+        name: {
+          type: String,
+          required: true,
+        },
+        bio: {
+          type: String,
+          required: true,
+        },
+        profile: {
+          type: String,
+          default: "",
+        },
+        username: {
+          type: String,
+          required: true,
+        },
+        id: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
+    followers: [
+      {
+        name: {
+          type: String,
+          required: true,
+        },
+        bio: {
+          type: String,
+          required: true,
+        },
+        profile: {
+          type: String,
+          default: "",
+        },
+        username: {
+          type: String,
+          required: true,
+        },
+        id: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );

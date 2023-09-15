@@ -25,7 +25,7 @@ Router.put("/:tweetId", async (req, res) => {
     if (!updatedTweet) {
       return res.status(404).json({
         status: 2,
-        msg: "Tweet not found or could not be updated.",
+        msg: "Tweet not found.",
       });
     }
 

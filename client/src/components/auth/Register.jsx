@@ -1,0 +1,291 @@
+import React, { useContext, useState } from "react";
+import { ImCross } from "react-icons/im";
+import "./login.css";
+import { AuthContext } from "../../useContext/AuthContext/AuthContext";
+import Loader from "../Loader/Loader";
+import MsgAlert from "../MsgAlertComp/MsgAlert";
+import axios from "axios";
+
+const initialFormData = {
+  email: "",
+  username: "",
+  password: "",
+  fullname: "",
+  bio: "",
+  location: "",
+  website: "",
+  gender: "",
+  dob: "",
+  profilepic: "",
+};
+
+const backendURL = process.env.REACT_APP_BACKEND_URL;
+
+export default function Register() {
+  const [, , showRegister, setShowRegister] = useContext(AuthContext);
+  const [step, setStep] = useState(1);
+  const [loader, setLoader] = useState(false);
+  const [msgType, setMsgType] = useState("");
+  const [showMsg, setShowMsg] = useState(false);
+  const [formData, setFormData] = useState(initialFormData);
+
+  const handleInputChange = (e) => {
+    const { name, value, type } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === "file" ? e.target.files[0] : value,
+    });
+  };
+
+  const statusHandlers = {
+    0: () => {
+      setMsgType("EMAIL_EXIST");
+      setShowMsg(true);
+      setTimeout(() => {
+        setShowMsg(false);
+        setLoader(false);
+      }, 2000);
+    },
+    1: () => {
+      setMsgType("REGISTERED_SUCCESS");
+      setShowMsg(true);
+      setTimeout(() => {
+        setShowMsg(false);
+        setLoader(false);
+      }, 2000);
+    },
+    2: () => {
+      setMsgType("USERNAME_EXIST");
+      setShowMsg(true);
+      setTimeout(() => {
+        setShowMsg(false);
+        setLoader(false);
+      }, 2000);
+    },
+    3: () => {
+      setMsgType("SERVER_ERROR");
+      setShowMsg(true);
+      setTimeout(() => {
+        setShowMsg(false);
+        setLoader(false);
+      }, 2000);
+    },
+  };
+
+  const registerUser = async () => {
+    try {
+      const fd = new FormData();
+      for (const key in formData) {
+        fd.append(key, formData[key]);
+      }
+
+      const response = await axios.post(`${backendURL}/user/auth/register`, fd);
+      const status = response.data.status;
+      const handler = statusHandlers[status];
+      console.log(status);
+      if (handler) {
+        handler();
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
+
+  const nextStep = () => {
+    setStep(step + 1);
+  };
+
+  return (
+    <>
+      <div className="login_page">
+        <div className="login_head">
+          <ImCross id="cross" onClick={() => setShowRegister(!showRegister)} />
+          <div className="x_logo">
+            <img src="/x-logo.png" alt="logo" />
+          </div>
+        </div>
+        {step === 1 && (
+          <div className="login_content">
+            <div className="auth_head">
+              <h1>Register for a new account</h1>
+            </div>
+            <p style={{ fontSize: "15px", fontWeight: "600" }}>Step 1 of 3</p>
+            <div className="auth_btn">
+              <div className="login_input">
+                <br />
+                <br />
+                <input
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  type="email"
+                  required
+                  placeholder="Enter email"
+                />
+                <br />
+                <br />
+                <input
+                  name="fullname"
+                  value={formData.fullname}
+                  onChange={handleInputChange}
+                  type="text"
+                  required
+                  placeholder="Enter full name"
+                />
+                <br />
+                <br />
+                <input
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  required
+                  type="password"
+                  placeholder="Enter password"
+                />
+                <br />
+                <br />
+                <input
+                  name="bio"
+                  value={formData.bio}
+                  onChange={handleInputChange}
+                  type="text"
+                  required
+                  placeholder="Enter bio"
+                />
+                <br />
+                <div className="social_media_btn">
+                  <button
+                    onClick={nextStep}
+                    disabled={
+                      !formData.email ||
+                      !formData.fullname ||
+                      !formData.password ||
+                      !formData.bio
+                    }
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {step === 2 && (
+          <div className="login_content">
+            <div className="auth_head">
+              <h1>Just a few more fields</h1>
+            </div>
+            <p style={{ fontSize: "15px", fontWeight: "600" }}>Step 2 of 3</p>
+            <div className="auth_btn">
+              <div className="login_input">
+                <br />
+                <br />
+                <input
+                  name="location"
+                  value={formData.location}
+                  onChange={handleInputChange}
+                  type="text"
+                  placeholder="Enter your location"
+                />
+                <br />
+                <br />
+                <input
+                  name="website"
+                  value={formData.website}
+                  onChange={handleInputChange}
+                  type="text"
+                  placeholder="Website link"
+                />
+                <br />
+                <br />
+                <input
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleInputChange}
+                  type="text"
+                  placeholder="Gender"
+                />
+                <br />
+                <br />
+                <input
+                  name="dob"
+                  value={formData.dob}
+                  onChange={handleInputChange}
+                  type="date"
+                  placeholder="month/day/year || 09/22/2003"
+                />
+                <br />
+                <br />
+                <div className="social_media_btn">
+                  <button
+                    onClick={nextStep}
+                    disabled={
+                      !formData.location ||
+                      !formData.website ||
+                      !formData.gender ||
+                      !formData.dob
+                    }
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {step === 3 && (
+          <div className="login_content">
+            <div className="auth_head">
+              <h1>Choose a profile picture</h1>
+            </div>
+            <p style={{ fontSize: "15px", fontWeight: "600" }}>Step 3 of 3</p>
+            <div className="auth_btn">
+              <div className="login_input">
+                <br />
+                <br />
+                <input
+                  name="username"
+                  value={formData.username}
+                  onChange={handleInputChange}
+                  type="text"
+                  placeholder="Enter username"
+                />
+                <br />
+                <br />
+                <input
+                  name="profilepic"
+                  onChange={handleInputChange}
+                  type="file"
+                  placeholder="Choose profile picture"
+                />
+                <div className="image_register">
+                  {formData.profilepic && (
+                    <img
+                      alt="profile"
+                      src={URL?.createObjectURL(formData.profilepic)}
+                    />
+                  )}
+                </div>
+
+                <div className="social_media_btn">
+                  <button
+                    onClick={() => {
+                      // setStep(4);
+                      setLoader(true);
+                      registerUser();
+                    }}
+                    disabled={!formData.profilepic}
+                  >
+                    Sign up
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        {loader && <Loader />}
+      </div>
+      {showMsg && <MsgAlert msgType={msgType} />}
+    </>
+  );
+}

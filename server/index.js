@@ -38,8 +38,18 @@ app.use("/user/auth", require("./auth/auth"));
 // Tweet actions
 app.use("/tweetaction", require("./tweetActions/tweetActions"));
 
-// activate account   
+// activate account
 app.use("/activateAccount", require("./activateaccount/activateaccount"));
+
+// User relationships
+app.use(
+  "/relationship",
+  require("./userRelationshipApis/userRelationshipApis")
+);
+
+// Like And Unlike Tweet
+
+app.use("/tweetinteractions", require("./InteractWithTweet/interactwithtweet"));
 
 app.listen(PORT, () => {
   console.log(`App is listening at http://localhost:${PORT}`);

@@ -1,6 +1,6 @@
 const TweetModel = require("../../Models/TweetModel/TweetModel");
 const Router = require("express").Router();
-
+// getAllTweets
 Router.get("/", async (req, res) => {
   try {
     const allTweets = await TweetModel.find();

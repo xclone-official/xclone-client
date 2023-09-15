@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Plan</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      pre {
+        background-color: #f5f5f5;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Online Room Finder Project Plan</h1>
+    <pre id="json-data"></pre>
+
+    <script>
+      // Your JSON data
+      var jsonData = {
+        steps: [
+          {
+            days: "1-5",
+            title: "Project Setup and Planning",
+            tasks: [
+              "Define project goals and requirements.",
+              "Create a project directory and set up version control (e.g., Git).",
+              "Choose the tech stack (e.g., React, Node.js, MongoDB) and initialize the project.",
+              "Plan the database schema for storing room listings and user data.",
+              "Create a basic folder structure for your project.",
+            ],
+          },
+          {
+            days: "6-10",
+            title: "Backend Development",
+            tasks: [
+              "Set up the backend server using Node.js and Express.",
+              "Implement user authentication and user registration.",
+            ],
+          },
+          {
+            days: "11-15",
+            title: "Database Integration",
+            tasks: [
+              "Set up and configure the database (e.g., MongoDB) for room listings.",
+              "Implement CRUD (Create, Read, Update, Delete) operations for room listings.",
+            ],
+          },
+          {
+            days: "16-20",
+            title: "User Profiles and Authentication",
+            tasks: [
+              "Create user profile pages.",
+              "Implement authentication flows for user login and logout.",
+            ],
+          },
+          {
+            days: "21-25",
+            title: "Room Listing Management",
+            tasks: [
+              "Build forms for users to create new room listings.",
+              "Implement features to edit and delete room listings.",
+            ],
+          },
+          {
+            days: "26-30",
+            title: "Search and Filters",
+            tasks: [
+              "Develop a search functionality to find rooms by location, price, etc.",
+              "Add filter options to refine search results.",
+            ],
+          },
+          {
+            days: "31-35",
+            title: "Frontend Development",
+            tasks: [
+              "Create a React.js app using a starter template.",
+              "Set up routing and navigation using react-router-dom.",
+            ],
+          },
+          {
+            days: "36-40",
+            title: "User Interface Design",
+            tasks: [
+              "Design the user interface for the app, including room listings and user profiles.",
+              "Implement responsive design for mobile and desktop.",
+            ],
+          },
+          {
+            days: "41-45",
+            title: "User Messaging",
+            tasks: [
+              "Design and implement a messaging system for users to communicate with room listers.",
+              "Implement real-time notifications for messages.",
+            ],
+          },
+          {
+            days: "46-50",
+            title: "Testing, Deployment, and Documentation",
+            tasks: [
+              "Conduct extensive testing, including unit tests, integration tests, and user testing.",
+              "Deploy the backend and frontend to hosting platforms (e.g., Heroku, Netlify).",
+              "Create user documentation for using the room finder app.",
+              "Launch the app and promote it to your target audience.",
+              "Continuously monitor and maintain the app post-launch, addressing user feedback and making improvements.",
+            ],
+          },
+        ],
+      };
+
+      function formatJSONAsHTML(data) {
+        var result = "";
+
+        data.steps.forEach(function (step) {
+          result += '<div class="step">';
+          result +=
+            '<p class="title">' + step.title + " (" + step.days + ")</p>";
+          result += '<ul class="tasks">';
+          step.tasks.forEach(function (task) {
+            result += "<li>" + task + "</li>";
+          });
+          result += "</ul>";
+          result += "</div>";
+        });
+
+        return result;
+      }
+
+      var jsonDataElement = document.getElementById("json-data");
+      jsonDataElement.innerHTML = formatJSONAsHTML(jsonData);
+    </script>
+  </body>
+</html>

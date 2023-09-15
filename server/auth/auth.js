@@ -8,5 +8,6 @@ Router.get("/", (req, res) => {
 
 Router.use("/login", require("./login/login"));
 Router.use("/register", require("./register/register"));
+Router.use("/getUser", require("./getUser/getUser"));
 
 module.exports = Router;

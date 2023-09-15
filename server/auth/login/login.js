@@ -21,28 +21,29 @@ Router.post("/", async (req, res) => {
           res.status(200).send({
             status: 1,
             msg: "Login Success.",
+            data: isUserExist,
           });
         } else {
-          res.status(302).send({
+          res.status(200).send({
             status: 3,
             msg: "Invalid Credentials.",
           });
         }
       } else {
-        res.status(302).send({
-          status: 3,
+        res.status(200).send({
+          status: 2,
           msg: "Your account is not activated. Please activate it before continuing.",
         });
       }
     } else {
-      res.status(302).send({
+      res.status(200).send({
         status: 3,
         msg: "Invalid Credentials.",
       });
     }
   } catch (error) {
-    res.status(500).send({
-      status: 3,
+    res.status(200).send({
+      status: 4,
       msg: "Server error. Please try again later.",
     });
   }

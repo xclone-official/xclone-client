@@ -10,12 +10,12 @@ Router.get("/", (req, res) => {
   });
 });
 
-Router.post("/", upload.array("tweetmedia", 4), async (req, res) => {
+Router.post("/", upload.array("tweetmedia", 2), async (req, res) => {
   try {
     const { authorId, authorUsername, authorName } = req.body;
     if (!authorId || !authorName || !authorUsername) {
       res.status(302).send({
-        status: 1,
+        status: 3,
         msg: "Fields can't be empty.",
       });
     } else {
@@ -62,11 +62,11 @@ Router.post("/", upload.array("tweetmedia", 4), async (req, res) => {
 
           await newTweet.save();
 
-          const findAllTweet = await TweetModel.find();
+          // const findAllTweet = await TweetModel.find();
           res.status(200).send({
             status: 1,
             msg: "Success",
-            data: findAllTweet,
+            data: newTweet,
           });
         } else {
           res.status(200).send({

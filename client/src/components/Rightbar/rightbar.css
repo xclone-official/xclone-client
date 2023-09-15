@@ -1,0 +1,106 @@
+.rightbar_container {
+    padding: 5px 10px;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.rightbar_container::-webkit-scrollbar {
+    width: 5px;
+}
+
+.rightbar_content {
+    display: grid;
+    gap: 10px;
+}
+
+.right_searchbar input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 30px;
+    border: none;
+    background-color: rgb(39, 51, 64);
+    outline: none;
+    color: white;
+}
+
+.right_searchbar input:focus {
+    outline: 1px solid var(--theme-color);
+}
+
+
+.verify_msg {
+    background-color: rgb(30, 39, 50);
+    padding: 10px 10px;
+    border-radius: 20px;
+    margin-top: 5px;
+}
+
+.verify_msg h1 {
+    font-size: 18px;
+    margin-top: 5px;
+}
+
+.verify_msg h4 {
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.verify_msg button {
+    padding: 9px;
+    font-size: 15px;
+    font-weight: 700;
+    color: white;
+    background-color: var(--theme-color);
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.trends_rightbar {
+    background-color: rgb(30, 39, 50);
+    border-radius: 20px;
+    margin-top: 5px;
+}
+
+.head_rightbar {
+    font-size: 20px;
+    margin: 5px;
+    margin-left: 10px;
+}
+
+.trending_content {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px;
+}
+
+.trending_topic {
+    font-size: 15px;
+}
+
+.trending_name {
+    display: grid;
+    gap: 2px;
+}
+
+.trending_content:hover {
+    background-color: var(--theme-hover-color);
+    cursor: pointer;
+}
+
+.trending_name {
+    margin-left: 10px;
+    padding: 5px;
+}
+
+.trending_category,
+.tweets_num {
+    font-size: 13px;
+    color: rgb(122, 122, 122);
+}
+
+.more_options {
+    width: 25px;
+}
