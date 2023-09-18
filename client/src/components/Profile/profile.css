@@ -1,0 +1,346 @@
+.profile_container {
+    padding: 1px;
+}
+
+.view_profile {
+    z-index: 100;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    box-shadow: rgba(42, 42, 101, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(51, 51, 151, 0.1) 0px 16px 48px;
+}
+
+.lock_ground {
+    opacity: .1;
+    cursor: default !important;
+    overflow-y: hidden !important;
+}
+
+.lock_ground img,
+.lock_ground video,
+.lock_ground link,
+.lock_ground a,
+.lock_ground button,
+.lock_ground p,
+.lock_ground span {
+    cursor: default !important;
+}
+
+.view_profile p {
+    position: absolute;
+    top: 10px;
+    background-color: black;
+    width: 30px;
+    height: 30px;
+    border-radius: 20px;
+    display: flex;
+    cursor: pointer;
+    user-select: none;
+    justify-content: center;
+    align-items: center;
+    left: 10px;
+}
+
+.view_profile img {
+    position: relative;
+    width: 100%;
+}
+
+.view_cover {
+    position: fixed;
+    z-index: 100;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 90vh;
+    width: 40%;
+    overflow-y: scroll;
+    box-shadow: rgba(42, 42, 101, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(51, 51, 151, 0.1) 0px 16px 48px;
+}
+
+.view_cover img {
+    width: 90%;
+}
+
+.view_cover p {
+    position: absolute;
+    top: 10px;
+    background-color: black;
+    width: 30px;
+    height: 30px;
+    border-radius: 20px;
+    display: flex;
+    cursor: pointer;
+    user-select: none;
+    justify-content: center;
+    align-items: center;
+    left: 10px;
+}
+
+
+
+.profile_top {
+    display: flex;
+    gap: 25px;
+    padding: 5px 10px;
+    border-bottom: 1px solid var(--theme-hover-color);
+}
+
+.profile_top svg {
+    width: 30px;
+    cursor: pointer;
+    height: 30px;
+    border-radius: 20px;
+    padding: 3px;
+    color: var(--theme-color);
+}
+
+.profile_top svg:hover {
+    background-color: var(--theme-hover-color);
+}
+
+.top_tweetname {
+    display: grid;
+    gap: 2px;
+}
+
+.top_tweetname p:first-child {
+    font-weight: 800;
+    font-size: 17px;
+}
+
+.top_tweetname span {
+    /* font-weight: 800; */
+    font-size: 13px;
+    color: rgb(137, 133, 133);
+}
+
+/* Profile content css */
+
+.profile_content {
+    width: 100%;
+    height: 93vh;
+    overflow-y: scroll !important;
+}
+
+.profile_content::-webkit-scrollbar {
+    width: 0;
+}
+
+.profile_media {
+    display: grid;
+    width: 100%;
+}
+
+.user_cover img {
+    height: 170px;
+    object-fit: cover;
+    width: 100%;
+    cursor: pointer;
+}
+
+.user_profile_edit_btn {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px;
+}
+
+.user_profile {
+    margin-top: -50px;
+}
+
+.user_profile img {
+    width: 140px;
+    height: 140px;
+    border-radius: 100%;
+    cursor: pointer;
+    object-fit: cover;
+    border: 4px solid rgb(87, 90, 91);
+    transition: .3s;
+}
+
+.user_profile img:hover {
+    transition: .3s;
+    border-color: rgb(50, 54, 58);
+}
+
+@media (max-width:500px) {
+    .user_profile img {
+        width: 90px;
+        height: 100%;
+        border-radius: 100%;
+        object-fit: cover;
+        border: 4px solid rgb(87, 90, 91);
+    }
+}
+
+.edit_btn {
+    margin-top: 10px;
+}
+
+.edit_btn button {
+    cursor: pointer;
+    padding: 10px 0;
+    width: 80px;
+    font-size: 11px;
+    background-color: transparent;
+    border: 2px solid var(--theme-hover-color);
+    color: white;
+    border-radius: 20px;
+}
+
+.profile_data {
+    padding: 10px 18px;
+    display: grid;
+}
+
+.name_username {
+    display: grid;
+    gap: 1px;
+}
+
+.name_username p {
+    font-size: 18px;
+    font-weight: 900;
+}
+
+.name_username span {
+    font-size: 15px;
+    color: rgb(126, 134, 136);
+}
+
+.profile_bio {
+    margin-top: 13px;
+}
+
+.profile_bio p {
+    font-size: 15px;
+    color: rgb(219, 219, 219);
+}
+
+.other_info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.other_information {
+    display: flex;
+    gap: 1px;
+    align-items: center;
+}
+
+.other_information svg {
+    width: 20px;
+    fill: rgb(126, 134, 136);
+}
+
+.other_information p {
+    font-size: 13px;
+    color: rgb(126, 134, 136);
+}
+
+.other_information p:where(#link) {
+    color: var(--theme-color);
+    cursor: pointer;
+    height: 15px;
+}
+
+.other_information p:where(#link):hover {
+    border-bottom: 1px solid var(--theme-color);
+}
+
+.follower_following_details {
+    margin-top: 10px;
+    display: flex;
+    gap: 4px;
+}
+
+.follower_following_details .userFollowing {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid transparent;
+}
+
+.follower_following_details .userfolllowers {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    border-bottom: 1px solid transparent;
+}
+
+.follower_following_details .userfolllowers:hover {
+    border-bottom: 1px solid rgb(126, 134, 136);
+    cursor: pointer;
+}
+
+.follower_following_details .userFollowing:hover {
+    border-bottom: 1px solid rgb(126, 134, 136);
+    cursor: pointer;
+}
+
+.userfolllowers p,
+.userFollowing p {
+    font-size: 14px;
+}
+
+.userfolllowers span,
+.userFollowing span {
+    font-size: 14px;
+    color: rgb(126, 134, 136);
+
+}
+
+/* Profile tab */
+.profile_tabs {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    /* background-color: antiquewhite; */
+}
+
+.profile_tabs div {
+    border-bottom: 1px solid var(--theme-hover-color);
+}
+
+.profile_tabs .tab_btn {
+    width: 100%;
+}
+
+.profile_tabs button {
+    cursor: pointer;
+}
+
+.profile_tabs div button {
+    width: 100%;
+    padding: 13px;
+    border: 0;
+    color: rgb(126, 134, 136);
+    background-color: transparent;
+}
+
+.posts_tab:hover,
+.replies_tab:hover,
+.highlights_tab:hover,
+.media_tab:hover,
+.likes_tab:hover {
+    background-color: var(--theme-hover-color);
+}
+
+.active_tabs button {
+    border-bottom: 4px solid var(--theme-color) !important;
+    font-weight: 700;
+    color: white !important;
+}
+
+.profile_tabs {
+    overflow-x: scroll;
+}
+
+.profile_tabs::-webkit-scrollbar {
+    height: 0px !important;
+}

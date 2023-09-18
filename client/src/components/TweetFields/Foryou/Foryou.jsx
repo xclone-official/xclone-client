@@ -5,8 +5,8 @@ import { AuthContext } from "../../../useContext/AuthContext/AuthContext";
 import InfoLoader from "../../Loader/InfoLoader";
 import InfiniteScroll from "react-infinite-scroll-component";
 import PostField from "../../PostField/PostField";
-
-export default function Foryou() {
+import { TweetContext } from "../../../useContext/TweetContext/TweetContext";
+export default function Foryou({ scrollbarhide, myAllTweets, profileId }) {
   const [
     showLogin,
     setShowLogin,
@@ -23,15 +23,23 @@ export default function Foryou() {
     followingTweet,
     setFollowingTweet,
   ] = useContext(AuthContext);
-
+  const [myTweets, setMyTweets] = useContext(TweetContext);
   const [initialPageCount, setInitialPageCount] = useState(2);
   const [showInitialArrayOfData, setShowInitialArrayOfData] = useState(
-    allTweets.slice(0, initialPageCount)
+    !myAllTweets
+      ? allTweets.slice(0, initialPageCount)
+      : allTweets
+          .filter((e) => parseInt(e.authorId) === parseInt(profileId?._id))
+          .slice(0, initialPageCount)
   );
-
   useEffect(() => {
-    allTweets.slice(0, initialPageCount);
-    setShowInitialArrayOfData(allTweets.slice(0, initialPageCount));
+    setShowInitialArrayOfData(
+      !myAllTweets
+        ? allTweets.slice(0, initialPageCount)
+        : allTweets
+            .filter((e) => parseInt(e.authorId) === parseInt(profileId?._id))
+            .slice(0, initialPageCount)
+    );
   }, [allTweets.length]);
 
   const fetchMoreData = () => {
@@ -44,7 +52,7 @@ export default function Foryou() {
 
   return (
     <>
-      {allTweets.length === 0 && (
+      {allTweets.length === 0 && !scrollbarhide && (
         <div className="hide_in_phone">
           <PostField />
         </div>
@@ -53,9 +61,14 @@ export default function Foryou() {
         <InfoLoader />
       ) : allTweets.length > 0 ? (
         <InfiniteScroll
+          className={scrollbarhide && "scrollbar_hide"}
           dataLength={showInitialArrayOfData.length}
           next={fetchMoreData}
-          hasMore={showInitialArrayOfData.length < allTweets.length}
+          hasMore={
+            !myAllTweets
+              ? showInitialArrayOfData.length < allTweets.length
+              : showInitialArrayOfData.length < myTweets.length
+          }
           loader={<InfoLoader />}
           height="640px"
           endMessage={
@@ -72,10 +85,12 @@ export default function Foryou() {
             </div>
           }
         >
-          <div className="hide_in_phone">
-            <PostField />
-          </div>
-          <div className="">
+          {!scrollbarhide && (
+            <div className="hide_in_phone">
+              <PostField />
+            </div>
+          )}
+          <div>
             {showInitialArrayOfData.map((tweet, index) => (
               <TweetCard tweets={tweet} key={index} />
             ))}
@@ -92,7 +107,7 @@ export default function Foryou() {
             fontSize: "14px",
           }}
         >
-          No Tweets Found. <br /> Please try refreshing.
+          No Tweets Found. <br />
         </div>
       )}
     </>

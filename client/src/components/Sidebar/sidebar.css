@@ -3,6 +3,21 @@
     padding: 20px 20px;
 }
 
+#new_notifications {
+    position: absolute;
+    background-color: var(--theme-color);
+    height: 15px;
+    width: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    border-radius: 20px;
+    border: 2px solid var(--theme-hover-color);
+    margin-top: -15px;
+    margin-left: 10px;
+}
+
 @media (max-width:1000px) {
     .hide_name_1000px {
         display: none !important;

@@ -16,6 +16,7 @@
 .tweetcard_content {
     display: flex;
     gap: 10px;
+    width: 100%;
     padding: 10px;
 }
 
@@ -27,12 +28,14 @@
     width: 40px;
     height: 40px;
     border-radius: 100%;
+    object-fit: cover;
     border: 1px solid var(--theme-hover-color);
 }
 
 .tweetcard_other_content {
     display: grid;
     gap: 10px;
+    width: 100%;
 }
 
 .user_details_options {

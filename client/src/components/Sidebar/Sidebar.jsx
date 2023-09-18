@@ -37,6 +37,7 @@ export default function Sidebar() {
       logo: <AiOutlineNotification />,
       activeLogo: <AiFillNotification />,
       href: "/notifications",
+      msg: <p id="new_notifications">1</p>,
     },
     {
       name: "Messages",
@@ -170,6 +171,7 @@ export default function Sidebar() {
                   }`}
                   key={index}
                 >
+                  {e.msg && e.msg}
                   <p>{isLocationMatched === e.href ? e.activeLogo : e.logo}</p>
                   <span className="hide_name_1000px">{e.name}</span>
                 </div>

@@ -3,8 +3,8 @@ const Router = require("express").Router();
 
 Router.put("/:userId", async (req, res) => {
   try {
-    const { userId } = req.params;
-    const { id } = req.body;
+    const { userId } = req.params; // other user id
+    const { id } = req.body; //myid
 
     if (!userId || !id) {
       return res.status(400).send({

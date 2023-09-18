@@ -14,6 +14,7 @@ const MSG_TYPES = {
   MORE_THAN_TWO_PHOTOS: "MORE_THAN_TWO_PHOTOS",
 
   UPLOAD_ERROR: "UPLOAD_ERROR",
+  UPLOAD_SUCCESS: "UPLOAD_SUCCESS",
 };
 
 export function MsgType(msgType) {
@@ -43,6 +44,8 @@ export function MsgType(msgType) {
 
     case MSG_TYPES.UPLOAD_ERROR:
       return "Can't upload now.";
+    case MSG_TYPES.UPLOAD_SUCCESS:
+      return "Upload success";
     default:
       break;
   }

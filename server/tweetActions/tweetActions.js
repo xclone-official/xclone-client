@@ -11,5 +11,8 @@ Router.use("/deletetweet", require("./deleteTweet/deleteTweet"));
 Router.use("/getalltweet", require("./loadTweet/loadTweet"));
 Router.use("/gettweetwithid", require("./getTweetWithId/getTweetWithId"));
 Router.use("/updatetweet", require("./updateTweet/updateTweet"));
-
+Router.use(
+  "/getTweetfromfollowinguser",
+  require("./getTweetfromfollowinguser/getTweetfromfollowinguser")
+);
 module.exports = Router;

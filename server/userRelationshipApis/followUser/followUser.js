@@ -5,9 +5,9 @@ Router.put("/:userId", async (req, res) => {
   try {
     const { userId } = req.params; // other user id
     const { id } = req.body; //myid
-    console.log(id);
+    // console.log(id);
     if (!userId || !id) {
-      return res.status(400).send({
+      return res.status(200).send({
         status: 2,
         msg: "UserId and ID can't be empty",
       });
@@ -15,7 +15,7 @@ Router.put("/:userId", async (req, res) => {
 
     const otherUserData = await UserModel.findById(userId);
     if (!otherUserData) {
-      return res.status(400).send({
+      return res.status(200).send({
         status: 4,
         msg: "Other profile doesn't exists",
       });
@@ -31,7 +31,7 @@ Router.put("/:userId", async (req, res) => {
     const myProfile = await UserModel.findById(id);
 
     if (!myProfile) {
-      return res.status(400).send({
+      return res.status(200).send({
         status: 4,
         msg: "My profile doesn't exists",
       });
@@ -60,10 +60,12 @@ Router.put("/:userId", async (req, res) => {
       res.status(200).send({
         status: 1,
         msg: "Account followed successfully.",
+        data: myProfile.following,
+        data2: otherUserData.followers,
       });
     } else {
       // User is already following
-      return res.status(400).send({
+      return res.status(200).send({
         status: 0,
         msg: "You are already following this user.",
       });

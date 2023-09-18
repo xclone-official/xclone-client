@@ -20,15 +20,6 @@ export default function Home({ children }) {
             <Sidebar />
           </div>
         </div>
-        {/* {navigate.pathname === "/home" || navigate.pathname === "/" ? (
-          <div className="tweetfields">
-            <div className="column">{children}</div>
-          </div>
-        ) : (
-          <div className="tweetfields" style={{ overflowY: "scroll" }}>
-            <div className="column">{children}</div>
-          </div>
-        )} */}
         <div className="tweetfields">
           <div className="column">{children}</div>
         </div>

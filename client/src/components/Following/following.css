@@ -1,0 +1,29 @@
+.follower_following_tabs {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 1px solid var(--theme-hover-color);
+}
+
+.followers {
+    width: 50%;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.following {
+    width: 50%;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.followers:hover,
+.following:hover {
+    background-color: var(--theme-hover-color);
+}
+
+.border__ {
+    border-bottom: 4px solid var(--theme-color);
+}

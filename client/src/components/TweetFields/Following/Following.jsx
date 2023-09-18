@@ -4,7 +4,6 @@ import TweetCard from "../../../TweetCard/TweetCard";
 import { AuthContext } from "../../../useContext/AuthContext/AuthContext";
 import InfoLoader from "../../Loader/InfoLoader";
 import InfiniteScroll from "react-infinite-scroll-component";
-import PostField from "../../PostField/PostField";
 const VerifiedAcccount = () => {
   return (
     <svg
@@ -22,16 +21,16 @@ const VerifiedAcccount = () => {
 };
 export default function Following() {
   const [
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
+    showLogin,
+    setShowLogin,
+    showRegister,
+    setShowRegister,
+    userData,
+    setUserData,
+    loading,
+    setLoading,
+    allTweets,
+    setAllTweets,
     infoLoader,
     setInfoLoader,
     followingTweet,
@@ -53,7 +52,6 @@ export default function Following() {
   };
   return (
     <>
-      <PostField />
       {infoLoader ? (
         <InfoLoader />
       ) : followingTweet.length > 0 ? (
@@ -77,9 +75,6 @@ export default function Following() {
             </div>
           }
         >
-          <div className="hide_in_phone">
-            <PostField />
-          </div>
           <div className="">
             {showInitialArrayOfData.map((tweet, index) => (
               <TweetCard tweets={tweet} key={index} />

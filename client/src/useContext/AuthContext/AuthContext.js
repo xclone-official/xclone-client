@@ -20,7 +20,6 @@ const AuthContextProvider = (props) => {
         setLoading(false); // Set loading to false when data is fetched
       });
     } catch (error) {
-      // console.log(error);
       setLoading(false); // Set loading to false in case of an error
     }
   };
@@ -31,13 +30,41 @@ const AuthContextProvider = (props) => {
       axios
         .get(`${backendURL}/tweetaction/getalltweet`)
         .then((data) => {
-          setAllTweets(data.data.tweets);
+          const tweets = data.data.tweets.reverse(); // Reverse the order of tweets
+
+          setAllTweets(tweets);
           setTimeout(() => {
             setInfoLoader(false);
           }, 2000);
         })
         .catch((err) => {
-          console.log(err);
+          setTimeout(() => {
+            setInfoLoader(false);
+          }, 2000);
+        });
+    } catch (error) {
+      setTimeout(() => {
+        setInfoLoader(false);
+      }, 2000);
+    }
+  };
+
+  const getAllTweetsFromFollowingUsers = async () => {
+    try {
+      // setInfoLoader(true);
+      axios
+        .get(
+          `${backendURL}/tweetaction/getTweetfromfollowinguser/${userData?._id}`
+        )
+        .then((data) => {
+          const tweets = data.data.tweets.reverse(); // Reverse the order of tweets
+
+          setFollowingTweet(tweets);
+          setTimeout(() => {
+            setInfoLoader(false);
+          }, 2000);
+        })
+        .catch((err) => {
           setTimeout(() => {
             setInfoLoader(false);
           }, 2000);
@@ -50,8 +77,7 @@ const AuthContextProvider = (props) => {
   };
   useEffect(() => {
     getAllTweets();
-  }, []);
-
+  }, [allTweets?.length]);
   useEffect(() => {
     if (sessionStorage.getItem("twitterdata")) {
       const id = sessionStorage.getItem("twitterdata");
@@ -62,7 +88,11 @@ const AuthContextProvider = (props) => {
       setLoading(false); // Set loading to false when no user data is available
     }
   }, []);
-
+  useEffect(() => {
+    if (userData?._id) {
+      getAllTweetsFromFollowingUsers();
+    }
+  }, [userData?._id, userData?.following?.length]);
   return (
     <AuthContext.Provider
       value={[

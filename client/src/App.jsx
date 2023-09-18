@@ -7,13 +7,12 @@ import { AuthContext } from "./useContext/AuthContext/AuthContext";
 import Home from "./components/Home/Home";
 import Loader from "./components/Loader/Loader";
 import Layout from "./components/Layout/Layout";
+
 export default function App() {
   const [, , , , userData, , loading] = useContext(AuthContext);
-  // Show loader when loading is true
   if (loading) {
     return <Loader />;
   }
-
   return (
     <BrowserRouter>
       <Routes>
@@ -32,6 +31,40 @@ export default function App() {
           element={userData ? <Layout profile={true} /> : <Auth />}
         />
         <Route
+          path="/p/:username/following"
+          element={userData ? <Layout following={true} /> : <Auth />}
+        />
+        {/* /p/${userData.username}/with_replies */}
+        <Route
+          path="/p/:username/with_replies"
+          element={userData ? <Layout with_replies={true} /> : <Auth />}
+        />
+        {/* /p/${userData.username}/with_replies */}
+        <Route
+          path="/p/:username/highlights"
+          element={userData ? <Layout highlights={true} /> : <Auth />}
+        />
+
+        <Route
+          path="/p/:username/media"
+          element={userData ? <Layout media={true} /> : <Auth />}
+        />
+
+        <Route
+          path="/p/:username/likes"
+          element={userData ? <Layout likes={true} /> : <Auth />}
+        />
+        <Route
+          path="/p/:username/followers"
+          element={userData ? <Layout followers={true} /> : <Auth />}
+        />
+
+        <Route
+          path="/p/:username/edit_profile"
+          element={userData ? <Layout edit_profile={true} /> : <Auth />}
+        />
+
+        <Route
           path="/explore"
           element={userData ? <Layout explore={true} /> : <Auth />}
         />
@@ -43,12 +76,10 @@ export default function App() {
           path="/messages"
           element={userData ? <Layout messages={true} /> : <Auth />}
         />
-
         <Route
           path="/lists/:username"
           element={userData ? <Layout lists={true} /> : <Auth />}
         />
-
         <Route
           path="/bookmarks"
           element={userData ? <Layout bookmarks={true} /> : <Auth />}
@@ -57,7 +88,6 @@ export default function App() {
           path="/communities"
           element={userData ? <Layout communities={true} /> : <Auth />}
         />
-
         <Route
           path="/hashtag/:hashtag"
           element={userData ? <Layout hashtag={true} /> : <Auth />}

@@ -14,6 +14,7 @@
 }
 
 body {
+  overflow: hidden;
   font-family: 'Roboto', sans-serif;
   background-color: #15202B;
   color: white;
@@ -80,4 +81,53 @@ button:disabled {
   border: none !important;
   outline: none !important;
   color: #747475 !important;
+}
+
+.profile_top {
+  position: relative;
+}
+
+.profile_top::after {
+  content: "back";
+  font-size: 10px;
+  padding: 4px 0;
+  top: 40px;
+  z-index: 1;
+  text-align: center;
+  border-radius: 5px;
+  background-color: rgb(3, 85, 106);
+  border: 1px solid var(--bg-hover-color);
+  width: 50px;
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.3s;
+  /* Add a transition for a smooth effect */
+}
+
+.profile_top:hover::after {
+  opacity: 1;
+}
+
+.scrollbar_hide::-webkit-scrollbar {
+  width: 0;
+}
+
+.user_doesnt_find {
+  height: 90vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user_doesnt_find p {
+  text-align: center;
+}
+
+.user_doesnt_find p {
+  font-weight: 700;
+}
+
+.user_doesnt_find span {
+  font-weight: 400;
 }

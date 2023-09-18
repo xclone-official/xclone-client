@@ -1,0 +1,87 @@
+ .skeleton {
+     background: linear-gradient(90deg, #e0e0e0 25%, #e0e0e0 50%, #b4b8b9 75%);
+     background-size: 200% 100%;
+     animation: loading 1.5s infinite;
+     height: 15px;
+     width: 100px;
+     border-radius: 20px;
+ }
+
+ @keyframes loading {
+     0% {
+         background-position: -200% 0;
+         opacity: 0.5;
+
+
+         /* Lower opacity at the beginning */
+     }
+
+     50% {
+         background-position: 200% 0;
+         opacity: 1;
+
+
+         /* Full opacity in the middle */
+     }
+
+     100% {
+         background-position: 200% 0;
+         opacity: 0.5;
+
+
+         /* Lower opacity at the end */
+     }
+ }
+
+ .skeleton_1 {
+     background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #b4b8b9 75%);
+     background-size: 200% 100%;
+     animation: loading 1.5s infinite;
+     height: 15px;
+     width: 70px;
+     border-radius: 20px;
+ }
+
+ .skeleton_w {
+     background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #b4b8b9 75%);
+     background-size: 200% 100%;
+     animation: loading 1.5s infinite;
+     height: 20px;
+     width: 150px;
+     border-radius: 20px;
+ }
+
+ .skeleton_bio {
+     display: grid;
+     gap: 3px;
+ }
+
+ .skeleton_bio .skeleton_w {
+     width: 100% !important;
+ }
+
+ .User_profile {
+     background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #b4b8b9 75%);
+     background-size: 200% 100%;
+     animation: loading 1.5s infinite;
+     height: 150px;
+     width: 150px;
+     border-radius: 100%;
+ }
+
+ .skeleton_w_btn {
+     background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #b4b8b9 75%);
+     background-size: 200% 100%;
+     animation: loading 1.5s infinite;
+     height: 30px;
+     width: 100px !important;
+     border-radius: 100%;
+ }
+
+ .User_cover {
+     background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #b4b8b9 75%);
+     background-size: 200% 100%;
+     animation: loading 1.5s infinite;
+     height: 150px;
+     width: 100%;
+ }
