@@ -130,7 +130,7 @@ export default function ProfileLayout({
         <ProfileSkeleton />
       ) : (
         <div className={"profile_container"}>
-          {/* View Profile in full */}
+          {/* View Profile in fulll */}
           {showMedia && (
             <>
               <div className="view_profile">
