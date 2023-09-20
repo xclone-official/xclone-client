@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./profile.css";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import ProfileSkeleton from "./ProfileSkeleton";
@@ -13,7 +13,7 @@ export default function ProfileLayout({
   likes,
   children,
   isloading,
-  // profileData,
+  userDataa,
 }) {
   const [
     showLogin,
@@ -37,8 +37,7 @@ export default function ProfileLayout({
   const [showMedia, setShowMedia] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
 
-  const [followBtn, setFollowBtn] = useState("Follow");
-  const [followedBtn, setFollowedBtn] = useState("Following");
+  const [followBtn, setFollowBtn] = useState("Loading...");
   const navigate = useNavigate();
   const goBackToPreviousPage = () => {
     navigate(-1);
@@ -83,12 +82,10 @@ export default function ProfileLayout({
               return newProfile;
             });
 
-            setFollowedBtn("Unfollow");
+            setFollowBtn("Unfollow");
           }
         });
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const followTheUser = () => {
@@ -106,6 +103,7 @@ export default function ProfileLayout({
         })
         .then((data) => {
           if (data.data.status === 1) {
+            console.log("first");
             setSpecificUserProfile((profile) => {
               const newProfile = { ...profile }; // Create a shallow copy of the profile
               newProfile.followers = [...profile.followers, data.data.data]; // Add mydata to followers array
@@ -116,14 +114,46 @@ export default function ProfileLayout({
               newProfile.following = [...profile.following, data.data.data2]; // Add mydata to followers array
               return newProfile; // Return the updated profile
             });
-            setFollowBtn("Following");
+            setFollowBtn("Unfollow");
           }
         });
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
+  };
+  const getFollowedSign = () => {
+    userData?.following?.find(
+      (user) => toString(user.id) === toString(specificUserProfile?._id)
+    )
+      ? setFollowBtn("Unfollow")
+      : setFollowBtn("Follow");
+
+    console.log(
+      "check",
+      specificUserProfile?.followers?.filter(
+        (user) => parseInt(user.id) === parseInt(userData?._id)
+      )
+    );
   };
 
+  useEffect(() => {
+    if (specificUserProfile) {
+      getFollowedSign();
+    }
+  }, [userDataa]);
+
+  const toggleFunction = () => {
+    console.log(userData.following);
+    const isFollowing = userData?.following?.some(
+      (user) => user.id === specificUserProfile?._id
+    );
+    console.log("Is Following:", isFollowing);
+
+    if (!isFollowing) {
+      followTheUser();
+    } else {
+      UnfollowTheUser();
+    }
+    console.log(userData.following);
+  };
   return (
     <>
       {isloading ? (
@@ -210,12 +240,8 @@ export default function ProfileLayout({
                     >
                       Edit Profile
                     </button>
-                  ) : userData?.following?.some(
-                      (user) => user.id === specificUserProfile?._id
-                    ) ? (
-                    <button onClick={UnfollowTheUser}>{followedBtn}</button>
                   ) : (
-                    <button onClick={followTheUser}>{followBtn}</button>
+                    <button onClick={toggleFunction}>{followBtn}</button>
                   )}
                 </div>
               </div>

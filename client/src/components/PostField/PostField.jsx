@@ -200,7 +200,7 @@ export default function PostField({ comment }) {
           <div className="textarea_">
             <textarea
               onChange={(e) => setTextContent(e.target.value)}
-              placeholder="What is happening?!"
+              placeholder={!comment ? "What is happening?!" : "Write a comment"}
               name="post"
               id="post"
               rows="3"
@@ -335,7 +335,7 @@ export default function PostField({ comment }) {
           )}
           <div className="post_btn">
             <button disabled={!textContent} onClick={savePost}>
-              Post
+              ✍
             </button>
           </div>
         </div>

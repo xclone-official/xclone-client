@@ -90,25 +90,7 @@ export default function TweetPageCard({ tweetdata }) {
           </div>
         </div>
         <div className="tweet_content_text">
-          <p>
-            Day 18 of 50 <br />
-            <br /> Step 6: Frontend Homepage and Timeline
-            <br />
-            <br /> Designed a Home page🔥 for our Twitclone project (#X: clone),
-            <br />
-            <br />
-            where users can now see relevant <br />
-            <br />
-            tweets fetched from the backend.
-            <br />
-            <br /> More is coming. <br />
-            <br />
-            Stay tuned. <br />
-            <br />
-            #50dayschallenge #StayTuned
-            <br />
-            <br /> #webdevelopment #xclone
-          </p>
+          <p>{tweetdata?.tweetContent}</p>
         </div>
         <div className="tweet_media ">
           {tweetdata.video?.length > 0 ? (
@@ -142,7 +124,7 @@ export default function TweetPageCard({ tweetdata }) {
 
         <div className="time_views">
           <p>
-            {convertDate(tweetdata?.createdAt)} · <span>43</span> views
+            {convertDate(tweetdata?.createdAt)} · <span>0</span> views
           </p>
         </div>
 

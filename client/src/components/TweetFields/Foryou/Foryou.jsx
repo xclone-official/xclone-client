@@ -67,7 +67,10 @@ export default function Foryou({ scrollbarhide, myAllTweets, profileId }) {
           hasMore={
             !myAllTweets
               ? showInitialArrayOfData.length < allTweets.length
-              : showInitialArrayOfData.length < myTweets.length
+              : showInitialArrayOfData.length <
+                allTweets?.filter(
+                  (e) => parseInt(e.authorId) === parseInt(profileId?._id)
+                ).length
           }
           loader={<InfoLoader />}
           height="640px"

@@ -61,14 +61,15 @@ export default function Layout({
   const getSpecificUser = () => {
     setLoader(true);
     document.title = "Loading...";
-    console.log("Loading");
     try {
       axios.get(`${backendURL}/user/auth/getUser/${username}`).then((data) => {
         if (data.data.status === 1) {
           const user = data.data.data;
           setprofileData(user);
           setSpecificUserProfile(user);
-          setLoader(false);
+          setTimeout(() => {
+            setLoader(false);
+          }, 1000);
           document.title = `${user?.fullname} (@${user?.username}) / X`;
         } else {
           setIsUserExist(false);
@@ -78,7 +79,17 @@ export default function Layout({
   };
 
   useEffect(() => {
-    if (profile || followers || following || edit_profile) getSpecificUser();
+    if (
+      profile ||
+      followers ||
+      following ||
+      edit_profile ||
+      with_replies ||
+      media ||
+      likes ||
+      highlights
+    )
+      getSpecificUser();
   }, [username]);
   if (!isUserExist) {
     return <ErrorPage />;
@@ -89,13 +100,13 @@ export default function Layout({
       {profile && (
         <ProfileLayout
           isloading={isloading}
-          profileData={specificUserProfile}
+          userDataa={specificUserProfile}
           allTweets={allTweets}
         >
           {!loading && (
             <Foryou
               scrollbarhide={true}
-              profileId={profileData}
+              profileId={specificUserProfile}
               myAllTweets={true}
             />
           )}

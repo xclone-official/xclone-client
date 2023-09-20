@@ -4,7 +4,7 @@ export const TweetContext = createContext();
 
 const TweetContextProvider = ({ children }) => {
   const [myTweets, setMyTweets] = useState([]);
-  const [specificUserProfile, setSpecificUserProfile] = useState([]);
+  const [specificUserProfile, setSpecificUserProfile] = useState();
   const [
     showLogin,
     setShowLogin,
