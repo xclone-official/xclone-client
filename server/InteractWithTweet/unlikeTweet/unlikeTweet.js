@@ -59,6 +59,7 @@ Router.put("/:tweetId/:userId", async (req, res) => {
       return res.status(200).send({
         status: 1,
         msg: "Tweet Unliked Success",
+        tweet: isTweetExist,
       });
     } else {
       return res.status(200).send({

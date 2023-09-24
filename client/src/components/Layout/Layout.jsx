@@ -87,7 +87,8 @@ export default function Layout({
       with_replies ||
       media ||
       likes ||
-      highlights
+      highlights ||
+      showTweet
     )
       getSpecificUser();
   }, [username]);

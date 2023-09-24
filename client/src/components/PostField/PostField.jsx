@@ -335,7 +335,7 @@ export default function PostField({ comment }) {
           )}
           <div className="post_btn">
             <button disabled={!textContent} onClick={savePost}>
-              ✍
+              {comment ? "✍" : "Post"}
             </button>
           </div>
         </div>

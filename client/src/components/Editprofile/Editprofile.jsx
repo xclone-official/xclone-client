@@ -26,7 +26,7 @@ export default function Editprofile() {
     document.title = "X / Notifications";
   }, []);
   const goBackToPreviousPage = () => {
-    navigate("/home");
+    navigate(-1);
   };
   const [myTweets, setMyTweets] = useContext(TweetContext);
   useEffect(() => {

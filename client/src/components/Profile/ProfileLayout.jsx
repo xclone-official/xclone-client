@@ -64,25 +64,28 @@ export default function ProfileLayout({
         })
         .then((data) => {
           if (data.data.status === 1) {
-            setSpecificUserProfile((profile) => {
-              const newProfile = { ...profile };
-              // Remove the unfollowed user from the followers array
-              newProfile.followers = newProfile.followers.filter(
-                (follower) => follower.id !== followBy
-              );
-              return newProfile;
-            });
+            // setSpecificUserProfile((profile) => {
+            //   const newProfile = { ...profile };
+            //   // Remove the unfollowed user from the followers array
+            //   newProfile.followers = newProfile.followers.filter(
+            //     (follower) => follower.id !== followBy
+            //   );
+            //   return newProfile;
+            // });
 
-            setUserData((profile) => {
-              const newProfile = { ...profile };
-              // Remove the unfollowed user from the following array
-              newProfile.following = newProfile.following.filter(
-                (followedUser) => followedUser.id !== tofollowId
-              );
-              return newProfile;
-            });
+            // setUserData((profile) => {
+            //   const newProfile = { ...profile };
+            //   // Remove the unfollowed user from the following array
+            //   newProfile.following = newProfile.following.filter(
+            //     (followedUser) => followedUser.id !== tofollowId
+            //   );
+            //   return newProfile;
+            // });
 
-            setFollowBtn("Unfollow");
+            setUserData(data.data.userUnfollowing);
+            setSpecificUserProfile(data.data.userToUnfollow);
+
+            setFollowBtn("Follow");
           }
         });
     } catch (error) {}
@@ -102,57 +105,55 @@ export default function ProfileLayout({
           id: followBy,
         })
         .then((data) => {
+          console.log(data.data.status);
           if (data.data.status === 1) {
             console.log("first");
-            setSpecificUserProfile((profile) => {
-              const newProfile = { ...profile }; // Create a shallow copy of the profile
-              newProfile.followers = [...profile.followers, data.data.data]; // Add mydata to followers array
-              return newProfile; // Return the updated profile
-            });
-            setUserData((profile) => {
-              const newProfile = { ...profile }; // Create a shallow copy of the profile
-              newProfile.following = [...profile.following, data.data.data2]; // Add mydata to followers array
-              return newProfile; // Return the updated profile
-            });
+            setUserData(data.data.myProfile);
+            setSpecificUserProfile(data.data.otherUserData);
+            // setSpecificUserProfile((profile) => {
+            //   const newProfile = { ...profile }; // Create a shallow copy of the profile
+            //   newProfile.followers = [...profile.followers, data.data.data]; // Add mydata to followers array
+            //   return newProfile; // Return the updated profile
+            // });
+
+            // setUserData((profile) => {
+            //   const newProfile = { ...profile }; // Create a shallow copy of the profile
+            //   newProfile.following = [...profile.following, data.data.data2]; // Add mydata to followers array
+            //   return newProfile; // Return the updated profile
+            // });
+
             setFollowBtn("Unfollow");
           }
+
+          // console.log("following", userData?.following);
+          // console.log("follower", specificUserProfile?.followers);
         });
     } catch (error) {}
   };
   const getFollowedSign = () => {
-    userData?.following?.find(
-      (user) => toString(user.id) === toString(specificUserProfile?._id)
-    )
+    userData?.following?.some((user) => user.id === specificUserProfile?._id)
       ? setFollowBtn("Unfollow")
       : setFollowBtn("Follow");
-
     console.log(
-      "check",
-      specificUserProfile?.followers?.filter(
-        (user) => parseInt(user.id) === parseInt(userData?._id)
-      )
+      userData?.following?.some((user) => user.id === specificUserProfile?._id)
     );
   };
 
   useEffect(() => {
-    if (specificUserProfile) {
-      getFollowedSign();
-    }
+    getFollowedSign();
   }, [userDataa]);
 
   const toggleFunction = () => {
-    console.log(userData.following);
     const isFollowing = userData?.following?.some(
       (user) => user.id === specificUserProfile?._id
     );
-    console.log("Is Following:", isFollowing);
-
+    console.log(userData?.following);
+    console.log(specificUserProfile.followers);
     if (!isFollowing) {
       followTheUser();
     } else {
       UnfollowTheUser();
     }
-    console.log(userData.following);
   };
   return (
     <>
@@ -196,18 +197,13 @@ export default function ProfileLayout({
               <p>{specificUserProfile?.fullname}</p>
               <span>
                 {allTweets?.filter(
-                  (e) =>
-                    parseInt(e?.authorId) === parseInt(specificUserProfile?._id)
+                  (e) => e?.authorId === specificUserProfile?._id
                 ).length > 1
                   ? allTweets.filter(
-                      (e) =>
-                        parseInt(e?.authorId) ===
-                        parseInt(specificUserProfile?._id)
+                      (e) => e?.authorId === specificUserProfile?._id
                     ).length + " tweets"
                   : allTweets.filter(
-                      (e) =>
-                        parseInt(e?.authorId) ===
-                        parseInt(specificUserProfile?._id)
+                      (e) => e?.authorId === specificUserProfile?._id
                     ).length + " tweet"}
               </span>
             </div>
@@ -231,8 +227,7 @@ export default function ProfileLayout({
                   />
                 </div>
                 <div className="edit_btn">
-                  {parseInt(specificUserProfile?._id) ===
-                  parseInt(userData?._id) ? (
+                  {specificUserProfile?._id === userData?._id ? (
                     <button
                       onClick={() =>
                         navigate(`/p/${userData?.username}/edit_profile`)
@@ -371,6 +366,7 @@ export default function ProfileLayout({
                 </Link>
               </div>
             </div>
+            {/* Children */}
             {children}
           </div>
         </div>

@@ -5,7 +5,6 @@ import { AuthContext } from "../../../useContext/AuthContext/AuthContext";
 import InfoLoader from "../../Loader/InfoLoader";
 import InfiniteScroll from "react-infinite-scroll-component";
 import PostField from "../../PostField/PostField";
-import { TweetContext } from "../../../useContext/TweetContext/TweetContext";
 export default function Foryou({ scrollbarhide, myAllTweets, profileId }) {
   const [
     showLogin,
@@ -23,13 +22,12 @@ export default function Foryou({ scrollbarhide, myAllTweets, profileId }) {
     followingTweet,
     setFollowingTweet,
   ] = useContext(AuthContext);
-  const [myTweets, setMyTweets] = useContext(TweetContext);
   const [initialPageCount, setInitialPageCount] = useState(2);
   const [showInitialArrayOfData, setShowInitialArrayOfData] = useState(
     !myAllTweets
       ? allTweets.slice(0, initialPageCount)
       : allTweets
-          .filter((e) => parseInt(e.authorId) === parseInt(profileId?._id))
+          .filter((e) => e.authorId === profileId?._id)
           .slice(0, initialPageCount)
   );
   useEffect(() => {
@@ -37,7 +35,7 @@ export default function Foryou({ scrollbarhide, myAllTweets, profileId }) {
       !myAllTweets
         ? allTweets.slice(0, initialPageCount)
         : allTweets
-            .filter((e) => parseInt(e.authorId) === parseInt(profileId?._id))
+            .filter((e) => e.authorId == profileId?._id)
             .slice(0, initialPageCount)
     );
   }, [allTweets.length]);
@@ -57,9 +55,7 @@ export default function Foryou({ scrollbarhide, myAllTweets, profileId }) {
           <PostField />
         </div>
       )}
-      {infoLoader ? (
-        <InfoLoader />
-      ) : allTweets.length > 0 ? (
+      {showInitialArrayOfData.length > 0 ? (
         <InfiniteScroll
           className={scrollbarhide && "scrollbar_hide"}
           dataLength={showInitialArrayOfData.length}
@@ -73,7 +69,7 @@ export default function Foryou({ scrollbarhide, myAllTweets, profileId }) {
                 ).length
           }
           loader={<InfoLoader />}
-          height="640px"
+          height="90vh"
           endMessage={
             <div
               style={{

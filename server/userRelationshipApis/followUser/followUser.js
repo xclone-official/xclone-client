@@ -60,8 +60,8 @@ Router.put("/:userId", async (req, res) => {
       res.status(200).send({
         status: 1,
         msg: "Account followed successfully.",
-        data: myProfile.following,
-        data2: otherUserData.followers,
+        myProfile: myProfile,
+        otherUserData: otherUserData,
       });
     } else {
       // User is already following

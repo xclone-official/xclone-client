@@ -49,6 +49,8 @@ Router.put("/:userId", async (req, res) => {
     res.status(200).send({
       status: 1,
       msg: "Account unfollowed successfully.",
+      userToUnfollow: userToUnfollow,
+      userUnfollowing: userUnfollowing,
     });
   } catch (error) {
     console.error(error);

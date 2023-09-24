@@ -67,6 +67,7 @@ Router.put("/:tweetId/:userId", async (req, res) => {
         status: 1,
         msg: "Tweet Liked Success",
         data: likeJSON,
+        tweet: isTweetExist,
       });
     } else {
       return res.status(200).send({

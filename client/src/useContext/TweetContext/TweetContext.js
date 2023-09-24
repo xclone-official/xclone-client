@@ -1,10 +1,12 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthContext/AuthContext";
+import axios from "axios";
 export const TweetContext = createContext();
 
 const TweetContextProvider = ({ children }) => {
   const [myTweets, setMyTweets] = useState([]);
   const [specificUserProfile, setSpecificUserProfile] = useState();
+  const [specifictweet, setSpecifictweet] = useState();
   const [
     showLogin,
     setShowLogin,
@@ -41,6 +43,51 @@ const TweetContextProvider = ({ children }) => {
     }
   }, [allTweets, sessionStorage]); // Make sure to include all relevant dependencies here
 
+  const backendURL = process.env.REACT_APP_BACKEND_URL;
+
+  const likeTweet = (specifictweet_id, userData_id) => {
+    try {
+      // Tweetid and userId
+      // api =>
+      console.log("liked");
+      const api = `${backendURL}/tweetinteractions/liketweet/${specifictweet_id}/${userData_id}`;
+      console.log(api);
+      axios
+        .put(api)
+        .then((data) => {
+          if (data.data.status === 1) {
+            setSpecifictweet(data.data.tweet);
+            // setLikeBtn(<Likebtn />);
+            console.log("liked inner");
+          }
+        })
+        .catch((err) => {
+          // console.log(err);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {}
+  };
+
+  const unlikeTweet = (specifictweet_id, userData_id) => {
+    try {
+      // Tweetid and userId
+      // api =>
+      console.log("Unliked");
+      const api = `${backendURL}/tweetinteractions/unliketweet/${specifictweet_id}/${userData_id}`;
+      axios
+        .put(api)
+        .then((data) => {
+          if (data.data.status === 1) {
+            setSpecifictweet(data.data.tweet);
+            // setLikeBtn(<UnlikeBtn />);
+            console.log("unliked inner");
+          }
+        })
+        .catch((err) => {});
+    } catch (error) {}
+  };
   return (
     <TweetContext.Provider
       value={[
@@ -48,6 +95,10 @@ const TweetContextProvider = ({ children }) => {
         setMyTweets,
         specificUserProfile,
         setSpecificUserProfile,
+        specifictweet,
+        setSpecifictweet,
+        likeTweet,
+        unlikeTweet,
       ]}
     >
       {children}
