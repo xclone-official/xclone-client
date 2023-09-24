@@ -22,7 +22,7 @@ export default function Foryou({ scrollbarhide, myAllTweets, profileId }) {
     followingTweet,
     setFollowingTweet,
   ] = useContext(AuthContext);
-  const [initialPageCount, setInitialPageCount] = useState(2);
+  const [initialPageCount, setInitialPageCount] = useState(5);
   const [showInitialArrayOfData, setShowInitialArrayOfData] = useState(
     !myAllTweets
       ? allTweets.slice(0, initialPageCount)
@@ -38,11 +38,27 @@ export default function Foryou({ scrollbarhide, myAllTweets, profileId }) {
             .filter((e) => e.authorId == profileId?._id)
             .slice(0, initialPageCount)
     );
+    console.log(
+      !myAllTweets
+        ? allTweets.slice(0, initialPageCount)
+        : allTweets
+            .filter((e) => e.authorId == profileId?._id)
+            .slice(0, initialPageCount)
+    );
   }, [allTweets.length]);
 
   const fetchMoreData = () => {
     const newPageCount = initialPageCount + 2;
-    const newTweets = allTweets.slice(initialPageCount, newPageCount);
+    let newTweets;
+
+    if (!myAllTweets) {
+      newTweets = allTweets.slice(initialPageCount, newPageCount);
+    } else {
+      newTweets = allTweets
+        .filter((e) => e.authorId === profileId?._id)
+        .slice(initialPageCount, newPageCount);
+    }
+
     // Concatenate the new tweets to the existing data
     setShowInitialArrayOfData((data) => [...data, ...newTweets]);
     setInitialPageCount(newPageCount);
@@ -64,9 +80,7 @@ export default function Foryou({ scrollbarhide, myAllTweets, profileId }) {
             !myAllTweets
               ? showInitialArrayOfData.length < allTweets.length
               : showInitialArrayOfData.length <
-                allTweets?.filter(
-                  (e) => parseInt(e.authorId) === parseInt(profileId?._id)
-                ).length
+                allTweets?.filter((e) => e.authorId === profileId?._id).length
           }
           loader={<InfoLoader />}
           height="90vh"

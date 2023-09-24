@@ -30,9 +30,12 @@ const AuthContextProvider = (props) => {
       axios
         .get(`${backendURL}/tweetaction/getalltweet`)
         .then((data) => {
-          const tweets = data.data.tweets.reverse(); // Reverse the order of tweets
-
-          setAllTweets(tweets);
+          const tweets = data.data.tweets; // Reverse the order of tweets
+          setAllTweets(
+            tweets.sort(function (a, b) {
+              return new Date(b.createdAt) - new Date(a.createdAt);
+            })
+          );
           setTimeout(() => {
             setInfoLoader(false);
           }, 2000);

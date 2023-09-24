@@ -72,17 +72,12 @@ export default function Following({ following, follower }) {
             <div className="top_tweetname">
               <p>{userData?.fullname}</p>
               <span>
-                {allTweets?.filter(
-                  (e) => parseInt(e?.authorId) === parseInt(profileData?._id)
-                ).length > 1
-                  ? allTweets.filter(
-                      (e) =>
-                        parseInt(e?.authorId) === parseInt(profileData?._id)
-                    ).length + " tweets"
-                  : allTweets.filter(
-                      (e) =>
-                        parseInt(e?.authorId) === parseInt(profileData?._id)
-                    ).length + " tweet"}
+                {allTweets?.filter((e) => e?.authorId === profileData?._id)
+                  .length > 1
+                  ? allTweets?.filter((e) => e?.authorId === profileData?._id)
+                      .length + " tweets"
+                  : allTweets?.filter((e) => e?.authorId === profileData?._id)
+                      .length + " tweet"}
               </span>
             </div>
           </div>

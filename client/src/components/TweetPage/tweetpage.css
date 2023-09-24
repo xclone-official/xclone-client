@@ -16,7 +16,7 @@
 
 .tweet_posted_user {
     display: flex;
-    margin-top: 6px;
+    margin-top: 15px;
     justify-content: space-between;
 }
 
@@ -27,7 +27,9 @@
 
 .tweet_user_pf img {
     width: 40px;
+    margin-top: -4px;
     height: 40px;
+    border: 1px solid var(--theme-hover-color);
     object-fit: cover;
     border-radius: 100%;
     cursor: pointer;
@@ -66,7 +68,8 @@
 
 .tweet_content_text {
     /* background-color: rgb(79, 78, 78); */
-    margin-top: 10px;
+    margin-top: 15px;
+    margin-bottom: -15px;
 }
 
 .border {

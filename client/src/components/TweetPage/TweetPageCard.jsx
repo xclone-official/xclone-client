@@ -236,6 +236,32 @@ export default function TweetPageCard({ tweetdata }) {
                 · <span>0</span> views
               </p>
             </div>
+            {allTweets.find((e) => e.authorId === tweetdata.authorId)?.likes
+              ?.length > 0 && (
+              <div className="view_engagement">
+                {
+                  <Link
+                    to={`/${
+                      allTweets.find((e) => e.authorId === tweetdata.authorId)
+                        ?.authorUsername
+                    }/tweet/${
+                      allTweets.find((e) => e.authorId === tweetdata.authorId)
+                        ?._id
+                    }/likes`}
+                    style={{ display: "flex", gap: "5px" }}
+                  >
+                    <p>
+                      {
+                        allTweets.find((e) => e.authorId === tweetdata.authorId)
+                          ?.likes?.length
+                      }
+                    </p>
+
+                    <span>Likes</span>
+                  </Link>
+                }
+              </div>
+            )}
 
             <div className="view_engagement">
               <svg viewBox="0 0 24 24" aria-hidden="true">

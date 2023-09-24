@@ -199,6 +199,7 @@ export default function PostField({ comment }) {
           </div>
           <div className="textarea_">
             <textarea
+              value={textContent}
               onChange={(e) => setTextContent(e.target.value)}
               placeholder={!comment ? "What is happening?!" : "Write a comment"}
               name="post"
