@@ -157,7 +157,7 @@ const TweetModel = mongoose.Schema(
     tweetSeen: [
       {
         type: String,
-        default: "",
+        required: true,
       },
     ],
     video: [

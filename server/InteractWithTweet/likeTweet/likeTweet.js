@@ -59,10 +59,21 @@ Router.put("/:tweetId/:userId", async (req, res) => {
     };
     // Like Tweet
 
+    const tweetDetails = {
+      authorName: isUserExist.fullname,
+      authorId: isUserExist._id,
+      authorUsername: isUserExist.username,
+      authorProfile: isUserExist.profilepicture,
+      tweet: isTweetExist,
+    };
+
     const isLikeExist = isTweetExist.likes.filter((e) => e.id === userId);
     if (isLikeExist.length === 0) {
       isTweetExist.likes.push(likeJSON);
       await isTweetExist.save();
+
+      isUserExist?.likedTweet.push(tweetDetails);
+      await isUserExist.save();
       return res.status(200).send({
         status: 1,
         msg: "Tweet Liked Success",
