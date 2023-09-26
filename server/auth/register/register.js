@@ -26,7 +26,6 @@ Router.get("/", (req, res) => {
 });
 Router.post("/", upload.single("profilepic"), async (req, res) => {
   try {
-    console.log(req.body);
     const {
       email,
       username,

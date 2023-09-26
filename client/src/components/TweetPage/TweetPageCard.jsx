@@ -6,6 +6,7 @@ import { convertDate } from "../CovertDateTime/ConvertDateTime";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import { TweetContext } from "../../useContext/TweetContext/TweetContext";
 import Loader from "../Loader/InfoLoader";
+import { SpecificTweets } from "../../useContext/SpecificTweet/SpecificTweetProvider";
 const Likebtn = () => {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -27,7 +28,6 @@ const UnlikeBtn = () => {
 export default function TweetPageCard({ tweetdata }) {
   const navigate = useNavigate();
   const [likeBtn, setLikeBtn] = useState(<UnlikeBtn />);
-  const [tweet_data, setTweet_data] = useState(tweetdata);
   const goBackToPreviousPage = () => {
     navigate(-1);
   };
@@ -59,7 +59,7 @@ export default function TweetPageCard({ tweetdata }) {
     likeTweet,
     unlikeTweet,
   ] = useContext(TweetContext);
-
+  const [specifictweet, setSpecifictweet] = useContext(SpecificTweets);
   const getFollowedSign = () => {
     const IsAlreadyLiked = allTweets
       .find((e) => e.authorId === tweetdata.authorId)
@@ -74,7 +74,9 @@ export default function TweetPageCard({ tweetdata }) {
   useEffect(() => {
     getFollowedSign();
   }, []);
-
+  useEffect(()=>{
+    setSpecifictweet(tweetdata);
+  },[tweetdata?.authorId])
   const toggleFunction = () => {
     const checkIsAlreadyLiked = allTweets
       .find((e) => e.authorId === tweetdata.authorId)
@@ -103,7 +105,7 @@ export default function TweetPageCard({ tweetdata }) {
 
   return (
     <>
-      {!tweetdata ? (
+      {!specifictweet || !specifictweet.length===0? (
         <>
           <br />
           <br />
@@ -138,7 +140,7 @@ export default function TweetPageCard({ tweetdata }) {
                     src={
                       backendURL +
                       "/" +
-                      allTweets.find((e) => e.authorId === tweetdata.authorId)
+                      specifictweet
                         .authorProfile
                     }
                     alt=""
@@ -147,13 +149,13 @@ export default function TweetPageCard({ tweetdata }) {
                 <div className="profile_user_name margin_top_1">
                   <Link
                     to={`/p/${
-                      allTweets.find((e) => e.authorId === tweetdata.authorId)
+                      specifictweet
                         ?.authorUsername
                     }`}
                   >
                     <p>
                       {
-                        allTweets.find((e) => e.authorId === tweetdata.authorId)
+                        specifictweet
                           .authorName
                       }
                     </p>
@@ -161,7 +163,7 @@ export default function TweetPageCard({ tweetdata }) {
                   <span>
                     @
                     {
-                      allTweets.find((e) => e.authorId === tweetdata.authorId)
+                      specifictweet
                         .authorUsername
                     }
                   </span>
@@ -181,26 +183,26 @@ export default function TweetPageCard({ tweetdata }) {
             <div className="tweet_content_text">
               <p>
                 {
-                  allTweets.find((e) => e.authorId === tweetdata.authorId)
+                  specifictweet
                     ?.tweetContent
                 }
               </p>
             </div>
             <div className="tweet_media ">
-              {allTweets.find((e) => e.authorId === tweetdata.authorId).video
+              {specifictweet.video
                 ?.length > 0 ? (
                 <video
                   className="border"
                   controls
                   src={`${backendURL}/${
-                    allTweets.find((e) => e.authorId === tweetdata.authorId)
+                    specifictweet
                       .video[0]
                   }`}
                   alt="video"
                 />
-              ) : allTweets.find((e) => e.authorId === tweetdata.authorId)
+              ) : specifictweet
                   .photos?.length > 0 ? (
-                allTweets.find((e) => e.authorId === tweetdata.authorId).photos
+                specifictweet.photos
                   ?.length > 1 ? (
                   allTweets
                     .find((e) => e.authorId === tweetdata.authorId)
@@ -216,7 +218,7 @@ export default function TweetPageCard({ tweetdata }) {
                   <img
                     className="imglast-child"
                     src={`${backendURL}/${
-                      allTweets.find((e) => e.authorId === tweetdata.authorId)
+                      specifictweet
                         .photos[0]
                     }`}
                     alt="photo"
@@ -230,29 +232,29 @@ export default function TweetPageCard({ tweetdata }) {
             <div className="time_views">
               <p>
                 {convertDate(
-                  allTweets.find((e) => e.authorId === tweetdata.authorId)
+                  specifictweet
                     ?.createdAt
                 )}{" "}
                 · <span>0</span> views
               </p>
             </div>
-            {allTweets.find((e) => e.authorId === tweetdata.authorId)?.likes
+            {specifictweet?.likes
               ?.length > 0 && (
               <div className="view_engagement">
                 {
                   <Link
                     to={`/${
-                      allTweets.find((e) => e.authorId === tweetdata.authorId)
+                      specifictweet
                         ?.authorUsername
                     }/tweet/${
-                      allTweets.find((e) => e.authorId === tweetdata.authorId)
+                      specifictweet
                         ?._id
                     }/likes`}
                     style={{ display: "flex", gap: "5px" }}
                   >
                     <p>
                       {
-                        allTweets.find((e) => e.authorId === tweetdata.authorId)
+                        specifictweet
                           ?.likes?.length
                       }
                     </p>
@@ -278,11 +280,11 @@ export default function TweetPageCard({ tweetdata }) {
                     <path d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z"></path>
                   </g>
                 </svg>
-                {allTweets.find((e) => e.authorId === tweetdata.authorId)
+                {specifictweet
                   ?.comments?.length > 0 && (
                   <p>
                     {
-                      allTweets.find((e) => e.authorId === tweetdata.authorId)
+                      specifictweet
                         ?.comments?.length
                     }
                   </p>
@@ -297,7 +299,7 @@ export default function TweetPageCard({ tweetdata }) {
               </div>
 
               {userData?._id ===
-              allTweets.find((e) => e.authorId === tweetdata.authorId)
+              specifictweet
                 ?.authorId ? (
                 <div className="like_tweet svg_width">
                   <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -308,11 +310,11 @@ export default function TweetPageCard({ tweetdata }) {
                       ></path>
                     </g>
                   </svg>
-                  {allTweets.find((e) => e.authorId === tweetdata.authorId)
+                  {specifictweet
                     ?.likes?.length > 0 && (
                     <p>
                       {
-                        allTweets.find((e) => e.authorId === tweetdata.authorId)
+                        specifictweet
                           ?.likes?.length
                       }
                     </p>
@@ -321,11 +323,11 @@ export default function TweetPageCard({ tweetdata }) {
               ) : (
                 <div className="like_tweet svg_width" onClick={toggleFunction}>
                   {likeBtn}
-                  {allTweets.find((e) => e.authorId === tweetdata.authorId)
+                  {specifictweet
                     ?.likes?.length > 0 && (
                     <p>
                       {
-                        allTweets.find((e) => e.authorId === tweetdata.authorId)
+                        specifictweet
                           ?.likes?.length
                       }
                     </p>
@@ -351,7 +353,6 @@ export default function TweetPageCard({ tweetdata }) {
             </div>
             <PostField comment={true} />
           </div>
-
           <div className="margin_top_100"></div>
         </div>
       )}
