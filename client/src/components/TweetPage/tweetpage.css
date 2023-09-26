@@ -4,10 +4,14 @@
 
 .overflow_scrolll {
     height: 96vh;
-    padding: 0px 10px 100px 10px;
+    padding: 0px 0px 100px 0px;
     overflow-y: scroll !important;
     width: 100%;
     margin-bottom: 200px !important;
+}
+
+.padding_wrap {
+    padding: 0px 10px 0px 10px;
 }
 
 .overflow_scrolll::-webkit-scrollbar {
@@ -93,6 +97,7 @@
 
 .time_views {
     display: flex;
+
     margin-top: 10px;
     border-top: 1px solid var(--theme-hover-color);
     border-bottom: 1px solid var(--theme-hover-color);
@@ -117,10 +122,9 @@
     align-items: center;
     gap: 5px;
     font-size: 14px;
-    padding-top: 15px;
     cursor: pointer;
     font-weight: 400;
-    padding-bottom: 15px;
+    padding: 15px 10px 15px 10px;
     color: rgb(139, 152, 165);
     border-bottom: 1px solid var(--theme-hover-color);
 }
@@ -139,12 +143,85 @@
     align-items: center;
     gap: 5px;
     font-size: 14px;
-    padding-top: 5px;
+    /* padding-top: 5px; */
     cursor: pointer;
     font-weight: 400;
-    padding-bottom: 5px;
+    /* padding-bottom: 5px; */
+    padding: 5px 10px 5px 10px;
     color: rgb(139, 152, 165);
     border-bottom: 1px solid var(--theme-hover-color);
 }
 
 /* Comment Section */
+
+/* .comment_section {} */
+
+.comment_detailss:hover {
+    cursor: pointer;
+    background-color: var(--theme-hover-color);
+}
+
+.comment_detailss {
+    padding: 0px 5px 0px 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment_details:hover {
+    cursor: pointer;
+    background-color: var(--theme-hover-color);
+}
+
+.comment_details {
+    padding: 0px 5px 0px 5px;
+    border-bottom: 1px solid var(--theme-hover-color);
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment_user_details {
+    display: flex;
+    gap: 7px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.comment_user_profile img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 100%;
+}
+
+.comment_name_username_time .cmt_name_details {
+    display: flex;
+    gap: 5px;
+}
+
+.cmt_name {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.cmt_username,
+.cmt_time {
+    font-size: 12px;
+    margin-top: 4px;
+    color: rgb(139, 152, 165);
+}
+
+.comment_text {
+    margin-top: 10px;
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.comment_delete_btn button {
+    padding: 5px;
+    border: 1px solid var(--theme-hover-color);
+    margin-top: 5px;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: transparent;
+    color: white;
+}

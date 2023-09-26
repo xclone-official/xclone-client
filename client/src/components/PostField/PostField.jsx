@@ -72,7 +72,7 @@ const icons = [
   // },
 ];
 
-export default function PostField({ comment }) {
+export default function PostField({ tweetId, comment }) {
   const [
     showLogin,
     setShowLogin,
@@ -187,6 +187,32 @@ export default function PostField({ comment }) {
     setIsVideo(false);
     setTextContent("");
     setFiles([]);
+  };
+  const saveComment = () => {
+    try {
+      const commentData = {
+        commentText: textContent,
+        commentUserId: userData?._id,
+      };
+      axios
+        .post(
+          `${backendURL}/tweetinteractions/commentoptions/comment/${tweetId}`,
+          commentData
+        )
+        .then((data) => {
+          if (data.data.status === 1) {
+            const findTweet = allTweets.find((e) => e.authorId === tweetId);
+          } else {
+            alert("Error");
+          }
+        })
+        .catch((err) => {
+          console.log("err", err);
+        });
+    } catch (error) {
+      console.log("error", error);
+    }
+    setTextContent("");
   };
   return (
     <>
@@ -335,7 +361,10 @@ export default function PostField({ comment }) {
             </div>
           )}
           <div className="post_btn">
-            <button disabled={!textContent} onClick={savePost}>
+            <button
+              disabled={!textContent}
+              onClick={comment ? saveComment : savePost}
+            >
               {comment ? "✍" : "Post"}
             </button>
           </div>

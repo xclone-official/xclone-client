@@ -56,6 +56,13 @@ Router.put("/:tweetId/:userId", async (req, res) => {
       const toUnlike = isTweetExist.likes.filter((e) => e.id !== userId);
       isTweetExist.likes = toUnlike;
       await isTweetExist.save();
+
+      const toRemoveLikedTweet = isUserExist.likedTweet.filter(
+        (e) => e.authorId !== userId
+      );
+      isUserExist.likedTweet = toRemoveLikedTweet;
+      await isUserExist.save();
+
       return res.status(200).send({
         status: 1,
         msg: "Tweet Unliked Success",

@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import "./TweetCard.css";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../useContext/AuthContext/AuthContext";
-import { TweetContext } from "../useContext/TweetContext/TweetContext";
-import { convertDate } from "../components/CovertDateTime/ConvertDateTime";
+import { AuthContext } from "../../useContext/AuthContext/AuthContext";
+import { TweetContext } from "../../useContext/TweetContext/TweetContext";
+import { convertDate } from "../CovertDateTime/ConvertDateTime";
 const VerifiedAcccount = () => {
   return (
     <svg
@@ -85,20 +84,20 @@ export default function TweetCard({ tweets }) {
     console.log(tweets);
   }, []);
 
-  const toggleFunction = () => {
-    const checkIsAlreadyLiked = tweets?.likes?.some(
-      (e) => e.id === userData?._id
-    );
-    if (!checkIsAlreadyLiked) {
-      console.log("called like");
-      likeTweet(tweets?._id, userData?._id);
-      setLikeBtn(<Likebtn />);
-    } else {
-      console.log("called unlike");
-      unlikeTweet(tweets?._id, userData?._id);
-      setLikeBtn(<UnlikeBtn />);
-    }
-  };
+  //   const toggleFunction = () => {
+  //     const checkIsAlreadyLiked = tweets?.likes?.some(
+  //       (e) => e.id === userData?._id
+  //     );
+  //     if (!checkIsAlreadyLiked) {
+  //       console.log("called like");
+  //       likeTweet(tweets?._id, userData?._id);
+  //       setLikeBtn(<Likebtn />);
+  //     } else {
+  //       console.log("called unlike");
+  //       unlikeTweet(tweets?._id, userData?._id);
+  //       setLikeBtn(<UnlikeBtn />);
+  //     }
+  //   };
 
   function formatTextWithLinks(text) {
     const words = text?.split(" ");
@@ -130,21 +129,8 @@ export default function TweetCard({ tweets }) {
       <div className="tweetcard_container ">
         <div className="tweetcard_content">
           <div className="tweetcard_user_profile">
-            <Link
-              to={`/p/${
-                allTweets.find((e) => e.authorId === tweets.authorId)
-                  ?.authorUsername
-              }`}
-            >
-              <img
-                src={
-                  backendURL +
-                  "/" +
-                  allTweets.find((e) => e.authorId === tweets.authorId)
-                    ?.authorProfile
-                }
-                alt=""
-              />
+            <Link to={`/p/${tweets?.authorUsername}`}>
+              <img src={backendURL + "/" + tweets?.authorProfile} alt="" />
             </Link>
           </div>
           <div className="tweetcard_other_content">
@@ -164,12 +150,7 @@ export default function TweetCard({ tweets }) {
                         gap: "2px",
                       }}
                     >
-                      <span>
-                        {
-                          allTweets.find((e) => e.authorId === tweets.authorId)
-                            ?.authorName
-                        }
-                      </span>
+                      <span>{tweets?.authorName}</span>
                       <p
                         title="Verified"
                         style={{ width: "15px", marginBottom: "-3px" }}
@@ -181,13 +162,7 @@ export default function TweetCard({ tweets }) {
                 </Link>
                 <div>
                   <div className="username">
-                    <span>
-                      @
-                      {
-                        allTweets.find((e) => e.authorId === tweets.authorId)
-                          ?.authorUsername
-                      }
-                    </span>
+                    <span>@{tweets?.authorUsername}</span>
                     <span>• {convertDate(tweets?.createdAt)?.slice(10)} </span>
                   </div>
                 </div>
@@ -204,15 +179,7 @@ export default function TweetCard({ tweets }) {
               </div>
             </div>
             <div className="tweet_content">
-              <div
-                onClick={() =>
-                  navigate(
-                    `/niraj/tweet/${
-                      allTweets.find((e) => e.authorId === tweets.authorId)?._id
-                    }`
-                  )
-                }
-              >
+              <div onClick={() => navigate(`/niraj/tweet/${tweets?._id}`)}>
                 <span className="tweet_text">
                   {formatTextWithLinks(tweets?.tweetContent)}
                 </span>

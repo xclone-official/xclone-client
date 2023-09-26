@@ -106,6 +106,27 @@ const UserModel = mongoose.Schema(
         },
       },
     ],
+    likedTweet: [
+      {
+        authorName: {
+          type: String,
+          required: true,
+        },
+        authorId: {
+          type: String,
+          required: true,
+        },
+        authorUsername: {
+          type: String,
+          required: true,
+        },
+        authorProfile: {
+          type: String,
+          required: true,
+        },
+        tweet: [],
+      },
+    ],
   },
   { timestamps: true }
 );

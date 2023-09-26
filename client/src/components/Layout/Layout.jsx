@@ -18,6 +18,7 @@ import axios from "axios";
 import ErrorPage from "../ErrorPage/ErrorPage";
 import Editprofile from "../Editprofile/Editprofile";
 import { TweetContext } from "../../useContext/TweetContext/TweetContext";
+import LikedTweet from "../LikedTweet/LikedTweet";
 export default function Layout({
   tweetFields,
   profile,
@@ -182,7 +183,7 @@ export default function Layout({
           allTweets={allTweets}
           likes={likes}
         >
-          <p>likes</p>
+          <LikedTweet profileData={profileData} />
         </ProfileLayout>
       )}
       {edit_profile && <Editprofile />}
