@@ -5,6 +5,7 @@ import ProfileSkeleton from "./ProfileSkeleton";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import axios from "axios";
 import { TweetContext } from "../../useContext/TweetContext/TweetContext";
+// import { NotificationContext } from "../../useContext/NotificationsContext/NotificationsContext";
 // import axios from "axios";
 export default function ProfileLayout({
   with_replies,
@@ -14,6 +15,7 @@ export default function ProfileLayout({
   children,
   isloading,
   userDataa,
+  socket,
 }) {
   const [
     showLogin,
@@ -35,6 +37,7 @@ export default function ProfileLayout({
     useContext(TweetContext);
   const backendURL = process.env.REACT_APP_BACKEND_URL;
   const [showMedia, setShowMedia] = useState(false);
+  // const [allNotification, setAllNotification] = useContext(NotificationContext);
   const [showProfile, setShowProfile] = useState(false);
 
   const [followBtn, setFollowBtn] = useState("Loading...");
@@ -48,9 +51,7 @@ export default function ProfileLayout({
   const setShowProfilePic = () => {
     setShowProfile(!showProfile);
   };
-
   const UnfollowTheUser = () => {
-    console.log("unfollowed");
     try {
       const tofollowId = specificUserProfile?._id; // ID of the user to unfollow
       const followBy = userData?._id; // Your ID
@@ -64,35 +65,27 @@ export default function ProfileLayout({
         })
         .then((data) => {
           if (data.data.status === 1) {
-            // setSpecificUserProfile((profile) => {
-            //   const newProfile = { ...profile };
-            //   // Remove the unfollowed user from the followers array
-            //   newProfile.followers = newProfile.followers.filter(
-            //     (follower) => follower.id !== followBy
-            //   );
-            //   return newProfile;
-            // });
-
-            // setUserData((profile) => {
-            //   const newProfile = { ...profile };
-            //   // Remove the unfollowed user from the following array
-            //   newProfile.following = newProfile.following.filter(
-            //     (followedUser) => followedUser.id !== tofollowId
-            //   );
-            //   return newProfile;
-            // });
-
             setUserData(data.data.userUnfollowing);
             setSpecificUserProfile(data.data.userToUnfollow);
-
             setFollowBtn("Follow");
           }
         });
     } catch (error) {}
   };
-
-  const followTheUser = () => {
-    console.log("followed");
+  // useEffect(() => {
+  //   socket?.on("followed", (data) => {
+  //     console.log("data", data);
+  //     if (
+  //       allNotification.some(
+  //         (username) => username?.receiverUsername === data.receiverUsername
+  //       )
+  //     ) {
+  //       setAllNotification((prev) => [...prev, data]);
+  //     }
+  //   });
+  //   console.log(allNotification);
+  // }, [socket]);
+  const followTheUser = (type) => {
     try {
       const tofollowId = specificUserProfile?._id; // other _id
       const followBy = userData?._id; // my id
@@ -105,28 +98,17 @@ export default function ProfileLayout({
           id: followBy,
         })
         .then((data) => {
-          console.log(data.data.status);
           if (data.data.status === 1) {
-            console.log("first");
             setUserData(data.data.myProfile);
             setSpecificUserProfile(data.data.otherUserData);
-            // setSpecificUserProfile((profile) => {
-            //   const newProfile = { ...profile }; // Create a shallow copy of the profile
-            //   newProfile.followers = [...profile.followers, data.data.data]; // Add mydata to followers array
-            //   return newProfile; // Return the updated profile
-            // });
-
-            // setUserData((profile) => {
-            //   const newProfile = { ...profile }; // Create a shallow copy of the profile
-            //   newProfile.following = [...profile.following, data.data.data2]; // Add mydata to followers array
-            //   return newProfile; // Return the updated profile
-            // });
-
             setFollowBtn("Unfollow");
+            socket?.emit("sendFollowNotification", {
+              senderUsername: userData?.username,
+              receiverUsername: userDataa?.username,
+              type: type,
+            });
+            console.log("FOllowed");
           }
-
-          // console.log("following", userData?.following);
-          // console.log("follower", specificUserProfile?.followers);
         });
     } catch (error) {}
   };
@@ -134,9 +116,6 @@ export default function ProfileLayout({
     userData?.following?.some((user) => user.id === specificUserProfile?._id)
       ? setFollowBtn("Unfollow")
       : setFollowBtn("Follow");
-    console.log(
-      userData?.following?.some((user) => user.id === specificUserProfile?._id)
-    );
   };
 
   useEffect(() => {
@@ -147,10 +126,8 @@ export default function ProfileLayout({
     const isFollowing = userData?.following?.some(
       (user) => user.id === specificUserProfile?._id
     );
-    console.log(userData?.following);
-    console.log(specificUserProfile.followers);
     if (!isFollowing) {
-      followTheUser();
+      followTheUser("follow");
     } else {
       UnfollowTheUser();
     }

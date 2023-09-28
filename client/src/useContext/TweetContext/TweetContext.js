@@ -1,12 +1,14 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthContext/AuthContext";
 import axios from "axios";
+import { SpecificTweets } from "../SpecificTweet/SpecificTweet";
 export const TweetContext = createContext();
 
 const TweetContextProvider = ({ children }) => {
   const [myTweets, setMyTweets] = useState([]);
   const [specificUserProfile, setSpecificUserProfile] = useState();
-  const [specifictweet, setSpecifictweet] = useState();
+  const [specifictweet, setSpecifictweet] = useState([]);
+
   const [
     showLogin,
     setShowLogin,
@@ -22,7 +24,11 @@ const TweetContextProvider = ({ children }) => {
     setInfoLoader,
     followingTweet,
     setFollowingTweet,
+    getAllTweets,
+    getAllTweetsFromFollowingUsers,
   ] = useContext(AuthContext);
+
+  const [specifictweetPage, setSpecifictweetPage] = useContext(SpecificTweets);
 
   useEffect(() => {
     setInfoLoader(true);
@@ -56,8 +62,11 @@ const TweetContextProvider = ({ children }) => {
         .put(api)
         .then((data) => {
           if (data.data.status === 1) {
-            setSpecifictweet(data.data.tweet);
+            // setSpecifictweet(data.data.tweet);
             // setLikeBtn(<Likebtn />);
+            setSpecifictweetPage(data.data.tweet);
+            getAllTweets();
+            getAllTweetsFromFollowingUsers();
             console.log("liked inner");
           }
         })
@@ -80,8 +89,11 @@ const TweetContextProvider = ({ children }) => {
         .put(api)
         .then((data) => {
           if (data.data.status === 1) {
-            setSpecifictweet(data.data.tweet);
+            // setSpecifictweet(data.data.tweet);
             // setLikeBtn(<UnlikeBtn />);
+            setSpecifictweetPage(data.data.tweet);
+            getAllTweets();
+            getAllTweetsFromFollowingUsers();
             console.log("unliked inner");
           }
         })

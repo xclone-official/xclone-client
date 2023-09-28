@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const uuid = require("uuid");
 const TweetModel = mongoose.Schema(
   {
     tweetContent: {
@@ -47,6 +48,10 @@ const TweetModel = mongoose.Schema(
     ],
     comments: [
       {
+        commentId: {
+          type: String,
+          default: uuid.v4,
+        },
         commentUsername: {
           type: String,
           required: true,
@@ -58,6 +63,14 @@ const TweetModel = mongoose.Schema(
         commentUserId: {
           type: String,
           required: true,
+        },
+        commentName: {
+          type: String,
+          required: true,
+        },
+        commenttime: {
+          type: Date,
+          default: Date.now(),
         },
         commentUserProfile: {
           type: String,

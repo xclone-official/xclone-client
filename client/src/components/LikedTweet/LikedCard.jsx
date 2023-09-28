@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import { TweetContext } from "../../useContext/TweetContext/TweetContext";
 import { convertDate } from "../CovertDateTime/ConvertDateTime";
+import { LikedContext } from "../../useContext/LikedContext/LikedContext";
 const VerifiedAcccount = () => {
   return (
     <svg
@@ -65,6 +66,7 @@ export default function TweetCard({ tweets }) {
     likeTweet,
     unlikeTweet,
   ] = useContext(TweetContext);
+  const [likedTweet, setLikedTweet] = useContext(LikedContext);
   const [likeBtn, setLikeBtn] = useState(<UnlikeBtn />);
   // const [tweet_data, setTweet_data] = useState(tweets);
   const navigate = useNavigate();
@@ -84,20 +86,20 @@ export default function TweetCard({ tweets }) {
     console.log(tweets);
   }, []);
 
-  //   const toggleFunction = () => {
-  //     const checkIsAlreadyLiked = tweets?.likes?.some(
-  //       (e) => e.id === userData?._id
-  //     );
-  //     if (!checkIsAlreadyLiked) {
-  //       console.log("called like");
-  //       likeTweet(tweets?._id, userData?._id);
-  //       setLikeBtn(<Likebtn />);
-  //     } else {
-  //       console.log("called unlike");
-  //       unlikeTweet(tweets?._id, userData?._id);
-  //       setLikeBtn(<UnlikeBtn />);
-  //     }
-  //   };
+  const toggleFunction = () => {
+    // const checkIsAlreadyLiked = tweets?.likes?.some(
+    //   (e) => e.id === userData?._id
+    // );
+    // if (!checkIsAlreadyLiked) {
+    //   console.log("called like");
+    //   likeTweet(tweets?._id, userData?._id);
+    //   setLikeBtn(<Likebtn />);
+    // } else {
+    //   console.log("called unlike");
+    //   unlikeTweet(tweets?._id, userData?._id);
+    //   setLikeBtn(<UnlikeBtn />);
+    // }
+  };
 
   function formatTextWithLinks(text) {
     const words = text?.split(" ");
@@ -244,11 +246,7 @@ export default function TweetCard({ tweets }) {
                   ?.authorId ? (
                   // Render this block if userData._id is equal to the authorId of the tweet
                   <div
-                    onClick={() =>
-                      navigate(
-                        `/${tweets?.authorUsername}/tweet/${tweets?._id}`
-                      )
-                    }
+                    onClick={toggleFunction}
                     className="like_tweet svg_width"
                   >
                     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -273,11 +271,7 @@ export default function TweetCard({ tweets }) {
                 ) : (
                   // Render this block if userData._id is not equal to the authorId of the tweet
                   <div
-                    onClick={() =>
-                      navigate(
-                        `/${tweets?.authorUsername}/tweet/${tweets?._id}`
-                      )
-                    }
+                    onClick={() => toggleFunction}
                     className="like_tweet svg_width"
                     // onClick={toggleFunction}
                   >

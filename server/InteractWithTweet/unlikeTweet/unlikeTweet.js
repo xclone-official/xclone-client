@@ -58,8 +58,9 @@ Router.put("/:tweetId/:userId", async (req, res) => {
       await isTweetExist.save();
 
       const toRemoveLikedTweet = isUserExist.likedTweet.filter(
-        (e) => e.authorId !== userId
+        (e) => e.tweetId !== tweetId
       );
+      console.log("userId", userId);
       isUserExist.likedTweet = toRemoveLikedTweet;
       await isUserExist.save();
 

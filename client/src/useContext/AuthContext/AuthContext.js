@@ -1,5 +1,6 @@
 import axios from "axios";
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { NotificationContext } from "../NotificationsContext/NotificationsContext";
 
 export const AuthContext = createContext();
 
@@ -12,11 +13,12 @@ const AuthContextProvider = (props) => {
   const [infoLoader, setInfoLoader] = useState(true);
   const [followingTweet, setFollowingTweet] = useState([]);
   const backendURL = process.env.REACT_APP_BACKEND_URL;
-
+  const [allNotification, setAllNotification] = useContext(NotificationContext);
   const fetchUser = async (id) => {
     try {
       await axios.get(`${backendURL}/user/auth/getUser/${id}`).then((data) => {
         setUserData(data.data.data);
+        setAllNotification(data.data.data.allNotifications);
         setLoading(false); // Set loading to false when data is fetched
       });
     } catch (error) {
@@ -60,9 +62,13 @@ const AuthContextProvider = (props) => {
           `${backendURL}/tweetaction/getTweetfromfollowinguser/${userData?._id}`
         )
         .then((data) => {
-          const tweets = data.data.tweets.reverse(); // Reverse the order of tweets
+          const tweets = data.data.tweets; // Reverse the order of tweets
 
-          setFollowingTweet(tweets);
+          setFollowingTweet(
+            tweets.sort(function (a, b) {
+              return new Date(b.createdAt) - new Date(a.createdAt);
+            })
+          );
           setTimeout(() => {
             setInfoLoader(false);
           }, 2000);
@@ -80,7 +86,7 @@ const AuthContextProvider = (props) => {
   };
   useEffect(() => {
     getAllTweets();
-  }, [allTweets?.length]);
+  }, [allTweets?.length, userData?._id, userData?.following?.length]);
   useEffect(() => {
     if (sessionStorage.getItem("twitterdata")) {
       const id = sessionStorage.getItem("twitterdata");
@@ -113,6 +119,8 @@ const AuthContextProvider = (props) => {
         setInfoLoader,
         followingTweet,
         setFollowingTweet,
+        getAllTweets,
+        getAllTweetsFromFollowingUsers,
       ]}
     >
       {props.children}

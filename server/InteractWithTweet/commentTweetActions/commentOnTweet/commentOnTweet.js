@@ -49,17 +49,19 @@ Router.post("/:tweetId", async (req, res) => {
       commentText: commentText,
       commentUserId: commentUserId,
       commentUserProfile: commentUserProfile,
+      commentName: isUserExist.fullname,
+      commenttime: Date.now(),
     };
 
     // const tweetCommentID = isTweetExist.comments.push(tweetData);
     isTweetExist.comments.push(tweetData);
     await isTweetExist.save();
-    // console.log(tweetCommentID);
-    // isTweetExist.comments[tweetCommentID - 1].commentSeen.push(commentUserId);
-    // await isTweetExist.save();
+    const allTweets = await TweetModel.find();
     res.status(200).send({
       status: 1,
       msg: "Comment saved success",
+      isTweetExist: isTweetExist,
+      allTweets: allTweets,
     });
   } catch (error) {
     console.log(error);

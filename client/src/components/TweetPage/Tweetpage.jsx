@@ -3,7 +3,7 @@ import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import { useParams } from "react-router-dom";
 import InfoLoader from "../Loader/InfoLoader";
 import TweetPageCard from "./TweetPageCard";
-export default function Tweetpage() {
+export default function Tweetpage({ socket }) {
   const [loader, setLoader] = useState(true);
   const [filterdata, setFilterdata] = useState([]);
   const [
@@ -20,13 +20,13 @@ export default function Tweetpage() {
     infoLoader,
     setInfoLoader,
   ] = useContext(AuthContext);
+  console.log(socket);
   const { tweetId } = useParams();
   const getTweet = async () => {
     try {
       // setLoader(true);
       const getTweetWithId = allTweets.filter((e) => e._id === tweetId);
       if (getTweetWithId?.length > 0) {
-        console.log(getTweetWithId);
         setFilterdata(getTweetWithId);
         setLoader(false);
       }

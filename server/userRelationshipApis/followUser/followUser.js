@@ -57,6 +57,16 @@ Router.put("/:userId", async (req, res) => {
 
       myProfile.following.push(otherUserNecessaryData);
       await myProfile.save();
+
+      // Emit a follow event to notify the user being followed
+      // const io = require("socket.io")(/* your server instance here */); // Import socket.io and provide your server instance
+      // const socket = io.sockets.sockets.get(users.get(userId)); // Get the socket of the user being followed
+      // // Get the socket of the user being followed
+      // if (socket) {
+      //   console.log("socket_inner", socket);
+      //   socket.emit("new_follow", "You have a new follower.");
+      // }
+      // console.log("socket_outer", socket);
       res.status(200).send({
         status: 1,
         msg: "Account followed successfully.",
@@ -75,6 +85,7 @@ Router.put("/:userId", async (req, res) => {
       status: 3,
       msg: "Internal server error.",
     });
+    console.log(error);
   }
 });
 

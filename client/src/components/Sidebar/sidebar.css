@@ -4,7 +4,8 @@
 }
 
 #new_notifications {
-    position: absolute;
+    z-index: 100;
+    margin-right: -30px;
     background-color: var(--theme-color);
     height: 15px;
     width: 15px;

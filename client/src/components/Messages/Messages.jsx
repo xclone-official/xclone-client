@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 export default function Lists() {
   const navigate = useNavigate();
   React.useEffect(() => {
-    document.title = "X / Notifications";
+    document.title = "X / Messages";
   }, []);
   const goBackToPreviousPage = () => {
     navigate(-1);

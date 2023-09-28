@@ -59,8 +59,13 @@ Router.post("/", upload.array("tweetmedia", 2), async (req, res) => {
             photos: images,
             video: video,
           });
-
+          // newTweet.tweetSeen.some(authorId) && newTweet.tweetSeen = authorId;
           await newTweet.save();
+
+          // if (!newTweet.tweetSeen.includes(authorId)) {
+          //   newTweet.tweetSeen.push(authorId); // Add the authorId to the tweetSeen array
+          //   await newTweet.save(); // Save the updated tweet
+          // }
 
           // const findAllTweet = await TweetModel.find();
           res.status(200).send({

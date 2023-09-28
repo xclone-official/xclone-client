@@ -34,6 +34,9 @@ const UserModel = mongoose.Schema(
       type: String,
       default: "",
     },
+    bookmark: [],
+    retweet: [],
+    list: [],
     website: {
       type: String,
       default: "",
@@ -124,7 +127,39 @@ const UserModel = mongoose.Schema(
           type: String,
           required: true,
         },
+        tweetId: {
+          type: String,
+          required: true,
+        },
         tweet: [],
+      },
+    ],
+    allNotifications: [
+      {
+        authorName: {
+          type: String,
+          required: true,
+        },
+        authorId: {
+          type: String,
+          required: true,
+        },
+        authorUsername: {
+          type: String,
+          required: true,
+        },
+        authorProfile: {
+          type: String,
+          required: true,
+        },
+        type: {
+          type: String,
+          required: true,
+        },
+        isSeen: {
+          type: Boolean,
+          default: false,
+        },
       },
     ],
   },

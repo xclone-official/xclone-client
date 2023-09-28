@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "./sidebar.css";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import { NavLink } from "react-router-dom";
@@ -15,10 +15,13 @@ import {
   AiOutlineNotification,
   AiOutlineSearch,
 } from "react-icons/ai";
+import { NotificationContext } from "../../useContext/NotificationsContext/NotificationsContext";
 
-export default function Sidebar() {
+export default function Sidebar({ socket }) {
   const location = useLocation();
   const [, , , , userData, , ,] = useContext(AuthContext);
+  const [allNotification, setAllNotification] = useContext(NotificationContext);
+
   const Links = [
     {
       name: "Home",
@@ -37,7 +40,19 @@ export default function Sidebar() {
       logo: <AiOutlineNotification />,
       activeLogo: <AiFillNotification />,
       href: "/notifications",
-      msg: <p id="new_notifications">1</p>,
+      msg: (
+        <>
+          {allNotification.filter((notification) => !notification.isSeen)
+            ?.length > 0 && (
+            <p id="new_notifications">
+              {
+                allNotification.filter((notification) => !notification.isSeen)
+                  .length
+              }
+            </p>
+          )}
+        </>
+      ),
     },
     {
       name: "Messages",
@@ -143,6 +158,14 @@ export default function Sidebar() {
       ),
     },
   ];
+  const getInputAndFocus = () => {
+    const postFieldInput = document?.querySelector("#post-tweet");
+    if (postFieldInput) {
+      // You can adjust the number of columns as needed.
+      postFieldInput?.focus();
+    }
+  };
+  const backendURL = process.env.REACT_APP_BACKEND_URL;
   return (
     <div className="sidebar_content">
       <div className="sidebar_logo">
@@ -183,18 +206,22 @@ export default function Sidebar() {
               </div>
             );
           })}
-          <button className="hide_name_1000px" id="post_btn">
+          <button
+            onClick={getInputAndFocus}
+            className="hide_name_1000px"
+            id="post_btn"
+          >
             Post
           </button>
         </div>
         <div className="sidebar_logout hide_in_phone">
           <div style={{ display: "flex", gap: "10px" }}>
             <div className="pfp_logout_img">
-              <img src="/pfp.png" alt="" />
+              <img src={`${backendURL}/${userData?.profilepicture}`} alt="" />
             </div>
             <div className="username_name hide_name_1000px">
-              <p>Niraj Chaurasiya</p>
-              <span>@loveforrobotics</span>
+              <p>{userData?.fullname}</p>
+              <span>@{userData?.username}</span>
             </div>
           </div>
           <div className="more_icon hide_name_1000px hide_in_phone">

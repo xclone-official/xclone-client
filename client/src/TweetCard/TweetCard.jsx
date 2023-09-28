@@ -3,7 +3,8 @@ import "./TweetCard.css";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../useContext/AuthContext/AuthContext";
 import { TweetContext } from "../useContext/TweetContext/TweetContext";
-import { convertDate } from "../components/CovertDateTime/ConvertDateTime";
+import { customTimeFormat } from "../components/customTime/customTime";
+import { NotificationContext } from "../useContext/NotificationsContext/NotificationsContext";
 const VerifiedAcccount = () => {
   return (
     <svg
@@ -39,7 +40,7 @@ const UnlikeBtn = () => {
     </svg>
   );
 };
-export default function TweetCard({ tweets }) {
+export default function TweetCard({ tweets, socket }) {
   const [
     showLogin,
     setShowLogin,
@@ -67,6 +68,7 @@ export default function TweetCard({ tweets }) {
     unlikeTweet,
   ] = useContext(TweetContext);
   const [likeBtn, setLikeBtn] = useState(<UnlikeBtn />);
+  const [allNotification, setAllNotification] = useContext(NotificationContext);
   // const [tweet_data, setTweet_data] = useState(tweets);
   const navigate = useNavigate();
   const backendURL = process.env.REACT_APP_BACKEND_URL;
@@ -82,7 +84,6 @@ export default function TweetCard({ tweets }) {
 
   useEffect(() => {
     getFollowedSign();
-    console.log(tweets);
   }, []);
 
   const toggleFunction = () => {
@@ -93,6 +94,13 @@ export default function TweetCard({ tweets }) {
       console.log("called like");
       likeTweet(tweets?._id, userData?._id);
       setLikeBtn(<Likebtn />);
+      console.log("socket", socket);
+      socket?.emit("sendLikeNotification", {
+        senderUsername: userData?.username,
+        receiverUsername: tweets?.authorUsername,
+        type: "liketweet",
+      });
+      console.log("liked tweet");
     } else {
       console.log("called unlike");
       unlikeTweet(tweets?._id, userData?._id);
@@ -130,32 +138,14 @@ export default function TweetCard({ tweets }) {
       <div className="tweetcard_container ">
         <div className="tweetcard_content">
           <div className="tweetcard_user_profile">
-            <Link
-              to={`/p/${
-                allTweets.find((e) => e.authorId === tweets.authorId)
-                  ?.authorUsername
-              }`}
-            >
-              <img
-                src={
-                  backendURL +
-                  "/" +
-                  allTweets.find((e) => e.authorId === tweets.authorId)
-                    ?.authorProfile
-                }
-                alt=""
-              />
+            <Link to={`/p/${tweets?.authorUsername}`}>
+              <img src={backendURL + "/" + tweets?.authorProfile} alt="" />
             </Link>
           </div>
           <div className="tweetcard_other_content">
             <div className="user_details_options">
               <div className="tweetcard_userdetails">
-                <Link
-                  to={`/p/${
-                    allTweets.find((e) => e.authorId === tweets.authorId)
-                      ?.authorUsername
-                  }`}
-                >
+                <Link to={`/p/${tweets?.authorUsername}`}>
                   <div className="user_name">
                     <div
                       style={{
@@ -164,12 +154,7 @@ export default function TweetCard({ tweets }) {
                         gap: "2px",
                       }}
                     >
-                      <span>
-                        {
-                          allTweets.find((e) => e.authorId === tweets.authorId)
-                            ?.authorName
-                        }
-                      </span>
+                      <span>{tweets?.authorName}</span>
                       <p
                         title="Verified"
                         style={{ width: "15px", marginBottom: "-3px" }}
@@ -181,14 +166,8 @@ export default function TweetCard({ tweets }) {
                 </Link>
                 <div>
                   <div className="username">
-                    <span>
-                      @
-                      {
-                        allTweets.find((e) => e.authorId === tweets.authorId)
-                          ?.authorUsername
-                      }
-                    </span>
-                    <span>• {convertDate(tweets?.createdAt)?.slice(10)} </span>
+                    <span>@{tweets?.authorUsername}</span>
+                    <span>• {customTimeFormat(tweets?.createdAt)} </span>
                   </div>
                 </div>
               </div>
@@ -204,15 +183,7 @@ export default function TweetCard({ tweets }) {
               </div>
             </div>
             <div className="tweet_content">
-              <div
-                onClick={() =>
-                  navigate(
-                    `/niraj/tweet/${
-                      allTweets.find((e) => e.authorId === tweets.authorId)?._id
-                    }`
-                  )
-                }
-              >
+              <div onClick={() => navigate(`/niraj/tweet/${tweets?._id}`)}>
                 <span className="tweet_text">
                   {formatTextWithLinks(tweets?.tweetContent)}
                 </span>
@@ -247,21 +218,15 @@ export default function TweetCard({ tweets }) {
                 )}
               </div>
               {/* Tweet Interactions */}
-              <div className="tweet_interactions_options">
+              <div className="tweet_interactions_options ">
                 <div className="tweet_comments svg_width">
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <g>
                       <path d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z"></path>
                     </g>
                   </svg>
-                  {allTweets.find((e) => e.authorId === tweets.authorId)
-                    ?.comments?.length > 0 && (
-                    <p>
-                      {
-                        allTweets.find((e) => e.authorId === tweets.authorId)
-                          ?.comments?.length
-                      }
-                    </p>
+                  {tweets?.comments?.length > 0 && (
+                    <p>{tweets?.comments?.length}</p>
                   )}
                 </div>
                 <div className="retweet_tweet svg_width">
@@ -272,18 +237,8 @@ export default function TweetCard({ tweets }) {
                   </svg>
                 </div>
 
-                {userData?._id ===
-                allTweets.find((e) => e.authorId === tweets.authorId)
-                  ?.authorId ? (
-                  // Render this block if userData._id is equal to the authorId of the tweet
-                  <div
-                    onClick={() =>
-                      navigate(
-                        `/${tweets?.authorUsername}/tweet/${tweets?._id}`
-                      )
-                    }
-                    className="like_tweet svg_width"
-                  >
+                {userData?._id === tweets?.authorId ? (
+                  <div className="like_tweet svg_width">
                     <svg viewBox="0 0 24 24" aria-hidden="true">
                       <g>
                         <path
@@ -292,27 +247,14 @@ export default function TweetCard({ tweets }) {
                         ></path>
                       </g>
                     </svg>
-                    {allTweets.find((e) => e.authorId === tweets.authorId)
-                      ?.likes?.length > 0 && (
-                      <p>
-                        {
-                          allTweets.find(
-                            (e) => e?.authorId === tweets?.authorId
-                          )?.likes?.length
-                        }
-                      </p>
+                    {tweets?.likes?.length > 0 && (
+                      <p>{tweets?.likes?.length}</p>
                     )}
                   </div>
                 ) : (
-                  // Render this block if userData._id is not equal to the authorId of the tweet
                   <div
-                    onClick={() =>
-                      navigate(
-                        `/${tweets?.authorUsername}/tweet/${tweets?._id}`
-                      )
-                    }
                     className="like_tweet svg_width"
-                    // onClick={toggleFunction}
+                    onClick={toggleFunction}
                   >
                     {likeBtn}
                     {tweets?.likes?.length > 0 && (
@@ -324,7 +266,7 @@ export default function TweetCard({ tweets }) {
                 <div className=" svg_width">
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <g>
-                      <path d="M8.75 21V3h2v18h-2zM18 21V8.5h2V21h-2zM4 21l.004-10h2L6 21H4zm9.248 0v-7h2v7h-2z"></path>
+                      <path d="M4 4.5C4 3.12 5.119 2 6.5 2h11C18.881 2 20 3.12 20 4.5v18.44l-8-5.71-8 5.71V4.5zM6.5 4c-.276 0-.5.22-.5.5v14.56l6-4.29 6 4.29V4.5c0-.28-.224-.5-.5-.5h-11z"></path>
                     </g>
                   </svg>
                 </div>

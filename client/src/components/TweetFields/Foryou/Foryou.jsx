@@ -5,7 +5,12 @@ import { AuthContext } from "../../../useContext/AuthContext/AuthContext";
 import InfoLoader from "../../Loader/InfoLoader";
 import InfiniteScroll from "react-infinite-scroll-component";
 import PostField from "../../PostField/PostField";
-export default function Foryou({ scrollbarhide, myAllTweets, profileId }) {
+export default function Foryou({
+  scrollbarhide,
+  myAllTweets,
+  profileId,
+  socket,
+}) {
   const [
     showLogin,
     setShowLogin,
@@ -21,28 +26,28 @@ export default function Foryou({ scrollbarhide, myAllTweets, profileId }) {
     setInfoLoader,
     followingTweet,
     setFollowingTweet,
+    getAllTweets,
   ] = useContext(AuthContext);
-  const [initialPageCount, setInitialPageCount] = useState(5);
-  const [showInitialArrayOfData, setShowInitialArrayOfData] = useState(
-    !myAllTweets
-      ? allTweets.slice(0, initialPageCount)
-      : allTweets
-          .filter((e) => e.authorId === profileId?._id)
-          .slice(0, initialPageCount)
-  );
+  const [initialPageCount, setInitialPageCount] = useState(15);
+  const [showInitialArrayOfData, setShowInitialArrayOfData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // Loading state
   useEffect(() => {
+    getAllTweets()
+      .then(() => {
+        setIsLoading(false); // Set loading to false after data is fetched
+      })
+      .catch((error) => {
+        console.error("Error fetching tweets:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    // Update showInitialArrayOfData when allTweets changes
     setShowInitialArrayOfData(
       !myAllTweets
         ? allTweets.slice(0, initialPageCount)
         : allTweets
-            .filter((e) => e.authorId == profileId?._id)
-            .slice(0, initialPageCount)
-    );
-    console.log(
-      !myAllTweets
-        ? allTweets.slice(0, initialPageCount)
-        : allTweets
-            .filter((e) => e.authorId == profileId?._id)
+            .filter((e) => e.authorId === profileId?._id)
             .slice(0, initialPageCount)
     );
   }, [allTweets.length]);
@@ -71,7 +76,9 @@ export default function Foryou({ scrollbarhide, myAllTweets, profileId }) {
           <PostField />
         </div>
       )}
-      {showInitialArrayOfData.length > 0 ? (
+      {isLoading ? ( // Show loading indicator while fetching data
+        <InfoLoader />
+      ) : showInitialArrayOfData.length > 0 ? (
         <InfiniteScroll
           className={scrollbarhide && "scrollbar_hide"}
           dataLength={showInitialArrayOfData.length}
@@ -105,7 +112,7 @@ export default function Foryou({ scrollbarhide, myAllTweets, profileId }) {
           )}
           <div>
             {showInitialArrayOfData.map((tweet, index) => (
-              <TweetCard tweets={tweet} key={index} />
+              <TweetCard socket={socket} tweets={tweet} key={index} />
             ))}
           </div>
         </InfiniteScroll>
