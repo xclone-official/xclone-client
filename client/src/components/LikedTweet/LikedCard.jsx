@@ -73,7 +73,7 @@ export default function TweetCard({ tweets }) {
   const backendURL = process.env.REACT_APP_BACKEND_URL;
 
   const getFollowedSign = () => {
-    const IsAlreadyLiked = tweets?.likes?.some((e) => e.id === userData?._id);
+    const IsAlreadyLiked = tweets?.likes?.some((e) => e?.id === userData?._id);
     if (IsAlreadyLiked) {
       setLikeBtn(<Likebtn />);
     } else {
@@ -83,19 +83,19 @@ export default function TweetCard({ tweets }) {
 
   useEffect(() => {
     getFollowedSign();
-    console.log(tweets);
+    console?.log(tweets);
   }, []);
 
   const toggleFunction = () => {
     // const checkIsAlreadyLiked = tweets?.likes?.some(
-    //   (e) => e.id === userData?._id
+    //   (e) => e?.id === userData?._id
     // );
     // if (!checkIsAlreadyLiked) {
-    //   console.log("called like");
+    //   console?.log("called like");
     //   likeTweet(tweets?._id, userData?._id);
     //   setLikeBtn(<Likebtn />);
     // } else {
-    //   console.log("called unlike");
+    //   console?.log("called unlike");
     //   unlikeTweet(tweets?._id, userData?._id);
     //   setLikeBtn(<UnlikeBtn />);
     // }
@@ -140,7 +140,7 @@ export default function TweetCard({ tweets }) {
               <div className="tweetcard_userdetails">
                 <Link
                   to={`/p/${
-                    allTweets.find((e) => e.authorId === tweets.authorId)
+                    allTweets?.find((e) => e?.authorId === tweets?.authorId)
                       ?.authorUsername
                   }`}
                 >
@@ -223,11 +223,11 @@ export default function TweetCard({ tweets }) {
                       <path d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z"></path>
                     </g>
                   </svg>
-                  {allTweets.find((e) => e.authorId === tweets.authorId)
+                  {allTweets?.find((e) => e?.authorId === tweets?.authorId)
                     ?.comments?.length > 0 && (
                     <p>
                       {
-                        allTweets.find((e) => e.authorId === tweets.authorId)
+                        allTweets?.find((e) => e?.authorId === tweets?.authorId)
                           ?.comments?.length
                       }
                     </p>
@@ -242,7 +242,7 @@ export default function TweetCard({ tweets }) {
                 </div>
 
                 {userData?._id ===
-                allTweets.find((e) => e.authorId === tweets.authorId)
+                allTweets?.find((e) => e?.authorId === tweets?.authorId)
                   ?.authorId ? (
                   // Render this block if userData._id is equal to the authorId of the tweet
                   <div
@@ -257,11 +257,11 @@ export default function TweetCard({ tweets }) {
                         ></path>
                       </g>
                     </svg>
-                    {allTweets.find((e) => e.authorId === tweets.authorId)
+                    {allTweets?.find((e) => e?.authorId === tweets?.authorId)
                       ?.likes?.length > 0 && (
                       <p>
                         {
-                          allTweets.find(
+                          allTweets?.find(
                             (e) => e?.authorId === tweets?.authorId
                           )?.likes?.length
                         }

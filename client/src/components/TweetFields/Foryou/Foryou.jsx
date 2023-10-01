@@ -73,7 +73,7 @@ export default function Foryou({
     <>
       {allTweets.length === 0 && !scrollbarhide && (
         <div className="hide_in_phone">
-          <PostField />
+          <PostField socket={socket} />
         </div>
       )}
       {isLoading ? ( // Show loading indicator while fetching data

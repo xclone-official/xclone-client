@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-export default function SearchInput() {
+export default function SearchInput({ message }) {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   return (
@@ -16,7 +16,7 @@ export default function SearchInput() {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         type="text"
-        placeholder="Search X"
+        placeholder={!message ? "Search X" : "Search Message"}
       />
     </form>
   );

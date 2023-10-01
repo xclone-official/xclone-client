@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import Rightbar from "../Rightbar/Rightbar";
 import "./home.css";
+import Messages from "../Messages/Messages";
 import { useLocation, useNavigate } from "react-router-dom";
 import { NotificationContext } from "../../useContext/NotificationsContext/NotificationsContext";
 export default function Home({ children, socket }) {
@@ -28,7 +29,7 @@ export default function Home({ children, socket }) {
         </div>
         <div className="rightbar">
           <div className="column">
-            <Rightbar />
+            {location.pathname === "/messages" ? <Messages /> : <Rightbar />}
           </div>
         </div>
       </div>

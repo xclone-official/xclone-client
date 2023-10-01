@@ -20,6 +20,7 @@ import Editprofile from "../Editprofile/Editprofile";
 import Replies from "../Replies/Replies";
 import { TweetContext } from "../../useContext/TweetContext/TweetContext";
 import LikedTweet from "../LikedTweet/LikedTweet";
+import SingleMessagesBox from "../Messages/SingleMessagesBox";
 export default function Layout({
   tweetFields,
   profile,
@@ -121,7 +122,7 @@ export default function Layout({
       )}
       {explore && <Explore socket={socket} />}
       {notifications && <Notifications socket={socket} />}
-      {messages && <Messages socket={socket} />}
+      {messages && <SingleMessagesBox socket={socket} />}
       {lists && <Lists socket={socket} />}
       {bookmarks && <Bookmarks socket={socket} />}
       {communities && <Communities socket={socket} />}

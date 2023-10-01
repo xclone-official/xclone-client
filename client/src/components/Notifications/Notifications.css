@@ -7,6 +7,12 @@
     height: 95vh;
     padding: 0 0 200px 0;
 }
+
+.reply_notification{
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 100% !important;
+}
 .single_notification_is_not_seen{
     background-color: var(--theme-hover-color);
 }
@@ -43,4 +49,26 @@
 }
 .notification_name_details{
     font-size: 15px;
+}
+.reply_username_notification{
+    color:rgb(139, 152, 165);
+}
+
+.reply_username_notification_{
+    color:rgb(139, 152, 165);
+    font-size: 14px;
+}
+
+.reply_username_notification_ span a{ 
+    color:var(--theme-color);
+    font-size: 14px;
+}
+
+.reply_username_notification_ span a:hover{
+    border-bottom: 1px solid var(--theme-color);
+}
+
+.reply_tweet_text{
+    display: grid;
+    gap: 8px;
 }

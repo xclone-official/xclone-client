@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const TweetModel = require("../../Models/TweetModel/TweetModel");
 const UserModel = require("../../Models/UserModel/UserModel");
+const { users } = require("../../userStore");
 const Router = require("express").Router();
 
 Router.get("/", async (req, res) => {
@@ -13,6 +14,10 @@ Router.get("/", async (req, res) => {
 Router.put("/:tweetId/:userId", async (req, res) => {
   try {
     const { tweetId, userId } = req.params;
+    // console.log("users", users);
+    // users?.forEach((e) => {
+    //   console.log("userdata", e);
+    // });
 
     if (!tweetId || !userId) {
       return res.status(200).send({

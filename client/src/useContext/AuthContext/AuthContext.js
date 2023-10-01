@@ -17,8 +17,14 @@ const AuthContextProvider = (props) => {
   const fetchUser = async (id) => {
     try {
       await axios.get(`${backendURL}/user/auth/getUser/${id}`).then((data) => {
-        setUserData(data.data.data);
-        setAllNotification(data.data.data.allNotifications);
+        const allData = data.data.data;
+        setUserData(allData);
+        const getAllNotifications = allData.allNotifications;
+        setAllNotification(
+          getAllNotifications?.sort(function (a, b) {
+            return new Date(b.date) - new Date(a.date);
+          })
+        );
         setLoading(false); // Set loading to false when data is fetched
       });
     } catch (error) {
@@ -63,7 +69,7 @@ const AuthContextProvider = (props) => {
         )
         .then((data) => {
           const tweets = data.data.tweets; // Reverse the order of tweets
-
+          // console.log(tweets);
           setFollowingTweet(
             tweets.sort(function (a, b) {
               return new Date(b.createdAt) - new Date(a.createdAt);

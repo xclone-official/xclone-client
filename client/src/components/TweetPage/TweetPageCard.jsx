@@ -26,7 +26,7 @@ const UnlikeBtn = () => {
     </svg>
   );
 };
-export default function TweetPageCard({ tweetdata }) {
+export default function TweetPageCard({ tweetdata, socket }) {
   const navigate = useNavigate();
   const [likeBtn, setLikeBtn] = useState(<UnlikeBtn />);
   const goBackToPreviousPage = () => {
@@ -88,6 +88,13 @@ export default function TweetPageCard({ tweetdata }) {
       console.log("called like");
       likeTweet(specifictweetPage?._id, userData?._id);
       setLikeBtn(<Likebtn />);
+      socket?.emit("sendLikeNotification", {
+        senderUsername: userData?.username,
+        receiverUsername: tweetdata?.authorUsername,
+        type: "liketweet",
+        tweet: tweetdata,
+        tweetId: tweetdata?._id,
+      });
     } else {
       console.log("called unlike");
       unlikeTweet(specifictweetPage?._id, userData?._id);
@@ -274,7 +281,13 @@ export default function TweetPageCard({ tweetdata }) {
                 </svg>
               </div>
             </div>
-            <PostField tweetId={tweetdata?._id} comment={true} />
+            <PostField
+              tweetId={tweetdata?._id}
+              receiverUsername={tweetdata?.authorUsername}
+              comment={true}
+              tweetdata={tweetdata}
+              socket={socket}
+            />
 
             {/* Comment Section */}
             <div className="comment_section">

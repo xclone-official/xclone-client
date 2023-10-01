@@ -1,205 +1,204 @@
 .sidebar_content {
-    display: flex;
-    padding: 20px 20px;
+  display: flex;
+  padding: 20px 20px;
 }
 
 #new_notifications {
-    z-index: 100;
-    margin-right: -30px;
-    background-color: var(--theme-color);
-    height: 15px;
-    width: 15px;
+  z-index: 100;
+  margin-right: -30px;
+  background-color: var(--theme-color);
+  height: 15px;
+  width: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  border-radius: 20px;
+  border: 2px solid var(--theme-hover-color);
+  margin-top: -15px;
+  margin-left: 10px;
+}
+
+@media (max-width: 1000px) {
+  .hide_name_1000px {
+    display: none !important;
+  }
+
+  .sidebar {
+    width: 80px !important;
+  }
+
+  .sidebar_content {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 12px;
-    border-radius: 20px;
-    border: 2px solid var(--theme-hover-color);
-    margin-top: -15px;
+    flex-direction: column;
+    padding: 10px !important;
+  }
+}
+
+@media (max-width: 820px) {
+  .hide_name_1000px {
+    display: none !important;
+  }
+
+  .sidebar {
+    width: 80px !important;
+  }
+
+  .tweetfields {
+    width: 100% !important;
+    overflow-y: scroll;
+  }
+
+  .rightbar_container {
+    display: none;
+  }
+
+  .rightbar {
+    display: none;
+    border-left: 1px solid var(--theme-hover-color);
+  }
+
+  .sidebar_logoo {
+    display: none;
+  }
+}
+
+@media (max-width: 450px) {
+  .sidebar_links {
+    margin: 0 auto !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .sidebar_logout .pfp_logout_img img {
+    display: none;
+  }
+
+  .sidebar {
+    width: 0 !important;
+  }
+
+  .sidebar_logoo {
+    height: 35px;
+    width: 40px;
+    cursor: pointer;
     margin-left: 10px;
-}
+  }
 
-@media (max-width:1000px) {
-    .hide_name_1000px {
-        display: none !important;
-    }
+  .sidebar_content {
+    position: fixed;
+    bottom: 0;
+    background-color: #15202b;
+    width: 100vw !important;
+    padding: 0px !important;
+  }
 
-    .sidebar {
-        width: 80px !important;
-    }
+  .sidebar_content svg {
+    width: 25px !important;
+  }
 
-    .sidebar_content {
-        display: flex;
-        flex-direction: column;
-        padding: 10px !important;
-    }
-}
+  .hide_in_phone {
+    display: none !important;
+  }
 
-@media (max-width:820px) {
-    .hide_name_1000px {
-        display: none !important;
-    }
+  .col_in_phone {
+    display: grid;
+  }
 
-    .sidebar {
-        width: 80px !important;
-    }
-
-    .tweetfields {
-        width: 100% !important;
-        overflow-y: scroll;
-    }
-
-    .rightbar_container {
-        display: none;
-    }
-
-    .rightbar {
-        display: none;
-        border-left: 1px solid var(--theme-hover-color);
-    }
-
-    .sidebar_logoo {
-        display: none;
-    }
-}
-
-@media (max-width:450px) {
-    .sidebar_links {
-        margin: 0 auto !important;
-        display: flex !important;
-        justify-content: center !important;
-    }
-
-    .sidebar_logout .pfp_logout_img img {
-        display: none;
-    }
-
-    .sidebar {
-        width: 0 !important;
-    }
-
-    .sidebar_logoo {
-        height: 35px;
-        width: 40px;
-        cursor: pointer;
-        margin-left: 10px;
-    }
-
-    .sidebar_content {
-        position: fixed;
-        bottom: 0;
-        background-color: #15202B;
-        width: 100vw !important;
-        padding: 0px !important;
-    }
-
-    .sidebar_content svg {
-        width: 25px !important;
-    }
-
-    .hide_in_phone {
-        display: none !important;
-    }
-
-    .col_in_phone {
-        display: grid;
-    }
-
-    .tweetcard_userdetails {
-        display: grid !important;
-        gap: 3px;
-    }
-
+  .tweetcard_userdetails {
+    display: grid !important;
+    gap: 3px;
+  }
 }
 
 .sidebar_logo svg {
-    height: 35px;
-    width: 35px;
-    cursor: pointer;
+  height: 35px;
+  width: 35px;
+  cursor: pointer;
 }
 
 .sidebar_logoo:hover {
-    background-color: var(--theme-hover-color);
+  background-color: var(--theme-hover-color);
 }
 
 .sidebar_links {
-    margin-top: 5px;
-    display: grid;
-    gap: 4px;
+  margin-top: 5px;
+  display: grid;
+  gap: 4px;
 }
 
 .sidebar_home {
-    display: flex;
-    padding: 3px 0;
-    align-items: center;
-    gap: 5px;
-    border-radius: 20px;
-    cursor: pointer;
+  display: flex;
+  padding: 3px 0;
+  align-items: center;
+  gap: 5px;
+  border-radius: 20px;
+  cursor: pointer;
 }
 
 .sidebar_home:hover {
-    background-color: var(--theme-hover-color);
+  background-color: var(--theme-hover-color);
 }
 
 .sidebar_home svg {
-    margin-left: 10px;
-    width: 28px;
-    margin-bottom: -3px;
+  margin-left: 10px;
+  width: 28px;
+  margin-bottom: -3px;
 }
 
 .sidebar_home span {
-    margin-left: 10px;
-    width: 25px;
-    font-size: 20px;
+  margin-left: 10px;
+  width: 25px;
+  font-size: 20px;
 }
 
 #post_btn {
-    padding: 9px;
-    font-size: 15px;
-    font-weight: 700;
-    color: white;
-    background-color: var(--theme-color);
-    border-radius: 20px;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    margin-top: 10px;
+  padding: 9px;
+  font-size: 15px;
+  font-weight: 700;
+  color: white;
+  background-color: var(--theme-color);
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  margin-top: 10px;
 }
 
 .sidebar_logout {
-    display: flex;
-    cursor: pointer;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 7px;
-    border-radius: 25px;
-    gap: 10px;
-    margin-top: 10px;
+  display: flex;
+  cursor: pointer;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px;
+  border-radius: 25px;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .sidebar_logout:hover {
-    background-color: var(--theme-hover-color);
+  background-color: var(--theme-hover-color);
 }
 
 .sidebar_logout .pfp_logout_img img {
-    width: 35px;
-    border-radius: 20px;
-    height: 35px;
+  width: 35px;
+  border-radius: 20px;
+  height: 35px;
+  object-fit: cover;
 }
 
-
 .username_name p {
-    font-size: 15px;
-    font-weight: 500;
+  font-size: 15px;
+  font-weight: 500;
 }
 
 .username_name span {
-    font-size: 14px;
-    font-weight: 300;
-    color: rgb(132, 134, 136);
+  font-size: 14px;
+  font-weight: 300;
+  color: rgb(132, 134, 136);
 }
 
 .more_icon svg {
-    width: 20px;
+  width: 20px;
 }

@@ -5,7 +5,14 @@ import axios from "axios";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import { Link } from "react-router-dom";
 import { SpecificTweets } from "../../useContext/SpecificTweet/SpecificTweet";
-export default function PostField({ tweetId, comment, replies }) {
+export default function PostField({
+  tweetId,
+  comment,
+  replies,
+  socket,
+  receiverUsername,
+  tweetdata,
+}) {
   const [
     showLogin,
     setShowLogin,
@@ -121,7 +128,9 @@ export default function PostField({ tweetId, comment, replies }) {
     setTextContent("");
     setFiles([]);
   };
+
   const saveComment = () => {
+    console.log("socket", socket);
     try {
       const commentData = {
         commentText: textContent,
@@ -147,6 +156,16 @@ export default function PostField({ tweetId, comment, replies }) {
                 return new Date(b.createdAt) - new Date(a.createdAt);
               })
             );
+
+            socket?.emit("sendRepliesNotification", {
+              senderUsername: userData?.username,
+              receiverUsername: receiverUsername,
+              type: "replytweet",
+              tweet: tweetdata,
+              tweetId: tweetId,
+              commentText: textContent,
+            });
+            console.log("Socket called");
           } else {
             alert("Error");
           }

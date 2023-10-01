@@ -72,19 +72,6 @@ export default function ProfileLayout({
         });
     } catch (error) {}
   };
-  // useEffect(() => {
-  //   socket?.on("followed", (data) => {
-  //     console.log("data", data);
-  //     if (
-  //       allNotification.some(
-  //         (username) => username?.receiverUsername === data.receiverUsername
-  //       )
-  //     ) {
-  //       setAllNotification((prev) => [...prev, data]);
-  //     }
-  //   });
-  //   console.log(allNotification);
-  // }, [socket]);
   const followTheUser = (type) => {
     try {
       const tofollowId = specificUserProfile?._id; // other _id
@@ -221,7 +208,12 @@ export default function ProfileLayout({
             {/* name? username */}
             <div className="profile_data">
               <div className="name_username">
-                <p>{specificUserProfile?.fullname}</p>
+                <p>
+                  {specificUserProfile?.fullname}{" "}
+                  {specificUserProfile?.following?.some(
+                    (user) => user.id === userData?._id
+                  ) && <span className="follows_you">follows you</span>}
+                </p>
                 <span>@{specificUserProfile?.username}</span>
               </div>
 

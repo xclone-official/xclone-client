@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import "./Notifications.css";
 import { Link, useNavigate } from "react-router-dom";
 import { NotificationContext } from "../../useContext/NotificationsContext/NotificationsContext";
+import { customTimeFormat } from "../customTime/customTime";
 export default function Lists() {
   const navigate = useNavigate();
   const [allNotification, setAllNotification] = useContext(NotificationContext);
@@ -57,39 +58,120 @@ export default function Lists() {
       <div className="allNotifications">
         <div className="">
           {allNotification?.length > 0 ? (
-            allNotification.map((notification, i) => (
-              <div
-                key={i}
-                className={`single_notification ${
-                  !notification?.isSeen && "single_notification_is_not_seen"
-                }`}
-              >
-                <div className="notification_svg">
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <g>
-                      <path
-                        fill="var(--theme-color)"
-                        d="M17.863 13.44c1.477 1.58 2.366 3.8 2.632 6.46l.11 1.1H3.395l.11-1.1c.266-2.66 1.155-4.88 2.632-6.46C7.627 11.85 9.648 11 12 11s4.373.85 5.863 2.44zM12 2C9.791 2 8 3.79 8 6s1.791 4 4 4 4-1.79 4-4-1.791-4-4-4z"
-                      ></path>
-                    </g>
-                  </svg>
+            allNotification.map((notification, i) =>
+              notification?.type === "follow" ? (
+                <div
+                  key={i}
+                  className={`single_notification ${
+                    !notification?.isSeen && "single_notification_is_not_seen"
+                  }`}
+                >
+                  <div className="notification_svg">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <g>
+                        <path
+                          fill="var(--theme-color)"
+                          d="M17.863 13.44c1.477 1.58 2.366 3.8 2.632 6.46l.11 1.1H3.395l.11-1.1c.266-2.66 1.155-4.88 2.632-6.46C7.627 11.85 9.648 11 12 11s4.373.85 5.863 2.44zM12 2C9.791 2 8 3.79 8 6s1.791 4 4 4 4-1.79 4-4-1.791-4-4-4z"
+                        ></path>
+                      </g>
+                    </svg>
+                  </div>
+                  <div className="notification_profile_name">
+                    <div className="notification_profile">
+                      <img
+                        src={`${backendURL}/${notification?.authorProfile}`}
+                        alt=""
+                      />
+                    </div>
+                    <div className="notification_name_details">
+                      <Link to={`/p/${notification?.authorUsername}`}>
+                        {notification?.authorName}
+                      </Link>
+                      <span>followed you</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="notification_profile_name">
+              ) : notification?.type === "liketweet" ? (
+                <div
+                  key={i}
+                  className={`single_notification ${
+                    !notification?.isSeen && "single_notification_is_not_seen"
+                  }`}
+                >
+                  <div className="notification_svg">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <g>
+                        <path
+                          fill="var(--theme-color)"
+                          d="M20.884 13.19c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z"
+                        ></path>
+                      </g>
+                    </svg>
+                  </div>
+                  <div className="notification_profile_name">
+                    <div className="notification_profile">
+                      <img
+                        src={`${backendURL}/${notification?.authorProfile}`}
+                        alt=""
+                      />
+                    </div>
+                    <div className="notification_name_details">
+                      <Link to={`/p/${notification?.authorUsername}`}>
+                        {notification?.authorName}
+                      </Link>
+                      <span>liked your tweet.</span>
+                    </div>
+                    <div className="like_tweet_text">
+                      <p>{notification?.tweet?.tweetContent}</p>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div
+                  key={i}
+                  className={`single_notification ${
+                    !notification?.isSeen && "single_notification_is_not_seen"
+                  }`}
+                >
                   <div className="notification_profile">
                     <img
+                      className="reply_notification"
                       src={`${backendURL}/${notification?.authorProfile}`}
                       alt=""
                     />
                   </div>
-                  <div className="notification_name_details">
-                    <Link to={`/p/${notification?.authorUsername}`}>
-                      {notification?.authorName}
-                    </Link>
-                    <span>followed you</span>
+                  <div className="notification_profile_name">
+                    <div className="notification_name_details">
+                      <Link to={`/p/${notification?.authorUsername}`}>
+                        {notification?.authorName}
+                      </Link>
+                      <span className="reply_username_notification">
+                        @{notification?.authorUsername} ·
+                      </span>
+
+                      <span className="reply_username_notification">
+                        {customTimeFormat(notification?.date)}
+                      </span>
+                    </div>
+                    <div className="reply_tweet_text">
+                      <p className="reply_username_notification_">
+                        Replying to{" "}
+                        <span>
+                          <Link to={`/p/${notification?.authorUsername}`}>
+                            @{notification?.tweet?.authorUsername}
+                          </Link>
+                        </span>
+                      </p>
+                      <Link
+                        to={`/${notification?.authorUsername}/tweet/${notification?.tweet?._id}`}
+                      >
+                        <p>{notification?.commentText}</p>
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))
+              )
+            )
           ) : (
             <div
               style={{
@@ -105,4 +187,8 @@ export default function Lists() {
       </div>
     </div>
   );
+}
+{
+  /* <svg viewBox="0 0 24 24" aria-hidden="true" class="r-vkub15 r-4qtqp9 r-yyyyoo r-yucp9h r-dnmrzs r-bnwqim r-1plcrui r-lrvibr"><g>
+  <path d="M20.884 13.19c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z"></path></g></svg> */
 }

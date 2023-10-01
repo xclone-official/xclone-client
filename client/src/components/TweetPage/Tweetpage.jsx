@@ -20,7 +20,6 @@ export default function Tweetpage({ socket }) {
     infoLoader,
     setInfoLoader,
   ] = useContext(AuthContext);
-  console.log(socket);
   const { tweetId } = useParams();
   const getTweet = async () => {
     try {
@@ -40,7 +39,11 @@ export default function Tweetpage({ socket }) {
   }, [tweetId]);
   return (
     <div>
-      {loader ? <InfoLoader /> : <TweetPageCard tweetdata={filterdata[0]} />}
+      {loader ? (
+        <InfoLoader />
+      ) : (
+        <TweetPageCard socket={socket} tweetdata={filterdata[0]} />
+      )}
     </div>
   );
 }

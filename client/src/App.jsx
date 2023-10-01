@@ -24,15 +24,18 @@ export default function App() {
   useEffect(() => {
     socket?.emit("newUser", userData?.username);
   }, [userData, socket]);
+  // Follow socket
   useEffect(() => {
     const handleFollowed = (data) => {
       console.log(data);
       if (
         !allNotification.some(
-          (notification) => notification?.authorUsername === data.authorUsername
+          (notification) =>
+            notification?.authorUsername === data.authorUsername &&
+            notification.type === data.type
         )
       ) {
-        setAllNotification((prev) => [...prev, data]);
+        setAllNotification((prev) => [data, ...prev]);
       }
     };
 
@@ -43,15 +46,19 @@ export default function App() {
       socket?.off("followed", handleFollowed);
     };
   }, [socket, allNotification?.length, allNotification]);
+  // Like socket
   useEffect(() => {
     const handleLiked = (data) => {
-      console.log(data);
+      // console.log("handleLike", data);
       if (
         !allNotification.some(
-          (notification) => notification?.authorUsername === data.authorUsername
+          (notification) =>
+            notification.authorUsername === data.authorUsername &&
+            notification.type === data.type &&
+            notification?.tweet?._id === data?.tweetId
         )
       ) {
-        setAllNotification((prev) => [...prev, data]);
+        setAllNotification((prev) => [data, ...prev]);
       }
     };
 
@@ -60,6 +67,19 @@ export default function App() {
     // Cleanup the event listener when the component unmounts
     return () => {
       socket?.off("likedtweet", handleLiked);
+    };
+  }, [socket, allNotification?.length, allNotification]);
+  // reply socket
+  useEffect(() => {
+    const handleLiked = (data) => {
+      setAllNotification((prev) => [data, ...prev]);
+    };
+
+    socket?.on("replytweet", handleLiked);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      socket?.off("replytweet", handleLiked);
     };
   }, [socket, allNotification?.length, allNotification]);
   if (loading) {

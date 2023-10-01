@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./tweets.css";
 import Foryou from "./Foryou/Foryou";
 import Following from "./Following/Following";

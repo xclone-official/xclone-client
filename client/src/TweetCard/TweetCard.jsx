@@ -87,6 +87,7 @@ export default function TweetCard({ tweets, socket }) {
   }, []);
 
   const toggleFunction = () => {
+    // console.log("Toggle Functions");
     const checkIsAlreadyLiked = tweets?.likes?.some(
       (e) => e.id === userData?._id
     );
@@ -99,10 +100,12 @@ export default function TweetCard({ tweets, socket }) {
         senderUsername: userData?.username,
         receiverUsername: tweets?.authorUsername,
         type: "liketweet",
+        tweet: tweets,
+        tweetId: tweets?._id,
       });
-      console.log("liked tweet");
+      // console.log("liked tweet");
     } else {
-      console.log("called unlike");
+      // console.log("called unlike");
       unlikeTweet(tweets?._id, userData?._id);
       setLikeBtn(<UnlikeBtn />);
     }
@@ -183,7 +186,11 @@ export default function TweetCard({ tweets, socket }) {
               </div>
             </div>
             <div className="tweet_content">
-              <div onClick={() => navigate(`/niraj/tweet/${tweets?._id}`)}>
+              <div
+                onClick={() =>
+                  navigate(`/${tweets?.authorUsername}/tweet/${tweets?._id}`)
+                }
+              >
                 <span className="tweet_text">
                   {formatTextWithLinks(tweets?.tweetContent)}
                 </span>

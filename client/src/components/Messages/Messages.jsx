@@ -1,32 +1,31 @@
 import "./Messages.css";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import SearchInput from "../SearchInput/SearchInput";
+import MessageComponent from "./MessageComponent";
 export default function Lists() {
-  const navigate = useNavigate();
   React.useEffect(() => {
     document.title = "X / Messages";
   }, []);
-  const goBackToPreviousPage = () => {
-    navigate(-1);
-  };
   return (
     <div>
-      <div className="profile_top">
-        <svg
-          onClick={goBackToPreviousPage}
-          fill="var(--theme-color)"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-          <g>
-            <path d="M7.414 13l5.043 5.04-1.414 1.42L3.586 12l7.457-7.46 1.414 1.42L7.414 11H21v2H7.414z"></path>
-          </g>
-        </svg>
+      <div className="profile_top" style={{ padding: "9.9px" }}>
         <div
           className="top_tweetname"
           style={{ display: "flex", alignItems: "center" }}
         >
-          <p>Messages</p>
+          <p>All Messages</p>
+        </div>
+      </div>
+      <div className="msg_search_input">
+        <SearchInput message={true} />
+      </div>
+      <div className="messages_container">
+        <div className="messages_mid_container">
+          {[
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 11, 14, 13, 15, 16, 17, 18, 19, 20,
+          ].map((e) => (
+            <MessageComponent key={e} />
+          ))}
         </div>
       </div>
     </div>

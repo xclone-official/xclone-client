@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const { users, getUser, removeUser, addNewUser } = require("./userStore");
 // Connection
 require("./connection/conn");
 require("dotenv").config();
@@ -15,39 +16,25 @@ const io = require("socket.io")(httpServer, {
     credentials: true,
   },
 });
-let users = []; // Initialize an object to map user IDs to socket IDs
-
-const addNewUser = (username, socketId) => {
-  if (username) {
-    !users.some((user) => user.username === username) &&
-      users.push({ username, socketId });
-  }
-};
-const removeUser = (socketId) => {
-  users = users.filter((user) => user.socketId !== socketId);
-};
-const getUser = (username) => {
-  return users?.find((user) => user.username === username);
-};
+module.exports = { io };
 io.on("connection", (socket) => {
   socket.on("connection", () => {
     console.log("Someone is connected");
   });
 
   socket.on("newUser", (username) => {
-    // console.log("username", username);
     addNewUser(username, socket.id);
   });
-
+  // Follow socket
   socket.on(
     "sendFollowNotification",
-    async ({ senderUsername, receiverUsername, type }) => {
+    async ({ senderUsername, receiverUsername, tweet, type }) => {
       const senderUser = await UserModel.findOne({ username: senderUsername });
       const receiverUser = await UserModel.findOne({
         username: receiverUsername,
       });
       const receiveUser = getUser(receiverUsername);
-      console.log("users", users);
+      console.log("usersss", users);
       console.log("receiveUser", receiveUser);
       if (senderUser && receiverUser && receiveUser) {
         const dataToPush = {
@@ -55,13 +42,16 @@ io.on("connection", (socket) => {
           authorId: senderUser._id,
           authorUsername: senderUsername,
           authorProfile: senderUser.profilepicture,
+          tweet: tweet,
           type: type,
+
           isSeen: false, // You can set this property accordingly
         };
 
         if (
           !receiverUser.allNotifications.some(
-            (e) => e.authorUsername === senderUsername
+            (e) =>
+              e.authorUsername === senderUsername && e.type === dataToPush.type
           )
         ) {
           receiverUser.allNotifications.push(dataToPush);
@@ -76,15 +66,16 @@ io.on("connection", (socket) => {
       }
     }
   );
+  // Like
   socket.on(
     "sendLikeNotification",
-    async ({ senderUsername, receiverUsername, type }) => {
+    async ({ senderUsername, receiverUsername, tweet, type, tweetId }) => {
       const senderUser = await UserModel.findOne({ username: senderUsername });
       const receiverUser = await UserModel.findOne({
         username: receiverUsername,
       });
       const receiveUser = getUser(receiverUsername);
-      console.log("users", users);
+      console.log("userss", users);
       console.log("receiveUser", receiveUser);
       if (senderUser && receiverUser && receiveUser) {
         const dataToPush = {
@@ -93,30 +84,85 @@ io.on("connection", (socket) => {
           authorUsername: senderUsername,
           authorProfile: senderUser.profilepicture,
           type: type,
+          tweet: tweet,
+          tweetId: tweetId,
           isSeen: false, // You can set this property accordingly
         };
 
         if (
           !receiverUser.allNotifications.some(
-            (e) => e.authorUsername === senderUsername
+            (e) =>
+              e.authorUsername === senderUsername &&
+              e.type === dataToPush.type &&
+              e?.tweet?._id === tweetId
           )
         ) {
           receiverUser.allNotifications.push(dataToPush);
           await receiverUser.save();
-          io.to(receiveUser.socketId).emit("likedtweet", dataToPush);
+
           console.log("receiveUser.socketId", receiveUser.socketId);
         } else {
           console.log("Notification already exists");
+        }
+        io.to(receiveUser.socketId).emit("likedtweet", dataToPush);
+        console.log("Can't add to db");
+      } else {
+        console.log("User not found");
+      }
+    }
+  );
+  // reply
+  socket.on(
+    "sendRepliesNotification",
+    async ({
+      senderUsername,
+      receiverUsername,
+      tweet,
+      type,
+      tweetId,
+      commentText,
+    }) => {
+      const senderUser = await UserModel.findOne({ username: senderUsername });
+      const receiverUser = await UserModel.findOne({
+        username: receiverUsername,
+      });
+      const receiveUser = getUser(receiverUsername);
+      console.log("userss", users);
+      console.log("receiveUser", receiveUser);
+      if (senderUser && receiverUser && receiveUser) {
+        const dataToPush = {
+          authorName: senderUser.fullname,
+          authorId: senderUser._id,
+          authorUsername: senderUsername,
+          authorProfile: senderUser.profilepicture,
+          type: type,
+          tweet: tweet,
+          tweetId: tweetId,
+          commentText: commentText,
+          isSeen: false, // You can set this property accordingly
+        };
+        console.log(senderUsername, receiverUsername);
+        if (senderUsername === receiverUsername) {
+          console.log("Can't add to db,", senderUsername, receiverUsername);
+        } else {
+          receiverUser.allNotifications.push(dataToPush);
+          await receiverUser.save();
+
+          console.log("receiveUser.socketId", receiveUser.socketId);
+
+          io.to(receiveUser.socketId).emit("replytweet", dataToPush);
         }
       } else {
         console.log("User not found");
       }
     }
   );
+  // Message
   socket.on("disconnect", () => {
     removeUser(socket.id);
   });
 });
+
 const PORT = process.env.PORT;
 
 const helmet = require("helmet");
@@ -160,6 +206,8 @@ app.get("/", (req, res) => {
 // User actions routes
 app.use("/user/auth", require("./auth/auth"));
 
+// handle message
+app.use("/api/message", require("./messageController/messageController"));
 // Tweet actions
 app.use("/tweetaction", require("./tweetActions/tweetActions"));
 

@@ -5,9 +5,7 @@ import InfoLoader from "../Loader/InfoLoader";
 import LikedCard from "./LikedCard";
 export default function LikedTweet({ profileData }) {
   const [initialData, setInitialData] = useState(5);
-  const [initialLikedArray, setInitialLikedArray] = useState(
-    profileData?.likedTweet?.slice(0, initialData)
-  );
+  const [initialLikedArray, setInitialLikedArray] = useState();
   useEffect(() => {
     setInitialLikedArray(profileData?.likedTweet?.slice(0, initialData));
   }, []);
@@ -45,9 +43,12 @@ export default function LikedTweet({ profileData }) {
           }
         >
           <div>
-            {initialLikedArray.map((data, index) => (
-              <LikedCard tweets={data?.tweet[0]} key={index} />
-            ))}
+            {initialLikedArray.map(
+              (data, index) =>
+                data?.tweet && (
+                  <LikedCard tweets={data?.tweet && data.tweet} key={index} />
+                )
+            )}
           </div>
         </InfiniteScroll>
       ) : (

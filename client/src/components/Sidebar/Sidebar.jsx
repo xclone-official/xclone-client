@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import "./sidebar.css";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { BiSolidSearch, BiSolidUser, BiUser } from "react-icons/bi";
 import { useLocation } from "react-router-dom";
 import {
@@ -215,7 +215,10 @@ export default function Sidebar({ socket }) {
           </button>
         </div>
         <div className="sidebar_logout hide_in_phone">
-          <div style={{ display: "flex", gap: "10px" }}>
+          <Link
+            to={`/p/${userData?.username}`}
+            style={{ display: "flex", gap: "10px" }}
+          >
             <div className="pfp_logout_img">
               <img src={`${backendURL}/${userData?.profilepicture}`} alt="" />
             </div>
@@ -223,7 +226,7 @@ export default function Sidebar({ socket }) {
               <p>{userData?.fullname}</p>
               <span>@{userData?.username}</span>
             </div>
-          </div>
+          </Link>
           <div className="more_icon hide_name_1000px hide_in_phone">
             <svg viewBox="0 0 24 24" aria-hidden="true" className="">
               <g>

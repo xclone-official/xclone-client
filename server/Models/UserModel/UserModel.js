@@ -131,7 +131,7 @@ const UserModel = mongoose.Schema(
           type: String,
           required: true,
         },
-        tweet: [],
+        tweet: {},
       },
     ],
     allNotifications: [
@@ -159,6 +159,15 @@ const UserModel = mongoose.Schema(
         isSeen: {
           type: Boolean,
           default: false,
+        },
+        tweet: {},
+        commentText: {
+          type: String,
+          default: "",
+        },
+        date: {
+          type: Date,
+          default: Date.now,
         },
       },
     ],
