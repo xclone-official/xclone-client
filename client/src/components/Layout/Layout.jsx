@@ -36,6 +36,7 @@ export default function Layout({
   followers,
   with_replies,
   highlights,
+  showMessage,
   media,
   replies,
   likes,
@@ -122,7 +123,12 @@ export default function Layout({
       )}
       {explore && <Explore socket={socket} />}
       {notifications && <Notifications socket={socket} />}
-      {messages && <SingleMessagesBox socket={socket} />}
+      {messages && (
+        <div className="select_a_msg_to_show">
+          <p>Select a message to view</p>
+        </div>
+      )}
+      {showMessage && <SingleMessagesBox socket={socket} />}
       {lists && <Lists socket={socket} />}
       {bookmarks && <Bookmarks socket={socket} />}
       {communities && <Communities socket={socket} />}

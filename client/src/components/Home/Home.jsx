@@ -1,14 +1,15 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import Rightbar from "../Rightbar/Rightbar";
 import "./home.css";
 import Messages from "../Messages/Messages";
-import { useLocation, useNavigate } from "react-router-dom";
-import { NotificationContext } from "../../useContext/NotificationsContext/NotificationsContext";
+
 export default function Home({ children, socket }) {
+  const { userId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const [allNotification, setAllNotification] = useContext(NotificationContext);
+
   useEffect(() => {
     if (location.pathname === "/") {
       navigate("/home");
@@ -29,7 +30,13 @@ export default function Home({ children, socket }) {
         </div>
         <div className="rightbar">
           <div className="column">
-            {location.pathname === "/messages" ? <Messages /> : <Rightbar />}
+            {userId ? (
+              <Messages userId={userId} />
+            ) : location.pathname === "/messages" ? (
+              <Messages />
+            ) : (
+              <Rightbar />
+            )}
           </div>
         </div>
       </div>

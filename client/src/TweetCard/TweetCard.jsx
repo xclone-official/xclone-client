@@ -5,6 +5,7 @@ import { AuthContext } from "../useContext/AuthContext/AuthContext";
 import { TweetContext } from "../useContext/TweetContext/TweetContext";
 import { customTimeFormat } from "../components/customTime/customTime";
 import { NotificationContext } from "../useContext/NotificationsContext/NotificationsContext";
+import RemoveUnnecessaryTag from "./RemoveUnnecessaryTag";
 const VerifiedAcccount = () => {
   return (
     <svg
@@ -111,31 +112,6 @@ export default function TweetCard({ tweets, socket }) {
     }
   };
 
-  function formatTextWithLinks(text) {
-    const words = text?.split(" ");
-
-    const coloredText = words?.map((word, index) => {
-      if (word.includes("#")) {
-        return (
-          <span key={index}>
-            <Link className="red-word" to={`/hashtag/${word?.split("#")[1]}`}>
-              {word}
-            </Link>
-          </span>
-        );
-      }
-      if (word.includes(".")) {
-        return (
-          <span key={index}>
-            {word} <br /> <br />
-          </span>
-        );
-      }
-      return <span key={index}>{word} </span>;
-    });
-
-    return coloredText;
-  }
   return (
     <>
       <div className="tweetcard_container ">
@@ -191,9 +167,11 @@ export default function TweetCard({ tweets, socket }) {
                   navigate(`/${tweets?.authorUsername}/tweet/${tweets?._id}`)
                 }
               >
-                <span className="tweet_text">
-                  {formatTextWithLinks(tweets?.tweetContent)}
-                </span>
+                {/* <span
+                  className="tweet_text"
+                  dangerouslySetInnerHTML={{ __html: tweets?.tweetContent }}
+                ></span> */}
+                <RemoveUnnecessaryTag htmlContent={tweets?.tweetContent} />
               </div>
               <div className="tweet_media">
                 {tweets?.video?.length > 0 ? (

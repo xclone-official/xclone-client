@@ -1,78 +1,105 @@
-import React from "react";
+import React, {
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  useLayoutEffect,
+} from "react";
 import "./singlemessages.css";
-import { useNavigate } from "react-router-dom";
-const dumbMessage = [
-  {
-    sender: "user1",
-    receiver: "user2",
-    content: "Hey there!",
-    timestamp: "2023-09-30T14:30:00Z",
-  },
-  {
-    sender: "user2",
-    receiver: "user1",
-    content: "Hi! How's it going?",
-    timestamp: "2023-09-30T14:35:00Z",
-  },
-  {
-    sender: "user1",
-    receiver: "user3",
-    content: "Hello, friend!",
-    timestamp: "2023-09-30T15:00:00Z",
-  },
-  {
-    sender: "user4",
-    receiver: "user1",
-    content: "What's up?",
-    timestamp: "2023-09-30T15:15:00Z",
-  },
-  {
-    sender: "user5",
-    receiver: "user2",
-    content: "Nice weather today!",
-    timestamp: "2023-09-30T16:00:00Z",
-  },
-  {
-    sender: "user2",
-    receiver: "user5",
-    content: "Yes, it's lovely!",
-    timestamp: "2023-09-30T16:05:00Z",
-  },
-  {
-    sender: "user6",
-    receiver: "user4",
-    content: "How's work?",
-    timestamp: "2023-09-30T16:30:00Z",
-  },
-  {
-    sender: "user4",
-    receiver: "user6",
-    content: "Busy as always!",
-    timestamp: "2023-09-30T16:35:00Z",
-  },
-  {
-    sender: "user3",
-    receiver: "user1",
-    content: "Do you want to grab some coffee?",
-    timestamp: "2023-09-30T17:00:00Z",
-  },
-  {
-    sender: "user1",
-    receiver: "user3",
-    content: "Sure, let's do it!",
-    timestamp: "2023-09-30T17:05:00Z",
-  },
-];
-
-export default function SingleMessagesBox() {
+import { MessageContext } from "../../useContext/MessageContext/MessageContext";
+import { useNavigate, useParams } from "react-router-dom";
+import { AuthContext } from "../../useContext/AuthContext/AuthContext";
+import { convertDate } from "../CovertDateTime/ConvertDateTime";
+import axios from "axios";
+export default function SingleMessagesBox({ socket }) {
+  const [
+    showLogin,
+    setShowLogin,
+    showRegister,
+    setShowRegister,
+    userData,
+    setUserData,
+    loading,
+    setLoading,
+    allTweets,
+    setAllTweets,
+    infoLoader,
+    setInfoLoader,
+    followingTweet,
+    setFollowingTweet,
+    getAllTweets,
+    getAllTweetsFromFollowingUsers,
+  ] = useContext(AuthContext);
+  const [allMessages, setAllMessages] = useContext(MessageContext);
+  const [message, setMessage] = useState("");
+  const { userId } = useParams();
+  const [isUserExists, setIsUserExists] = useState(false);
+  const [profileData, setProfileData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const backendURL = process.env.REACT_APP_BACKEND_URL;
+  const chatContainerRef = useRef(null);
+  // Function to scroll the chat container to the bottom
+  const scrollToBottom = () => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+    } else {
+    }
+  };
+  scrollToBottom();
+  useLayoutEffect(() => {
+    scrollToBottom();
+  }, [allMessages, userId, chatContainerRef]);
+  const fetchUser = async (userId) => {
+    try {
+      await axios
+        .get(`${backendURL}/user/auth/getUser/${userId}`)
+        .then((data) => {
+          const response = data.data;
+          if (response.status === 1) {
+            setProfileData(data.data.data);
+            setIsUserExists(true);
+          } else {
+            setIsUserExists(false);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    } catch (error) {
+      console.log("error"); // Set loading to false in case of an error
+    }
+  };
+  useEffect(() => {
+    fetchUser(userId);
+  }, [userId]);
+  useEffect(() => {
+    setAllMessages([]);
+    socket?.emit("saveAllMessages", {
+      senderusername: userData?.username,
+      senderId: userData?._id,
+      receiverId: userId,
+    });
+  }, [userId]);
   const navigate = useNavigate();
   const goBackToPreviousPage = () => {
     navigate(-1);
   };
+
   function handleMessage(e) {
     e.preventDefault();
+    socket?.emit("addMsg", {
+      senderId: userData?._id,
+      senderUsername: userData?.username,
+      receiverId: userId,
+      message: message,
+    });
+    setMessage("");
   }
-  return (
+  return isUserExists ? (
     <div style={{ width: "100%" }}>
       <div className="profile_top">
         <svg
@@ -89,7 +116,7 @@ export default function SingleMessagesBox() {
           className="top_tweetname"
           style={{ display: "flex", alignItems: "center" }}
         >
-          <p>Niraj Chaurasiya</p>
+          <p>{profileData?.fullname}</p>
         </div>
       </div>
       <div className="messages_container_">
@@ -97,49 +124,65 @@ export default function SingleMessagesBox() {
           {/* Messages */}
           <div className="user_credentials_messages">
             <div className="message_user_profile">
-              <img src="/pfp.png" alt="" />
+              <img
+                src={`${backendURL}/${profileData?.profilepicture}`}
+                alt=""
+              />
             </div>
             <div className="messsage_username_name">
-              <p>Niraj Chaurasiya</p>
-              <span>@niraj</span>
+              <p>{profileData?.fullname}</p>
+              <span>@{profileData?.username}</span>
             </div>
             <div className="message_user_bio">
-              <p>
-                Full-stack developer • Tech writer • I help Businesses and
-                Brands gain visibility online • Tweets around web development |
-                AI | ML | Robotics | Tech experience
-              </p>
+              <p>{profileData?.bio}</p>
             </div>
             <div className="joined_and_followers_num">
-              <p>Joined August 2023</p>
+              <p>{convertDate(profileData?.createdAt)}</p>
               {"  •  "}
-              <p>80 Followers</p>
+              <p>{profileData?.followers?.length} followers</p>
             </div>
           </div>
-          <div className="users_conversation">
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 11, 12, 14, 13, 15, 16].map((e) => (
-              <div key={e} className="user_conversation_container">
-                <div className="my_msg_container">
-                  <div className="my_messages">
-                    <p>Hey there!</p>
+          <div className="users_conversation" ref={chatContainerRef}>
+            {allMessages.length > 0
+              ? allMessages?.map((e, i) => (
+                  <div key={i} className="user_conversation_container">
+                    {parseInt(e.senderId) === parseInt(userData._id) ? (
+                      <div className="my_msg_container">
+                        <div className="my_messages">
+                          <p>{e?.message}</p>
+                        </div>
+                        <span>{convertDate(e?.createdAt)}</span>
+                      </div>
+                    ) : (
+                      <div className="user_msg_container">
+                        <div className="other_user_messages">
+                          <p>{e?.message}</p>
+                        </div>
+                        <span>{convertDate(e?.createdAt)}</span>
+                      </div>
+                    )}
                   </div>
-                  <span>Aug 21, 2023, 7:04 AM</span>
-                </div>
-                <div className="user_msg_container">
-                  <div className="other_user_messages">
-                    <p>How are you?</p>
-                  </div>
-                  <span>Aug 21, 2023, 7:04 AM</span>
-                </div>
-              </div>
-            ))}
+                ))
+              : ""}
           </div>
         </div>
       </div>
       <form onSubmit={handleMessage} id="message_input" action="">
-        <input id="msg_input" placeholder="Enter Message" autocomplete="off" />
+        <input
+          value={message}
+          onChange={(e) => {
+            setMessage(e.target.value);
+          }}
+          id="msg_input"
+          placeholder="Enter Message"
+          autoComplete="off"
+        />
         <button className="message_input_btn">Send</button>
       </form>
+    </div>
+  ) : (
+    <div>
+      <p>User doesn't exist</p>
     </div>
   );
 }

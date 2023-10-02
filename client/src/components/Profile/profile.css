@@ -179,6 +179,25 @@
 .edit_btn {
   margin-top: 10px;
 }
+.edit_btn div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.edit_btn p {
+  cursor: pointer;
+  padding: 6px 0;
+  display: flex;
+  justify-content: center;
+  width: 40px;
+  background-color: transparent;
+  border: 2px solid var(--theme-hover-color);
+  color: white;
+  border-radius: 20px;
+}
+.edit_btn p svg {
+  width: 20px;
+}
 
 .edit_btn button {
   cursor: pointer;

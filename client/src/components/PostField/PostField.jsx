@@ -5,6 +5,7 @@ import axios from "axios";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import { Link } from "react-router-dom";
 import { SpecificTweets } from "../../useContext/SpecificTweet/SpecificTweet";
+import { Editor } from "@tinymce/tinymce-react";
 export default function PostField({
   tweetId,
   comment,
@@ -58,6 +59,7 @@ export default function PostField({
       }, 2000);
     },
   };
+  const MSE_APIKEY = process.env.REACT_APP_MCE_KEY;
   const [specifictweetPage, setSpecifictweetPage] = useContext(SpecificTweets);
   const [count, setCount] = useState(0);
   const handleFileChange = (e) => {
@@ -182,6 +184,7 @@ export default function PostField({
   return (
     <>
       <div className="postfield_container">
+        {/* <Editor apiKey="47yj93bwgcv3ul774qtixc55apjjqqlzfcwbickua7xwhdpp" onChange={()} /> */}
         <div className="img_textarea">
           <div className="post_profile">
             <Link to={`/p/${userData?.username}`}>
@@ -189,14 +192,31 @@ export default function PostField({
             </Link>
           </div>
           <div className="textarea_">
-            <textarea
+            <Editor
+              apiKey={MSE_APIKEY}
+              value={textContent}
+              onEditorChange={(content) => setTextContent(content)}
+              name="post"
+              id="post-tweet"
+              init={{
+                placeholder: !comment
+                  ? "What is happening?!"
+                  : "Write a comment",
+                color_cols: "red",
+                body_class: "text_red",
+                content_style: "body {color: white; line-height: .3; }",
+                // Other TinyMCE configuration options go here
+              }}
+            />
+
+            {/* <textarea
               value={textContent}
               onChange={(e) => setTextContent(e.target.value)}
               placeholder={!comment ? "What is happening?!" : "Write a comment"}
               name="post"
               id="post-tweet"
               rows="3"
-            ></textarea>
+            ></textarea> */}
           </div>
         </div>
         <div

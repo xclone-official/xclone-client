@@ -34,8 +34,6 @@ io.on("connection", (socket) => {
         username: receiverUsername,
       });
       const receiveUser = getUser(receiverUsername);
-      console.log("usersss", users);
-      console.log("receiveUser", receiveUser);
       if (senderUser && receiverUser && receiveUser) {
         const dataToPush = {
           authorName: senderUser.fullname,
@@ -158,9 +156,76 @@ io.on("connection", (socket) => {
     }
   );
   // Message
+  socket.on(
+    "saveAllMessages",
+    async ({ senderusername, senderId, receiverId }) => {
+      const receiveUser = getUser(senderusername);
+      if ((senderId, receiveUser, receiverId)) {
+        const allChats = await MessageModel.find({
+          $or: [
+            { senderId: senderId, receiverId: receiverId },
+            { senderId: receiverId, receiverId: senderId },
+          ],
+        });
+        io.to(receiveUser?.socketId).emit("setAllMsg", allChats);
+      } else {
+        // console.log("Can't get msg");
+      }
+    }
+  );
+
   socket.on("disconnect", () => {
     removeUser(socket.id);
   });
+
+  // AddMsg socket
+  socket.on(
+    "addMsg",
+    async ({ senderId, senderUsername, receiverId, message }) => {
+      console.log(senderId, senderUsername, receiverId, message);
+      if (senderId && senderUsername && receiverId && message) {
+        const senderUser = getUser(senderUsername);
+        const receiverUser = await UserModel.findById(receiverId);
+
+        if (receiverUser) {
+          const getReceiverUser = getUser(receiverUser?.username);
+
+          if (senderUser) {
+            // Check if the recipient is online
+
+            // Save the message to the database
+            const newChat = await MessageModel({
+              senderId,
+              receiverId,
+              message,
+            });
+            await newChat.save();
+
+            const AllMsg = await MessageModel.find({
+              $or: [
+                { senderId: senderId, receiverId: receiverId },
+                { senderId: receiverId, receiverId: senderId },
+              ],
+            });
+            if (getReceiverUser) {
+              // Recipient is online, broadcast immediately
+              io.to(getReceiverUser.socketId).emit("sendAddMsg", AllMsg);
+            }
+
+            // Broadcast to sender and recipient (if online) for a chat history update
+
+            io.to(senderUser?.socketId).emit("sendAddMsg", AllMsg);
+          } else {
+            console.log("Can't find user1");
+          }
+        } else {
+          console.log("Can't find user2");
+        }
+      } else {
+        console.log("Can't add msg");
+      }
+    }
+  );
 });
 
 const PORT = process.env.PORT;
@@ -169,6 +234,7 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const path = require("path");
 const UserModel = require("./Models/UserModel/UserModel");
+const MessageModel = require("./Models/MessageModel/MessageModel");
 app.use(express.json());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));

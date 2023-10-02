@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
 
 * {
   margin: 0;
@@ -15,8 +15,8 @@
 
 body {
   overflow: hidden;
-  font-family: 'Roboto', sans-serif;
-  background-color: #15202B;
+  font-family: "Roboto", sans-serif;
+  background-color: #15202b;
   color: white;
   --theme-color: var(--bg-color);
   --theme-hover-color: var(--bg-hover-color);
@@ -130,4 +130,14 @@ button:disabled {
 
 .user_doesnt_find span {
   font-weight: 400;
+}
+
+.select_a_msg_to_show {
+  display: flex;
+  justify-content: center;
+  margin-top: 20vh;
+  font-size: 20px;
+}
+.select_a_msg_to_show p {
+  font-weight: 900;
 }

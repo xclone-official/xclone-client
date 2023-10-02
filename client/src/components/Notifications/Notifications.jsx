@@ -3,6 +3,7 @@ import "./Notifications.css";
 import { Link, useNavigate } from "react-router-dom";
 import { NotificationContext } from "../../useContext/NotificationsContext/NotificationsContext";
 import { customTimeFormat } from "../customTime/customTime";
+import RemoveUnnecessaryTag from "../../TweetCard/RemoveUnnecessaryTag";
 export default function Lists() {
   const navigate = useNavigate();
   const [allNotification, setAllNotification] = useContext(NotificationContext);
@@ -122,7 +123,11 @@ export default function Lists() {
                       <span>liked your tweet.</span>
                     </div>
                     <div className="like_tweet_text">
-                      <p>{notification?.tweet?.tweetContent}</p>
+                      <p style={{ marginTop: "7px" }}>
+                        <RemoveUnnecessaryTag
+                          htmlContent={notification?.tweet?.tweetContent}
+                        />
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -165,7 +170,11 @@ export default function Lists() {
                       <Link
                         to={`/${notification?.authorUsername}/tweet/${notification?.tweet?._id}`}
                       >
-                        <p>{notification?.commentText}</p>
+                        <p>
+                          <RemoveUnnecessaryTag
+                            htmlContent={notification?.commentText}
+                          />
+                        </p>
                       </Link>
                     </div>
                   </div>

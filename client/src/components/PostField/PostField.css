@@ -1,140 +1,171 @@
 .postfield_container {
-    width: 100%;
-    border-bottom: 1px solid var(--theme-hover-color);
-    max-height: 400px;
-    overflow-y: scroll;
+  width: 100%;
+  border-bottom: 1px solid var(--theme-hover-color);
+  max-height: 400px;
+  overflow-y: scroll;
+}
+#post-tweet_ifr {
+  background-color: transparent;
+}
+.tox-editor-header svg {
+  fill: var(--theme-color);
+}
+.mce-content-body,
+#tinymce {
+  background-color: black;
+  color: aliceblue !important;
+}
+.tox-editor-header,
+.tox-menubar,
+.tox-statusbar {
+  display: none !important;
 }
 
 .postfield_container::-webkit-scrollbar {
-    width: 0;
+  width: 0;
 }
-
+.tox-menubar {
+  background-color: black !important;
+}
 .choosen_img_1 {
-    display: flex;
-    margin-bottom: 10px;
-    margin: auto;
-    width: 80%;
+  display: flex;
+  margin-bottom: 10px;
+  margin: auto;
+  width: 80%;
 }
 
 .choose_images {
-    width: 100%;
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-bottom: 10px;
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 10px;
 }
 
 .delete_photo {
-    margin-left: -45px;
-    margin-top: 5px;
-    background-color: black;
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    text-align: center;
-    border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  margin-left: -45px;
+  margin-top: 5px;
+  background-color: black;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-
 .choose_images img {
-    border-radius: 20px;
-    width: 40%;
-    object-fit: cover;
-    border: 1px solid var(--theme-color);
+  border-radius: 20px;
+  width: 40%;
+  object-fit: cover;
+  border: 1px solid var(--theme-color);
 }
 
 .choose_images video {
-    border-radius: 20px;
-    width: 90%;
-    border: 1px solid black;
+  border-radius: 20px;
+  width: 90%;
+  border: 1px solid black;
 }
 
 .img_textarea {
-    width: 100%;
-    display: flex;
-    padding: 5px 10px;
-    gap: 10px;
+  width: 100%;
+  display: flex;
+  padding: 5px 10px;
+  gap: 10px;
 }
-
+.tox-tinymce {
+  border: 1px solid var(--theme-hover-color) !important;
+}
 .post_profile img {
-    width: 40px;
-    height: 40px;
-    border-radius: 100%;
-    object-fit: cover;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  object-fit: cover;
 }
 
 .textarea_ {
-    display: flex;
-    width: 100%;
+  display: flex;
+  width: 100%;
 }
-
+.tox-tinymce {
+  width: 100%;
+  height: 100px !important;
+}
+#post-tweet {
+  height: 100px !important;
+  border: 1px solid var(--theme-hover-color);
+  border-radius: 20px;
+}
 .textarea_ textarea {
-    width: 100%;
-    resize: none;
-    padding: 5px;
-    outline: none;
-    border: none;
-    background-color: transparent;
-    color: white;
-    font-family: 'Roboto', sans-serif;
-    font-size: 18px;
+  width: 100%;
+  resize: none;
+  padding: 5px;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-family: "Roboto", sans-serif;
+  font-size: 18px;
 }
 
 .textarea_ textarea::placeholder {
-    color: rgb(83, 100, 113);
-    font-size: 20px;
-    font-family: 'Roboto', sans-serif;
+  color: rgb(83, 100, 113);
+  font-size: 20px;
+  font-family: "Roboto", sans-serif;
 }
-
+/* Define the styles for the custom placeholder class */
+.custom-placeholder::placeholder {
+  color: white !important; /* Change the color to white or any desired color */
+}
 
 .line {
-    border: 1px solid var(--theme-hover-color);
-    width: 85%;
-    margin: auto;
+  border: 1px solid var(--theme-hover-color);
+  margin: auto;
 }
-
+.text_red {
+  color: white !important;
+}
 .icons_btn {
-    display: flex;
-    justify-content: space-between;
-    width: 85%;
-    margin: -15px auto;
-    padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  width: 85%;
+  margin: -15px auto;
+  padding-top: 20px;
 }
 
 .post_icons {
-    display: flex;
-    gap: 5px;
+  display: flex;
+  gap: 5px;
 }
 
 .post_icon {
-    cursor: pointer;
-    padding: 5px;
-    display: flex;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
 }
 
 .post_icon svg {
-    width: 20px;
+  width: 20px;
 }
 
 .post_icon:hover {
-    background-color: var(--theme-hover-color);
-    border-radius: 100%;
+  background-color: var(--theme-hover-color);
+  border-radius: 100%;
 }
 
 .post_btn button {
-    padding: 5px;
-    border-radius: 20px;
-    cursor: pointer;
-    background-color: var(--theme-color);
-    border: none;
-    outline: none;
-    display: flex;
-    align-items: center;
-    color: white;
-    width: 60px;
-    justify-content: center;
-    font-weight: 800;
+  padding: 5px;
+  border-radius: 20px;
+  cursor: pointer;
+  background-color: var(--theme-color);
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  color: white;
+  width: 60px;
+  justify-content: center;
+  font-weight: 800;
 }

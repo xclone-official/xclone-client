@@ -5,14 +5,7 @@
   text-align: center;
   width: 95%;
   padding: 20px;
-  margin-top: 20px;
   cursor: pointer;
-}
-
-.messages_container_ {
-  overflow-y: scroll;
-  height: 95vh;
-  padding: 0 0 150px 0;
 }
 
 .user_credentials_messages:hover {
@@ -20,8 +13,8 @@
   padding: 20px;
 }
 .message_user_profile img {
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   border-radius: 100%;
   object-fit: cover;
 }
@@ -38,11 +31,11 @@
   font-weight: 400;
 }
 .message_user_bio {
-  margin-top: 15px;
+  margin-top: 5px;
 }
 
 .joined_and_followers_num {
-  margin-top: 15px;
+  margin-top: 5px;
   display: flex;
   gap: 5px;
   justify-content: center;
@@ -55,7 +48,9 @@
 }
 
 .users_conversation {
-  padding: 20px;
+  padding: 20px 20px 20px 20px;
+  height: 60vh; /* Set an appropriate height */
+  overflow-y: scroll;
 }
 
 .user_conversation_container {

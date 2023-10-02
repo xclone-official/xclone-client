@@ -171,6 +171,34 @@ const UserModel = mongoose.Schema(
         },
       },
     ],
+    userHasChatted: [
+      {
+        name: {
+          type: String,
+          required: true,
+        },
+        _id: {
+          type: String,
+          required: true,
+        },
+        username: {
+          type: String,
+          required: true,
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
+        profile: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
+    isOnline: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
@@ -190,5 +218,6 @@ UserModel.pre("save", async function (next) {
     return next(error);
   }
 });
-
+// 12345
+// $2a$10$YdKy9lVA8t2TgTqel.pBue7r3Exd6ez5RRZE.ZdqUzBns9kRn6Grm
 module.exports = mongoose.model("userdata", UserModel);

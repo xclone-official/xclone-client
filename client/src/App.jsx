@@ -9,10 +9,12 @@ import Loader from "./components/Loader/Loader";
 import Layout from "./components/Layout/Layout";
 import { io } from "socket.io-client";
 import { NotificationContext } from "./useContext/NotificationsContext/NotificationsContext";
+import { MessageContext } from "./useContext/MessageContext/MessageContext";
 
 export default function App() {
   const [, , , , userData, , loading] = useContext(AuthContext);
   const [allNotification, setAllNotification] = useContext(NotificationContext);
+  const [allMessages, setAllMessages] = useContext(MessageContext);
   const [socket, setSocket] = useState(null);
   useEffect(() => {
     setSocket(
@@ -69,6 +71,38 @@ export default function App() {
       socket?.off("likedtweet", handleLiked);
     };
   }, [socket, allNotification?.length, allNotification]);
+
+  // allMsg
+  useEffect(() => {
+    const handleAllMsg = (data) => {
+      // console.log("allMsg", data);
+      data?.length > 0 && setAllMessages(data);
+    };
+
+    socket?.on("setAllMsg", handleAllMsg);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      socket?.off("setAllMsg", handleAllMsg);
+    };
+  }, [socket]);
+
+  // Add msg
+  useEffect(() => {
+    const handleAllMsg = (data) => {
+      // console.log("sendAddMsg", data);
+
+      data?.length > 0 && setAllMessages(data);
+    };
+
+    socket?.on("sendAddMsg", handleAllMsg);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      socket?.off("sendAddMsg", handleAllMsg);
+    };
+  }, [socket]);
+
   // reply socket
   useEffect(() => {
     const handleLiked = (data) => {
@@ -180,6 +214,12 @@ export default function App() {
           path="/messages"
           element={
             userData ? <Layout socket={socket} messages={true} /> : <Auth />
+          }
+        />
+        <Route
+          path="/messages/:userId"
+          element={
+            userData ? <Layout socket={socket} showMessage={true} /> : <Auth />
           }
         />
         <Route

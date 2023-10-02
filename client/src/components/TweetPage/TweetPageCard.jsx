@@ -8,6 +8,7 @@ import { TweetContext } from "../../useContext/TweetContext/TweetContext";
 import Loader from "../Loader/InfoLoader";
 import { SpecificTweets } from "../../useContext/SpecificTweet/SpecificTweet";
 import { customTimeFormat } from "../customTime/customTime";
+import RemoveUnnecessaryTag from "../../TweetCard/RemoveUnnecessaryTag";
 const Likebtn = () => {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -162,7 +163,13 @@ export default function TweetPageCard({ tweetdata, socket }) {
               </div>
             </div>
             <div className="tweet_content_text padding_wrap">
-              <p>{specifictweetPage?.tweetContent}</p>
+              <p>
+                <RemoveUnnecessaryTag
+                  htmlContent={specifictweetPage?.tweetContent}
+                />
+
+                {/* {specifictweetPage?.tweetContent} */}
+              </p>
             </div>
             <div className="tweet_media padding_wrap">
               {specifictweetPage.video?.length > 0 ? (
