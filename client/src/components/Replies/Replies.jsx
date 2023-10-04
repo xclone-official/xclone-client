@@ -8,6 +8,7 @@ import Loader from "../Loader/InfoLoader";
 import { SpecificTweets } from "../../useContext/SpecificTweet/SpecificTweet";
 import { customTimeFormat } from "../customTime/customTime";
 import axios from "axios";
+import RemoveUnnecessaryTag from "../../TweetCard/RemoveUnnecessaryTag";
 const Likebtn = () => {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -107,9 +108,21 @@ export default function Replies({ tweetdata }) {
     }
   };
   useEffect(() => {
-    document.title = `${specifictweetPage?.authorName || "User"} on X: "${
-      specifictweetPage?.tweetContent || "loading..."
-    }"`;
+    if (specifictweetPage) {
+      // Create a temporary DOM element
+      const tempDiv = document.createElement("div");
+
+      // Set the HTML content
+      tempDiv.innerHTML = specifictweetPage?.comments?.find(
+        (e) => e._id === commentId
+      )?.commentText;
+
+      // Get the plain text content
+      const plainTextContent = tempDiv.textContent;
+
+      // Set the document title with the parsed plain text
+      document.title = `${specifictweetPage?.authorName} on X: "${plainTextContent}"`;
+    }
   }, [specifictweetPage]);
   return (
     <>
@@ -196,10 +209,13 @@ export default function Replies({ tweetdata }) {
             </div>
             <div className="tweet_content_text padding_wrap">
               <p>
-                {
-                  specifictweetPage?.comments?.find((e) => e._id === commentId)
-                    ?.commentText
-                }
+                <RemoveUnnecessaryTag
+                  htmlContent={
+                    specifictweetPage?.comments?.find(
+                      (e) => e._id === commentId
+                    )?.commentText
+                  }
+                />
               </p>
             </div>
             <div className="tweet_media padding_wrap">

@@ -10,7 +10,6 @@
 
 .user_credentials_messages:hover {
   background-color: var(--theme-hover-color);
-  padding: 20px;
 }
 .message_user_profile img {
   width: 60px;
@@ -48,12 +47,12 @@
 }
 
 .users_conversation {
-  padding: 20px 20px 20px 20px;
-  height: 60vh; /* Set an appropriate height */
+  height: 90vh; /* Set an appropriate height */
   overflow-y: scroll;
 }
 
 .user_conversation_container {
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
 }
@@ -96,27 +95,42 @@
 
 /* Message Input */
 
+.message_input_form {
+  position: sticky;
+  bottom: 0;
+}
+@media (max-width: 450px) {
+  .message_input_form {
+    position: sticky;
+    bottom: 40px;
+  }
+}
 #message_input {
-  position: fixed;
+  visibility: visible;
   background: rgba(0, 0, 0, 0.15);
   padding: 0.25rem;
-  bottom: 0;
-  /* left: 490px;
-  right: 564px; */
-  width: 38.25%;
+  width: 100%;
   display: flex;
   height: 3rem;
   box-sizing: border-box;
   backdrop-filter: blur(10px);
 }
+#msg_input::placeholder {
+  color: white;
+}
 #msg_input {
   border: none;
-  padding: 0 1rem;
+  resize: none;
+  padding: 11px 1rem;
   flex-grow: 1;
+  visibility: visible;
   color: white;
   border-radius: 2rem;
-  margin: 0.25rem;
+  margin: 0.1rem;
   background-color: var(--theme-hover-color);
+}
+#msg_input::-webkit-scrollbar {
+  width: 0;
 }
 #msg_input:focus {
   outline: 1px solid var(--theme-color);
@@ -134,4 +148,18 @@
   outline: none;
   color: #fff;
   cursor: pointer;
+}
+.send_files {
+  border: none;
+  flex-grow: 0.5;
+  padding-top: 5px;
+  padding-left: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  border-radius: 2rem;
+  margin: 0.25rem;
+  width: 5px;
+  background-color: var(--theme-hover-color);
 }

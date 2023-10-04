@@ -5,6 +5,8 @@ import React, {
   useState,
   useLayoutEffect,
 } from "react";
+import { Editor } from "@tinymce/tinymce-react";
+import RemoveUnnecessaryTag from "../../TweetCard/RemoveUnnecessaryTag";
 import "./singlemessages.css";
 import { MessageContext } from "../../useContext/MessageContext/MessageContext";
 import { useNavigate, useParams } from "react-router-dom";
@@ -31,8 +33,11 @@ export default function SingleMessagesBox({ socket }) {
     getAllTweetsFromFollowingUsers,
   ] = useContext(AuthContext);
   const [allMessages, setAllMessages] = useContext(MessageContext);
+  const [count, setCount] = useState(0);
+  const MSE_APIKEY = process.env.REACT_APP_MCE_KEY;
   const [message, setMessage] = useState("");
   const { userId } = useParams();
+  const [file, setFile] = useState("");
   const [isUserExists, setIsUserExists] = useState(false);
   const [profileData, setProfileData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -89,16 +94,37 @@ export default function SingleMessagesBox({ socket }) {
     navigate(-1);
   };
 
+  // function handleMessage(e) {
+  //   e.preventDefault();
+  //   const fd = new FormData();
+  //   fd.append("senderId", userData?._id);
+  //   fd.append("senderUsername", userData?.username);
+  //   fd.append("receiverId", userId);
+  //   fd.append("message", message);
+  //   fd.append("file", file);
+
+  //   socket?.emit("addMsg", fd);
+  //   setMessage("");
+  //   setFile("");
+  // }
   function handleMessage(e) {
     e.preventDefault();
-    socket?.emit("addMsg", {
+    setCount(count + 1);
+    console.log(count);
+    const data = {
       senderId: userData?._id,
       senderUsername: userData?.username,
       receiverId: userId,
       message: message,
-    });
+      file: file, // You can include the file data if needed
+    };
+
+    socket?.emit("addMsg", data);
+
     setMessage("");
+    setFile(""); // Clear the file input if needed
   }
+
   return isUserExists ? (
     <div style={{ width: "100%" }}>
       <div className="profile_top">
@@ -122,27 +148,28 @@ export default function SingleMessagesBox({ socket }) {
       <div className="messages_container_">
         <div className="messages_mid_container">
           {/* Messages */}
-          <div className="user_credentials_messages">
-            <div className="message_user_profile">
-              <img
-                src={`${backendURL}/${profileData?.profilepicture}`}
-                alt=""
-              />
-            </div>
-            <div className="messsage_username_name">
-              <p>{profileData?.fullname}</p>
-              <span>@{profileData?.username}</span>
-            </div>
-            <div className="message_user_bio">
-              <p>{profileData?.bio}</p>
-            </div>
-            <div className="joined_and_followers_num">
-              <p>{convertDate(profileData?.createdAt)}</p>
-              {"  •  "}
-              <p>{profileData?.followers?.length} followers</p>
-            </div>
-          </div>
+
           <div className="users_conversation" ref={chatContainerRef}>
+            <div className="user_credentials_messages">
+              <div className="message_user_profile">
+                <img
+                  src={`${backendURL}/${profileData?.profilepicture}`}
+                  alt=""
+                />
+              </div>
+              <div className="messsage_username_name">
+                <p>{profileData?.fullname}</p>
+                <span>@{profileData?.username}</span>
+              </div>
+              <div className="message_user_bio">
+                <p>{profileData?.bio}</p>
+              </div>
+              <div className="joined_and_followers_num">
+                <p>{convertDate(profileData?.createdAt)}</p>
+                {"  •  "}
+                <p>{profileData?.followers?.length} followers</p>
+              </div>
+            </div>
             {allMessages.length > 0
               ? allMessages?.map((e, i) => (
                   <div key={i} className="user_conversation_container">
@@ -159,6 +186,7 @@ export default function SingleMessagesBox({ socket }) {
                           <p>{e?.message}</p>
                         </div>
                         <span>{convertDate(e?.createdAt)}</span>
+                        {/* <img src={backendURL + `/${e?.file}`} alt="file" /> */}
                       </div>
                     )}
                   </div>
@@ -167,18 +195,46 @@ export default function SingleMessagesBox({ socket }) {
           </div>
         </div>
       </div>
-      <form onSubmit={handleMessage} id="message_input" action="">
-        <input
-          value={message}
+      <div className="message_input_form">
+        <form onSubmit={handleMessage} id="message_input" action="">
+          {/* <input
+          type="file"
           onChange={(e) => {
-            setMessage(e.target.value);
+            console.log(e.target.files[0]);
+            setFile(e.target.files[0]);
           }}
-          id="msg_input"
-          placeholder="Enter Message"
-          autoComplete="off"
-        />
-        <button className="message_input_btn">Send</button>
-      </form>
+          name=""
+          disabled={count === 1}
+          id=""
+          className="send_files"
+        /> */}
+          <input
+            value={message}
+            onChange={(e) => {
+              setMessage(e.target.value);
+            }}
+            id="msg_input"
+            placeholder="Enter Message"
+            autoComplete="off"
+          />
+
+          {/* <Editor
+            apiKey={MSE_APIKEY}
+            value={message}
+            onEditorChange={(content) => setMessage(content)}
+            name="post"
+            id="msg_input"
+            init={{
+              placeholder: "Enter message",
+              color_cols: "red",
+              content_style:
+                "body {color: white; line-height: .3;background : #15202b;} textarea {background-color:transparent ;} ",
+              // Other TinyMCE configuration options go here
+            }}
+          /> */}
+          <button className="message_input_btn">Send</button>
+        </form>
+      </div>
     </div>
   ) : (
     <div>

@@ -103,7 +103,19 @@ export default function TweetPageCard({ tweetdata, socket }) {
     }
   };
   useEffect(() => {
-    document.title = `${tweetdata?.authorName} on X: "${tweetdata?.tweetContent}"`;
+    if (tweetdata?.tweetContent) {
+      // Create a temporary DOM element
+      const tempDiv = document.createElement("div");
+
+      // Set the HTML content
+      tempDiv.innerHTML = tweetdata.tweetContent;
+
+      // Get the plain text content
+      const plainTextContent = tempDiv.textContent;
+
+      // Set the document title with the parsed plain text
+      document.title = `${tweetdata.authorName} on X: "${plainTextContent}"`;
+    }
   }, [tweetdata]);
 
   return (
@@ -499,7 +511,11 @@ export default function TweetPageCard({ tweetdata, socket }) {
                             <Link
                               to={`/${comment?.commentUsername}/tweet/${tweetdata?._id}/replies/${comment?._id}`}
                             >
-                              <p>{comment?.commentText}</p>
+                              <p>
+                                <RemoveUnnecessaryTag
+                                  htmlContent={comment?.commentText}
+                                />
+                              </p>
                             </Link>
                           </div>
                           <div

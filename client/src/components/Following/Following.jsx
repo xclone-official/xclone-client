@@ -4,6 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import axios from "axios";
 import Loader from "../Loader/InfoLoader";
+import FollowersViewPage from "../FollowersViewPage/FollowersViewPage";
+import FollowingViewPage from "../FollowingViewPage/FollowingViewPage";
 export default function Following({ following, follower }) {
   const [, , , , userData, , , , allTweets, , , , , ,] =
     useContext(AuthContext);
@@ -99,6 +101,9 @@ export default function Following({ following, follower }) {
               <p>Following</p>
             </div>
           </div>
+
+          {follower && <FollowersViewPage />}
+          {following && <FollowingViewPage />}
         </>
       )}
     </div>

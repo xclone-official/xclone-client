@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const messageImage = require("./multer/messageImage");
 const { users, getUser, removeUser, addNewUser } = require("./userStore");
 // Connection
 require("./connection/conn");
@@ -179,53 +180,49 @@ io.on("connection", (socket) => {
   });
 
   // AddMsg socket
-  socket.on(
-    "addMsg",
-    async ({ senderId, senderUsername, receiverId, message }) => {
-      console.log(senderId, senderUsername, receiverId, message);
-      if (senderId && senderUsername && receiverId && message) {
-        const senderUser = getUser(senderUsername);
-        const receiverUser = await UserModel.findById(receiverId);
+  socket.on("addMsg", async (fd) => {
+    const { senderId, senderUsername, receiverId, message, file } = fd;
+    console.log(senderId, senderUsername, receiverId, message);
+    if (senderId && senderUsername && receiverId && message) {
+      const senderUser = getUser(senderUsername);
+      const receiverUser = await UserModel.findById(receiverId);
+      // if (file) console.log(Buffer.isBuffer(file));
+      if (receiverUser) {
+        const getReceiverUser = getUser(receiverUser?.username);
 
-        if (receiverUser) {
-          const getReceiverUser = getUser(receiverUser?.username);
+        if (senderUser) {
+          const newChat = await MessageModel({
+            senderId,
+            receiverId,
+            message,
+            file,
+          });
+          await newChat.save();
 
-          if (senderUser) {
-            // Check if the recipient is online
-
-            // Save the message to the database
-            const newChat = await MessageModel({
-              senderId,
-              receiverId,
-              message,
-            });
-            await newChat.save();
-
-            const AllMsg = await MessageModel.find({
-              $or: [
-                { senderId: senderId, receiverId: receiverId },
-                { senderId: receiverId, receiverId: senderId },
-              ],
-            });
-            if (getReceiverUser) {
-              // Recipient is online, broadcast immediately
-              io.to(getReceiverUser.socketId).emit("sendAddMsg", AllMsg);
-            }
-
-            // Broadcast to sender and recipient (if online) for a chat history update
-
-            io.to(senderUser?.socketId).emit("sendAddMsg", AllMsg);
-          } else {
-            console.log("Can't find user1");
+          const AllMsg = await MessageModel.find({
+            $or: [
+              { senderId: senderId, receiverId: receiverId },
+              { senderId: receiverId, receiverId: senderId },
+            ],
+          });
+          if (getReceiverUser) {
+            // Recipient is online, broadcast immediately
+            io.to(getReceiverUser.socketId).emit("sendAddMsg", AllMsg);
           }
+
+          // Broadcast to sender and recipient (if online) for a chat history update
+
+          io.to(senderUser?.socketId).emit("sendAddMsg", AllMsg);
         } else {
-          console.log("Can't find user2");
+          console.log("Can't find user1");
         }
       } else {
-        console.log("Can't add msg");
+        console.log("Can't find user2");
       }
+    } else {
+      console.log("Can't add msg");
     }
-  );
+  });
 });
 
 const PORT = process.env.PORT;

@@ -123,11 +123,15 @@ export default function Lists() {
                       <span>liked your tweet.</span>
                     </div>
                     <div className="like_tweet_text">
-                      <p style={{ marginTop: "7px" }}>
-                        <RemoveUnnecessaryTag
-                          htmlContent={notification?.tweet?.tweetContent}
-                        />
-                      </p>
+                      <Link
+                        to={`/${notification?.tweet.authorUsername}/tweet/${notification?.tweet?._id}`}
+                      >
+                        <p style={{ marginTop: "7px" }}>
+                          <RemoveUnnecessaryTag
+                            htmlContent={notification?.tweet?.tweetContent}
+                          />
+                        </p>
+                      </Link>
                     </div>
                   </div>
                 </div>
