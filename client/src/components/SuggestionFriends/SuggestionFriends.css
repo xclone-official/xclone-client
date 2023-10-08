@@ -1,0 +1,69 @@
+.friend_suggestion_container {
+  display: grid;
+  padding-top: 5px;
+}
+.friend_suggestion_mid_container {
+  display: grid;
+  background-color: rgb(30, 39, 50);
+  padding: 15px 0 0 0;
+  border-radius: 20px;
+}
+.friend_suggestion_mid_container .whotofollow {
+  padding: 0 10px;
+  padding-bottom: 10px;
+  font-size: 20px;
+  font-weight: 800;
+}
+.friend_suggestion_card:hover {
+  background-color: var(--theme-hover-color);
+}
+.friend_suggestion_card {
+  cursor: pointer;
+  display: flex;
+  user-select: none;
+  gap: 5px;
+  transition: 0.3s;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+.friend_suggestion_card:active {
+  background-color: rgb(29, 35, 41);
+}
+.friend_suggestion_username {
+  color: rgb(122, 122, 122);
+  font-size: 13px;
+}
+.friend_suggestion_image {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.friend_suggestion_credentials {
+  display: grid;
+  gap: 3px;
+}
+.friend_suggestion_image img {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+}
+.friend_suggestion_follow_btn button {
+  padding: 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  border: 1px solid var(--theme-hover-color);
+  background-color: var(--theme-hover-color);
+  color: white;
+}
+.show_more_friend {
+  color: var(--theme-color);
+  padding: 13px;
+  cursor: pointer;
+  transition: 0.3s;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+.show_more_friend:hover {
+  background-color: var(--theme-hover-color);
+}

@@ -4,7 +4,6 @@ import TweetFields from "../TweetFields/TweetFields";
 import ProfileLayout from "../Profile/ProfileLayout";
 import Explore from "../Explore/Explore";
 import Notifications from "../Notifications/Notifications";
-import Messages from "../Messages/Messages";
 import Lists from "../Lists/Lists";
 import Bookmarks from "../Bookmarks/Booksmarks";
 import Communities from "../Communities/Communities";
@@ -21,6 +20,8 @@ import Replies from "../Replies/Replies";
 import { TweetContext } from "../../useContext/TweetContext/TweetContext";
 import LikedTweet from "../LikedTweet/LikedTweet";
 import SingleMessagesBox from "../Messages/SingleMessagesBox";
+import Messages from "../Messages/Messages";
+import LikedUser from "../LikedUser/LikedUser";
 export default function Layout({
   tweetFields,
   profile,
@@ -33,6 +34,7 @@ export default function Layout({
   hashtag,
   showTweet,
   following,
+  composetweet,
   followers,
   with_replies,
   highlights,
@@ -42,6 +44,7 @@ export default function Layout({
   likes,
   edit_profile,
   socket,
+  tweetLike,
 }) {
   const [
     showLogin,
@@ -102,7 +105,11 @@ export default function Layout({
     return <ErrorPage />;
   }
   return (
-    <Home>
+    <Home
+      composetweet={composetweet}
+      messages={messages}
+      showMessage={showMessage}
+    >
       {tweetFields && <TweetFields socket={socket} />}
       {profile && (
         <ProfileLayout
@@ -124,9 +131,14 @@ export default function Layout({
       {explore && <Explore socket={socket} />}
       {notifications && <Notifications socket={socket} />}
       {messages && (
-        <div className="select_a_msg_to_show">
-          <p>Select a message to view</p>
-        </div>
+        <>
+          <div className="show_on_phone">
+            <Messages />
+          </div>
+          <div className="hide_on_phone select_a_msg_to_show">
+            Select a message to view
+          </div>
+        </>
       )}
       {showMessage && <SingleMessagesBox socket={socket} />}
       {lists && <Lists socket={socket} />}
@@ -206,6 +218,7 @@ export default function Layout({
       )}
       {edit_profile && <Editprofile socket={socket} />}
       {replies && <Replies socket={socket} />}
+      {tweetLike && <LikedUser />}
     </Home>
   );
 }

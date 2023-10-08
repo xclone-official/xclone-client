@@ -15,4 +15,5 @@ Router.use(
   "/getTweetfromfollowinguser",
   require("./getTweetfromfollowinguser/getTweetfromfollowinguser")
 );
+Router.use("/getALlLikes", require("./getAllLikes/getAllLikes"));
 module.exports = Router;

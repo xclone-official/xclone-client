@@ -8,15 +8,23 @@ export default function LikedTweet({ profileData }) {
   const [initialLikedArray, setInitialLikedArray] = useState();
   useEffect(() => {
     setInitialLikedArray(profileData?.likedTweet?.slice(0, initialData));
-  }, []);
-
+  }, [profileData]);
   const fetchMoreData = () => {
-    const newPageCount = initialData + 2;
-    let newTweets;
-    newTweets = profileData?.likedData?.slice(initialData, newPageCount);
-    // Concatenate the new tweets to the existing data
-    setInitialLikedArray((data) => [...data, ...newTweets]);
-    setInitialData(newPageCount);
+    if (profileData?.likedTweet) {
+      // Calculate the next index based on the current length of initialLikedArray
+      const nextIndex = initialLikedArray.length + 2;
+      // Get the next 2 liked tweets
+      const nextLikedTweets = profileData.likedTweet.slice(
+        nextIndex - 2,
+        nextIndex
+      );
+
+      // Update the initialLikedArray with the nextLikedTweets
+      setInitialLikedArray((prevLikedArray) => [
+        ...prevLikedArray,
+        ...nextLikedTweets,
+      ]);
+    }
   };
   return (
     <div>
@@ -43,12 +51,9 @@ export default function LikedTweet({ profileData }) {
           }
         >
           <div>
-            {initialLikedArray.map(
-              (data, index) =>
-                data?.tweet && (
-                  <LikedCard tweets={data?.tweet && data.tweet} key={index} />
-                )
-            )}
+            {initialLikedArray.map((data, index) => {
+              return <LikedCard tweets={data?.tweet} key={index} />;
+            })}
           </div>
         </InfiniteScroll>
       ) : (

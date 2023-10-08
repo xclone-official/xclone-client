@@ -287,6 +287,9 @@ app.use(
 
 app.use("/tweetinteractions", require("./InteractWithTweet/interactwithtweet"));
 
+// bookmark tweet
+app.use("/bookmark", require("./bookmarktweet/bookmarktweet"));
+
 httpServer.listen(PORT, () => {
   console.log(`App is listening at http://localhost:${PORT}`);
 });

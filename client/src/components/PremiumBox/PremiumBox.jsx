@@ -5,10 +5,16 @@ export default function PremiumBox() {
     <div className="verify_msg">
       <h1>Subscribe to Premium </h1>
       <h4>
-        Subscribe to unlock new features and if eligible, receive a share of ads
-        revenue.
+        No need to subscribe to premium. You <br />
+        will get blue tick for free😂
       </h4>
-      <button>Subscribe</button>
+      <button
+        onClick={() => {
+          alert("Hurray!");
+        }}
+      >
+        Hurray!
+      </button>
     </div>
   );
 }

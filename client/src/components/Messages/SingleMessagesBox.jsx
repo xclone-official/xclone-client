@@ -5,14 +5,13 @@ import React, {
   useState,
   useLayoutEffect,
 } from "react";
-import { Editor } from "@tinymce/tinymce-react";
-import RemoveUnnecessaryTag from "../../TweetCard/RemoveUnnecessaryTag";
 import "./singlemessages.css";
 import { MessageContext } from "../../useContext/MessageContext/MessageContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import { convertDate } from "../CovertDateTime/ConvertDateTime";
 import axios from "axios";
+import Loader from "../Loader/InfoLoader";
 export default function SingleMessagesBox({ socket }) {
   const [
     showLogin,
@@ -82,12 +81,14 @@ export default function SingleMessagesBox({ socket }) {
     fetchUser(userId);
   }, [userId]);
   useEffect(() => {
+    setIsLoading(true);
     setAllMessages([]);
     socket?.emit("saveAllMessages", {
       senderusername: userData?.username,
       senderId: userData?._id,
       receiverId: userId,
     });
+    setIsLoading(false);
   }, [userId]);
   const navigate = useNavigate();
   const goBackToPreviousPage = () => {
@@ -145,59 +146,63 @@ export default function SingleMessagesBox({ socket }) {
           <p>{profileData?.fullname}</p>
         </div>
       </div>
-      <div className="messages_container_">
-        <div className="messages_mid_container">
-          {/* Messages */}
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <div className="messages_container_">
+            <div className="messages_mid_container">
+              {/* Messages */}
 
-          <div className="users_conversation" ref={chatContainerRef}>
-            <div className="user_credentials_messages">
-              <div className="message_user_profile">
-                <img
-                  src={`${backendURL}/${profileData?.profilepicture}`}
-                  alt=""
-                />
-              </div>
-              <div className="messsage_username_name">
-                <p>{profileData?.fullname}</p>
-                <span>@{profileData?.username}</span>
-              </div>
-              <div className="message_user_bio">
-                <p>{profileData?.bio}</p>
-              </div>
-              <div className="joined_and_followers_num">
-                <p>{convertDate(profileData?.createdAt)}</p>
-                {"  •  "}
-                <p>{profileData?.followers?.length} followers</p>
+              <div className="users_conversation" ref={chatContainerRef}>
+                <div className="user_credentials_messages">
+                  <div className="message_user_profile">
+                    <img
+                      src={`${backendURL}/${profileData?.profilepicture}`}
+                      alt=""
+                    />
+                  </div>
+                  <div className="messsage_username_name">
+                    <p>{profileData?.fullname}</p>
+                    <span>@{profileData?.username}</span>
+                  </div>
+                  <div className="message_user_bio">
+                    <p>{profileData?.bio}</p>
+                  </div>
+                  <div className="joined_and_followers_num">
+                    <p>{convertDate(profileData?.createdAt)}</p>
+                    {"  •  "}
+                    <p>{profileData?.followers?.length} followers</p>
+                  </div>
+                </div>
+                {allMessages.length > 0
+                  ? allMessages?.map((e, i) => (
+                      <div key={i} className="user_conversation_container">
+                        {parseInt(e.senderId) === parseInt(userData._id) ? (
+                          <div className="my_msg_container">
+                            <div className="my_messages">
+                              <p>{e?.message}</p>
+                            </div>
+                            <span>{convertDate(e?.createdAt)}</span>
+                          </div>
+                        ) : (
+                          <div className="user_msg_container">
+                            <div className="other_user_messages">
+                              <p>{e?.message}</p>
+                            </div>
+                            <span>{convertDate(e?.createdAt)}</span>
+                            {/* <img src={backendURL + `/${e?.file}`} alt="file" /> */}
+                          </div>
+                        )}
+                      </div>
+                    ))
+                  : ""}
               </div>
             </div>
-            {allMessages.length > 0
-              ? allMessages?.map((e, i) => (
-                  <div key={i} className="user_conversation_container">
-                    {parseInt(e.senderId) === parseInt(userData._id) ? (
-                      <div className="my_msg_container">
-                        <div className="my_messages">
-                          <p>{e?.message}</p>
-                        </div>
-                        <span>{convertDate(e?.createdAt)}</span>
-                      </div>
-                    ) : (
-                      <div className="user_msg_container">
-                        <div className="other_user_messages">
-                          <p>{e?.message}</p>
-                        </div>
-                        <span>{convertDate(e?.createdAt)}</span>
-                        {/* <img src={backendURL + `/${e?.file}`} alt="file" /> */}
-                      </div>
-                    )}
-                  </div>
-                ))
-              : ""}
           </div>
-        </div>
-      </div>
-      <div className="message_input_form">
-        <form onSubmit={handleMessage} id="message_input" action="">
-          {/* <input
+          <div className="message_input_form">
+            <form onSubmit={handleMessage} id="message_input" action="">
+              {/* <input
           type="file"
           onChange={(e) => {
             console.log(e.target.files[0]);
@@ -208,17 +213,17 @@ export default function SingleMessagesBox({ socket }) {
           id=""
           className="send_files"
         /> */}
-          <input
-            value={message}
-            onChange={(e) => {
-              setMessage(e.target.value);
-            }}
-            id="msg_input"
-            placeholder="Enter Message"
-            autoComplete="off"
-          />
+              <input
+                value={message}
+                onChange={(e) => {
+                  setMessage(e.target.value);
+                }}
+                id="msg_input"
+                placeholder="Enter Message"
+                autoComplete="off"
+              />
 
-          {/* <Editor
+              {/* <Editor
             apiKey={MSE_APIKEY}
             value={message}
             onEditorChange={(content) => setMessage(content)}
@@ -232,9 +237,11 @@ export default function SingleMessagesBox({ socket }) {
               // Other TinyMCE configuration options go here
             }}
           /> */}
-          <button className="message_input_btn">Send</button>
-        </form>
-      </div>
+              <button className="message_input_btn">Send</button>
+            </form>
+          </div>
+        </>
+      )}
     </div>
   ) : (
     <div>

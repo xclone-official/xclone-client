@@ -7,7 +7,12 @@ export default function TweetFields({ socket }) {
   const [isActive2, setIsActive2] = useState(false);
   return (
     <div className="margin_bottom_200px">
-      <h3 className="home_btn">Home</h3>
+      <div className="profile_top_flex">
+        <h3 className="home_btn">Home</h3>
+        <div className="profile_image">
+          <img src="/pfp.png" alt="" />
+        </div>
+      </div>
       <div className="two_tab">
         <div
           className={`for_you ${isActive1 ? "active1" : ""}`}

@@ -141,6 +141,12 @@ export default function App() {
           }
         />
         <Route
+          path="/home/compose/tweet"
+          element={
+            userData ? <Layout socket={socket} composetweet={true} /> : <Auth />
+          }
+        />
+        <Route
           path="/p/:username"
           element={
             userData ? <Layout socket={socket} profile={true} /> : <Auth />
@@ -250,6 +256,12 @@ export default function App() {
           path="/:username/tweet/:tweetId"
           element={
             userData ? <Layout socket={socket} showTweet={true} /> : <Auth />
+          }
+        />
+        <Route
+          path="/:username/tweet/:tweetId/likes"
+          element={
+            userData ? <Layout socket={socket} tweetLike={true} /> : <Auth />
           }
         />
         <Route

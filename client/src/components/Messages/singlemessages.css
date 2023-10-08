@@ -49,10 +49,14 @@
 .users_conversation {
   height: 90vh; /* Set an appropriate height */
   overflow-y: scroll;
+  padding: 0 0 100px 0;
 }
-
+.users_conversation::-webkit-scrollbar {
+  width: 0;
+}
 .user_conversation_container {
   margin-top: 20px;
+  padding: 0 10px;
   display: flex;
   flex-direction: column;
 }
@@ -97,12 +101,12 @@
 
 .message_input_form {
   position: sticky;
-  bottom: 0;
+  bottom: 0px;
 }
 @media (max-width: 450px) {
   .message_input_form {
     position: sticky;
-    bottom: 40px;
+    bottom: 52px;
   }
 }
 #message_input {

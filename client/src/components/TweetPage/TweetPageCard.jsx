@@ -2,13 +2,15 @@ import React, { useContext, useEffect, useState } from "react";
 import "./tweetpage.css";
 import PostField from "../PostField/PostField";
 import { Link, useNavigate } from "react-router-dom";
-import { convertDate } from "../CovertDateTime/ConvertDateTime";
+// import { convertDate } from "../CovertDateTime/ConvertDateTime";
+import { convertDate } from "convertdatetimeandliketwitter";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import { TweetContext } from "../../useContext/TweetContext/TweetContext";
 import Loader from "../Loader/InfoLoader";
 import { SpecificTweets } from "../../useContext/SpecificTweet/SpecificTweet";
 import { customTimeFormat } from "../customTime/customTime";
 import RemoveUnnecessaryTag from "../../TweetCard/RemoveUnnecessaryTag";
+import axios from "axios";
 const Likebtn = () => {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -61,6 +63,7 @@ export default function TweetPageCard({ tweetdata, socket }) {
     likeTweet,
     unlikeTweet,
   ] = useContext(TweetContext);
+  const [showShare, setShowShare] = useState(false);
   const [specifictweetPage, setSpecifictweetPage] = useContext(SpecificTweets);
   const getFollowedSign = () => {
     const IsAlreadyLiked = tweetdata?.likes?.some(
@@ -117,7 +120,24 @@ export default function TweetPageCard({ tweetdata, socket }) {
       document.title = `${tweetdata.authorName} on X: "${plainTextContent}"`;
     }
   }, [tweetdata]);
+  const handleBookMark = () => {
+    try {
+      console.log("bookmark save called");
 
+      axios
+        .post(
+          `${backendURL}/bookmark/savebookmark/${tweetdata?._id}/${userData?._id}`
+        )
+        .then((data) => {
+          console.log(data?.data);
+        })
+        .catch((Err) => {
+          console.log("Err", Err);
+        });
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
   return (
     <>
       {!specifictweetPage || !specifictweetPage?.length === 0 ? (
@@ -193,9 +213,9 @@ export default function TweetPageCard({ tweetdata, socket }) {
                 />
               ) : specifictweetPage.photos?.length > 0 ? (
                 specifictweetPage.photos?.length > 1 ? (
-                  specifictweetPage.photos?.map((e) => (
+                  specifictweetPage.photos?.map((e, i) => (
                     <img
-                      key={e}
+                      key={i}
                       className="imgfirst-child"
                       src={`${backendURL}/${e}`}
                       alt="photo"
@@ -259,6 +279,9 @@ export default function TweetPageCard({ tweetdata, socket }) {
                     <path d="M4.5 3.88l4.432 4.14-1.364 1.46L5.5 7.55V16c0 1.1.896 2 2 2H13v2H7.5c-2.209 0-4-1.79-4-4V7.55L1.432 9.48.068 8.02 4.5 3.88zM16.5 6H11V4h5.5c2.209 0 4 1.79 4 4v8.45l2.068-1.93 1.364 1.46-4.432 4.14-4.432-4.14 1.364-1.46 2.068 1.93V8c0-1.1-.896-2-2-2z"></path>
                   </g>
                 </svg>
+                {specifictweetPage?.retweet?.length > 0 && (
+                  <p>{specifictweetPage?.retweet?.length}</p>
+                )}
               </div>
 
               {userData?._id === specifictweetPage?.authorId ? (
@@ -285,19 +308,36 @@ export default function TweetPageCard({ tweetdata, socket }) {
               )}
 
               <div className=" svg_width">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                  onClick={handleBookMark}
+                >
                   <g>
                     <path d="M4 4.5C4 3.12 5.119 2 6.5 2h11C18.881 2 20 3.12 20 4.5v18.44l-8-5.71-8 5.71V4.5zM6.5 4c-.276 0-.5.22-.5.5v14.56l6-4.29 6 4.29V4.5c0-.28-.224-.5-.5-.5h-11z"></path>
                   </g>
                 </svg>
+                {specifictweetPage?.bookmark?.length > 0 && (
+                  <p>{specifictweetPage?.bookmark?.length}</p>
+                )}
               </div>
 
               <div className="tweet_share svg_width">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                  onClick={() => setShowShare(!showShare)}
+                >
                   <g>
                     <path d="M12 2.59l5.7 5.7-1.41 1.42L13 6.41V16h-2V6.41l-3.3 3.3-1.41-1.42L12 2.59zM21 15l-.02 3.51c0 1.38-1.12 2.49-2.5 2.49H5.5C4.11 21 3 19.88 3 18.5V15h2v3.5c0 .28.22.5.5.5h12.98c.28 0 .5-.22.5-.5L19 15h2z"></path>
                   </g>
                 </svg>
+                {showShare && (
+                  <div id="share_tweet">
+                    <button>Delete</button>
+                    <button>Copy link</button>
+                  </div>
+                )}
               </div>
             </div>
             <PostField
@@ -311,10 +351,10 @@ export default function TweetPageCard({ tweetdata, socket }) {
             {/* Comment Section */}
             <div className="comment_section">
               {specifictweetPage?.comments?.map((comment, i) => (
-                <div key={i}>
+                <div key={comment?._id}>
                   {comment === 1 ? (
                     <>
-                      <div className="comment_detailss">
+                      <div key={i} className="comment_detailss">
                         <div className="comment_user_details">
                           <div className="comment_user_profile">
                             <img
@@ -473,7 +513,7 @@ export default function TweetPageCard({ tweetdata, socket }) {
                       </div>
                     </>
                   ) : (
-                    <div className="comment_details">
+                    <div key={i} className="comment_details">
                       <div
                         className="comment_user_details"
                         style={{ width: "100%" }}
@@ -508,17 +548,17 @@ export default function TweetPageCard({ tweetdata, socket }) {
                             to={`/${comment?.commentUsername}/tweet/${tweetdata?._id}/replies/${comment?._id}`}
                             className="comment_text"
                           >
-                            <Link
+                            {/* <Link
                               to={`/${comment?.commentUsername}/tweet/${tweetdata?._id}/replies/${comment?._id}`}
-                            >
-                              <p>
-                                <RemoveUnnecessaryTag
-                                  htmlContent={comment?.commentText}
-                                />
-                              </p>
-                            </Link>
+                            > */}
+                            <p>
+                              <RemoveUnnecessaryTag
+                                htmlContent={comment?.commentText}
+                              />
+                            </p>
+                            {/* </Link> */}
                           </div>
-                          <div
+                          {/* <div
                             className="tweet_interactions_options"
                             style={{
                               display: "flex",
@@ -572,7 +612,7 @@ export default function TweetPageCard({ tweetdata, socket }) {
                                 </g>
                               </svg>
                             </div>
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                       <div className="comment_delete_btn">

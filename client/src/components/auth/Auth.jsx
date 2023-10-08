@@ -19,7 +19,7 @@ export default function Auth() {
       >
         <div className="primary_page">
           <div className="auth-image">
-            <img src="/x-logo.png" alt="" />
+            <img src="/xlogo-removebg-preview.png" alt="" />
           </div>
           <div className="auth-box">
             <div className="auth_text">

@@ -4,7 +4,9 @@
   height: 100vh;
   background-color: #15202b !important;
 }
-
+.main_content::-webkit-scrollbar {
+  width: 0;
+}
 @media (max-width: 1400px) {
   .main_content {
     width: 90%;
@@ -23,16 +25,21 @@
   }
 
   .sidebar {
-    width: 10%;
+    width: 20%;
   }
 
   .tweetfields {
-    width: 60%;
+    width: 40%;
     overflow-y: scroll;
   }
 
   .rightbar {
-    width: 40% !important;
+    width: 35% !important;
+  }
+}
+@media (max-width: 1000px) {
+  .rightbar {
+    width: 45% !important;
   }
 }
 
@@ -46,10 +53,11 @@
 }
 
 .sidebar {
-  width: 25%;
+  width: 23%;
   overflow-y: scroll;
   border-right: 1px solid var(--theme-hover-color);
   z-index: 100;
+  overflow-x: hidden;
 }
 
 .sidebar::-webkit-scrollbar {
@@ -68,10 +76,15 @@
 ::-webkit-scrollbar {
   width: 10px;
 }
-
+@media (max-width: 500px) {
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
+}
 .tweetfields {
-  width: 45%;
+  width: 47%;
   overflow-y: hidden;
+  border-right: 1px solid var(--theme-hover-color);
 }
 
 .tweetfields::-webkit-scrollbar {
@@ -80,11 +93,72 @@
 
 .rightbar {
   width: 30%;
-  border-left: 1px solid var(--theme-hover-color);
+  border-right: 1px solid var(--theme-hover-color);
 }
 
 /* Example styling for columns */
 .column {
-  /* border: 1px solid #ddd; */
   margin-bottom: 10px;
+}
+
+/* tweet btn on phone */
+@media (min-width: 450px) {
+  .tweet_btn_on_phone {
+    display: none;
+  }
+}
+.tweet_btn_on_phone {
+  position: fixed;
+  top: 78vh;
+  right: 14px;
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  z-index: 2000;
+  background-color: var(--theme-color);
+}
+.tweet_btn_on_phone svg {
+  width: 50px;
+  fill: white;
+  height: 50px;
+  padding: 10px;
+}
+.post_field_in_phone_and_pc {
+  position: fixed;
+  width: 100%;
+  background-color: #15202b;
+  height: 100% !important;
+  z-index: 1000;
+}
+.real_post_div {
+  margin-top: 20px;
+}
+
+.post_field_in_phone_and_pc .postfield_container {
+  max-height: 700px;
+}
+.post_field_in_phone_and_pc .icons_btn {
+  width: 100% !important;
+}
+@media (min-width: 450px) {
+  .post_field_in_phone_and_pc {
+    left: 0%;
+    height: 100% !important;
+  }
+  .real_post_div {
+    width: 40%;
+    margin: auto;
+  }
+}
+
+@media (max-width: 820px) {
+  .show_on_phone {
+    display: block;
+  }
+}
+@media (min-width: 820px) {
+  .show_on_phone {
+    display: none;
+  }
 }

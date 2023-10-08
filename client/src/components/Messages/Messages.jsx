@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import SearchInput from "../SearchInput/SearchInput";
 import MessageComponent from "./MessageComponent";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
-export default function Lists() {
+export default function Messages() {
   React.useEffect(() => {
     document.title = "X / Messages";
   }, []);

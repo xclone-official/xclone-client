@@ -4,6 +4,7 @@ import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import { TweetContext } from "../../useContext/TweetContext/TweetContext";
 import { convertDate } from "../CovertDateTime/ConvertDateTime";
 import { LikedContext } from "../../useContext/LikedContext/LikedContext";
+import RemoveUnnecessaryTag from "../../TweetCard/RemoveUnnecessaryTag";
 const VerifiedAcccount = () => {
   return (
     <svg
@@ -83,7 +84,6 @@ export default function TweetCard({ tweets }) {
 
   useEffect(() => {
     getFollowedSign();
-    console?.log(tweets);
   }, []);
 
   const toggleFunction = () => {
@@ -183,7 +183,7 @@ export default function TweetCard({ tweets }) {
             <div className="tweet_content">
               <div onClick={() => navigate(`/niraj/tweet/${tweets?._id}`)}>
                 <span className="tweet_text">
-                  {formatTextWithLinks(tweets?.tweetContent)}
+                  <RemoveUnnecessaryTag htmlContent={tweets?.tweetContent} />
                 </span>
               </div>
               <div className="tweet_media">
