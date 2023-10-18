@@ -178,7 +178,7 @@ export default function SingleMessagesBox({ socket }) {
                 {allMessages.length > 0
                   ? allMessages?.map((e, i) => (
                       <div key={i} className="user_conversation_container">
-                        {parseInt(e.senderId) === parseInt(userData._id) ? (
+                        {e.senderId === userData._id ? (
                           <div className="my_msg_container">
                             <div className="my_messages">
                               <p>{e?.message}</p>

@@ -6,6 +6,7 @@ import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import Loader from "../Loader/Loader";
 import MsgAlert from "../MsgAlertComp/MsgAlert";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 export default function Login() {
   const [showLogin, setShowLogin, , , userData, setUserData] =
     useContext(AuthContext);
@@ -66,10 +67,8 @@ export default function Login() {
       const handler = statusHandlers[status];
       setUserData(response.data.data);
       if (response.data.status === 1) {
-        sessionStorage.setItem(
-          "twitterdata",
-          JSON.stringify(response.data.data._id)
-        );
+        const uId = response.data.data._id;
+        Cookies.set("xid", uId, { expires: 30 });
       }
       navigate("/home");
       if (handler) {

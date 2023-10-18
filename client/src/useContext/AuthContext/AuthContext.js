@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { NotificationContext } from "../NotificationsContext/NotificationsContext";
+import Cookies from "js-cookie";
 
 export const AuthContext = createContext();
 
@@ -94,8 +95,8 @@ const AuthContextProvider = (props) => {
     getAllTweets();
   }, [allTweets?.length, userData?._id, userData?.following?.length]);
   useEffect(() => {
-    if (sessionStorage.getItem("twitterdata")) {
-      const id = sessionStorage.getItem("twitterdata");
+    if (Cookies.get("xid")) {
+      const id = Cookies.get("xid");
       const toRemoveString = id;
       const stringWithoutQuotes = toRemoveString.replace(/^"(.*)"$/, "$1");
       fetchUser(stringWithoutQuotes);

@@ -10,6 +10,7 @@ import Layout from "./components/Layout/Layout";
 import { io } from "socket.io-client";
 import { NotificationContext } from "./useContext/NotificationsContext/NotificationsContext";
 import { MessageContext } from "./useContext/MessageContext/MessageContext";
+import Cookies from "js-cookie";
 
 export default function App() {
   const [, , , , userData, , loading] = useContext(AuthContext);
@@ -116,9 +117,10 @@ export default function App() {
       socket?.off("replytweet", handleLiked);
     };
   }, [socket, allNotification?.length, allNotification]);
-  if (loading) {
-    return <Loader />;
+  if (Cookies.get("xid")) {
+    loading && <Loader />;
   }
+
   return (
     <BrowserRouter>
       <Routes>

@@ -17,6 +17,7 @@ import {
   AiOutlineSearch,
 } from "react-icons/ai";
 import { NotificationContext } from "../../useContext/NotificationsContext/NotificationsContext";
+import Cookies from "js-cookie";
 
 export default function Sidebar({ socket }) {
   const [showLogoutBtn, setShowLogoutBtn] = useState(false);
@@ -263,7 +264,7 @@ export default function Sidebar({ socket }) {
           <div
             className="sidebar_logout showLogout_btn hide_in_phone"
             onClick={() => {
-              sessionStorage.clear();
+              Cookies.remove("xid");
               window.location.reload();
             }}
           >

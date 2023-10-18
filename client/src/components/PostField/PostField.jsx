@@ -204,7 +204,8 @@ export default function PostField({
                   : "Write a comment",
                 color_cols: "red",
                 body_class: "text_red",
-                content_style: "body {color: white; line-height: .3; }",
+                content_style:
+                  "body {color: white; line-height: .3; } .mce-content-body[data-mce-placeholder]:not(.mce-visualblocks)::before { color: white ;opacity: 1 }",
                 // Other TinyMCE configuration options go here
               }}
             />
