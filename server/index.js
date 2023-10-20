@@ -3,6 +3,7 @@ const app = express();
 const messageImage = require("./multer/messageImage");
 const { users, getUser, removeUser, addNewUser } = require("./userStore");
 // Connection
+const axios = require("axios");
 require("./connection/conn");
 require("dotenv").config();
 const cors = require("cors");
@@ -289,6 +290,58 @@ app.use("/tweetinteractions", require("./InteractWithTweet/interactwithtweet"));
 
 // bookmark tweet
 app.use("/bookmark", require("./bookmarktweet/bookmarktweet"));
+
+// Login with Github
+
+app.use("/login/oauth/access_token", async (req, res) => {
+  try {
+    // res.send({ msg: "Success" });
+    const { client_id, client_secret, code } = req.body;
+    const response = await axios.post(
+      `https://github.com/login/oauth/access_token`,
+      {
+        client_id: client_id,
+        client_secret: client_secret,
+        code: code,
+      }
+    );
+    console.log(response.data);
+    const access_token = new URLSearchParams(response.data).get("access_token");
+    return res.send({ res: access_token });
+  } catch (error) {
+    console.log("error", error);
+  }
+});
+const getEmail = async (access_token) => {
+  try {
+    const response = await axios.get(`https://api.github.com/user/emails`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    const selectedArray = response.data.filter(
+      (item) => item.primary === true && item.verified === true
+    );
+    return selectedArray[0].email;
+  } catch (error) {
+    console.log(error);
+  }
+};
+app.use("/github/getUser/:access_token", async (req, res) => {
+  try {
+    // res.send({ msg: "Success" });
+    const { access_token } = req.params;
+    const response = await axios.get(`https://api.github.com/user`, {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    const email = getEmail(access_token);
+    return res.send({ res: response.data, email: email });
+  } catch (error) {
+    console.log("error", error);
+  }
+});
 
 httpServer.listen(PORT, () => {
   console.log(`App is listening at http://localhost:${PORT}`);

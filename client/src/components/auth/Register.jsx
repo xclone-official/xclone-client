@@ -1,27 +1,27 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ImCross } from "react-icons/im";
 import "./login.css";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import Loader from "../Loader/Loader";
 import MsgAlert from "../MsgAlertComp/MsgAlert";
 import axios from "axios";
+import { getAccessToken, getUserData } from "./callback";
 
-const initialFormData = {
-  email: "",
-  username: "",
-  password: "",
-  fullname: "",
-  bio: "",
-  location: "",
-  website: "",
-  gender: "",
-  dob: "",
-  profilepic: "",
-};
-
-const backendURL = process.env.REACT_APP_BACKEND_URL;
-
-export default function Register() {
+export default function Register({ name, email, is_verified }) {
+  const backendURL = process.env.REACT_APP_BACKEND_URL;
+  const initialFormData = {
+    email: email || "",
+    username: "",
+    password: "",
+    fullname: name || "",
+    bio: "",
+    location: "",
+    website: "",
+    gender: "",
+    dob: "",
+    profilepic: "",
+    is_verified: is_verified || false,
+  };
   const [, , showRegister, setShowRegister] = useContext(AuthContext);
   const [step, setStep] = useState(1);
   const [loader, setLoader] = useState(false);
@@ -98,6 +98,24 @@ export default function Register() {
       console.log("Error:", error);
     }
   };
+
+  const getUserDetails = async () => {
+    const userData = await getUserData();
+    console.log("userData", userData);
+  };
+
+  useEffect(() => {
+    async function fetchToken() {
+      try {
+        const res = await getAccessToken();
+        localStorage.setItem("Xtempdata", res);
+        getUserDetails();
+      } catch (error) {
+        console.log("error", error);
+      }
+    }
+    fetchToken();
+  }, []);
 
   const nextStep = () => {
     setStep(step + 1);
