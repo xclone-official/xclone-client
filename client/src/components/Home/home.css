@@ -49,7 +49,7 @@
   width: 100%;
   height: 100vh;
   /* border: 1px solid var(--theme-hover-color); */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
 }
 
 .sidebar {
@@ -161,4 +161,12 @@
   .show_on_phone {
     display: none;
   }
+}
+
+.post_field_in_phone_and_pc {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }

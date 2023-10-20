@@ -23,7 +23,7 @@ export default function Editprofile() {
   const navigate = useNavigate();
   const { username } = useParams();
   useEffect(() => {
-    document.title = "X / Notifications";
+    document.title = `${userData.fullname} / Edit Profile - Xclone`;
   }, []);
   const goBackToPreviousPage = () => {
     navigate(-1);

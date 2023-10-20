@@ -214,7 +214,7 @@ export default function Sidebar({ socket }) {
                   }`}
                   key={index}
                 >
-                  {e.msg && e.msg}
+                  {e.msg}
                   <p>{isLocationMatched === e.href ? e.activeLogo : e.logo}</p>
                   <span className="hide_name_1000px">{e.name}</span>
                 </div>

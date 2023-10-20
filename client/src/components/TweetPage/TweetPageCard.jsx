@@ -3,7 +3,6 @@ import "./tweetpage.css";
 import PostField from "../PostField/PostField";
 import { Link, useNavigate } from "react-router-dom";
 import { convertDate } from "../CovertDateTime/ConvertDateTime";
-// import { convertDate } from "convertdatetimeandliketwitter";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import { TweetContext } from "../../useContext/TweetContext/TweetContext";
 import Loader from "../Loader/InfoLoader";

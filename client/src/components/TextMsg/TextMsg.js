@@ -4,7 +4,7 @@ const MSG_TYPES = {
   REGISTERED_SUCCESS: "REGISTERED_SUCCESS",
   USERNAME_EXIST: "USERNAME_EXIST",
   EMAIL_EXIST: "EMAIL_EXIST",
-
+  EMAIL_IS_NOT_VALID: "EMAIL_IS_NOT_VALID",
   LOGIN_SUCCESS: "LOGIN_SUCCESS",
   INVALID_CREDENTIALS: "INVALID_CREDENTIALS",
   ACTIVATED_ERROR: "ACTIVATED_ERROR",
@@ -32,7 +32,8 @@ export function MsgType(msgType) {
       return "Login success";
     case MSG_TYPES.INVALID_CREDENTIALS:
       return "Invalid credentials";
-
+    case MSG_TYPES.EMAIL_IS_NOT_VALID:
+      return "Email is not valid";
     case MSG_TYPES.ACTIVATED_ERROR:
       return "Activate your account";
 

@@ -4,7 +4,7 @@ const { sendEmail } = require("../../emailType/emailType");
 const upload = require("../../multer/profilepic");
 require("dotenv").config();
 function generateRandomNumber() {
-  const length = 30;
+  const length = 50;
   let result = "";
 
   // Generate random digits until the desired length is reached
@@ -24,6 +24,11 @@ Router.get("/", (req, res) => {
     msg: "Success",
   });
 });
+function isEmailValid(email) {
+  // Regular expression for basic email validation
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  return emailRegex.test(email);
+}
 Router.post("/", upload.single("profilepic"), async (req, res) => {
   try {
     const {
@@ -38,6 +43,13 @@ Router.post("/", upload.single("profilepic"), async (req, res) => {
       gender,
       language,
     } = req.body;
+    const isEmail = isEmailValid(email);
+    if (!isEmail) {
+      return res.status(200).send({
+        status: 5,
+        msg: "Email is not valid.",
+      });
+    }
     // Check if email or username already exist
     const isUserExist = await UserModel.findOne({
       $or: [{ email }, { username }],
@@ -59,6 +71,7 @@ Router.post("/", upload.single("profilepic"), async (req, res) => {
         isActivated: false,
         activateToken: randomNum,
       });
+      console.log("email", email);
       sendEmail("account_activation", email, user.activateToken);
       res.status(200).send({
         status: 1,
@@ -77,7 +90,7 @@ Router.post("/", upload.single("profilepic"), async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).send({
+    return res.status(500).send({
       status: 3,
       msg: "Server error. Please try again later.",
     });

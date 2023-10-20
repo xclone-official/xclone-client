@@ -61,7 +61,9 @@ button:disabled {
   border-radius: 20px;
   font-weight: 700;
 }
-
+.active svg {
+  fill: white;
+}
 a {
   color: white;
   text-decoration: none;

@@ -70,6 +70,14 @@ export default function Register() {
         setLoader(false);
       }, 2000);
     },
+    5: () => {
+      setMsgType("EMAIL_IS_NOT_VALID");
+      setShowMsg(true);
+      setTimeout(() => {
+        setShowMsg(false);
+        setLoader(false);
+      }, 2000);
+    },
   };
 
   const registerUser = async () => {
