@@ -44,13 +44,20 @@ Router.post("/", upload.single("profilepic"), async (req, res) => {
       language,
       is_verified,
     } = req.body;
+
     const isEmail = isEmailValid(email);
+
     if (!isEmail) {
       return res.status(200).send({
         status: 5,
         msg: "Email is not valid.",
       });
     }
+
+    // console.log(typeof is_verified);
+    // console.log("is_verified", is_verified);
+    // console.log(is_verified === true ? "" : randomNum);
+
     // Check if email or username already exist
     const isUserExist = await UserModel.findOne({
       $or: [{ email }, { username }],
@@ -72,8 +79,7 @@ Router.post("/", upload.single("profilepic"), async (req, res) => {
         isActivated: is_verified,
         activateToken: is_verified === true ? "" : randomNum,
       });
-      console.log("email", email);
-      is_verified
+      is_verified === true
         ? sendEmail("account_opened", email, user.activateToken)
         : sendEmail("account_activation", email, user.activateToken);
       res.status(200).send({

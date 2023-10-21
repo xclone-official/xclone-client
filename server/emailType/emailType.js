@@ -56,7 +56,7 @@ function sendEmail(emailType, toEmail, params) {
             <body>
               <h1>Account opened success</h1>
               <p>You registered your account via one of social accounts. <br/> so, your account will be activated automatically.</p>
-              <a href="${process.env.WEBSITE}/flow/login">Login to your account</a>
+              <a href="${process.env.FRONTEND_WEBSITE}/flow/login">Login to your account</a>
             </body>
           </html>
         `;

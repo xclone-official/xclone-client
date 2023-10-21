@@ -66,7 +66,7 @@ export default function Auth() {
                     onError={() => {
                       googleAuthError();
                     }}
-                    width="280px"
+                    width="282px"
                     text="Signup with Google"
                   />
                 </GoogleOAuthProvider>

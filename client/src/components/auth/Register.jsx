@@ -20,7 +20,7 @@ export default function Register({ name, email, is_verified }) {
     gender: "",
     dob: "",
     profilepic: "",
-    is_verified: is_verified || false,
+    is_verified: false,
   };
   const [, , showRegister, setShowRegister] = useContext(AuthContext);
   const [step, setStep] = useState(1);
@@ -82,11 +82,18 @@ export default function Register({ name, email, is_verified }) {
 
   const registerUser = async () => {
     try {
+      name &&
+        setFormData({
+          ...formData,
+          is_verified: true,
+        });
       const fd = new FormData();
       for (const key in formData) {
         fd.append(key, formData[key]);
       }
-
+      fd.forEach((e) => {
+        console.log(e);
+      });
       const response = await axios.post(`${backendURL}/user/auth/register`, fd);
       const status = response.data.status;
       const handler = statusHandlers[status];
@@ -110,6 +117,7 @@ export default function Register({ name, email, is_verified }) {
       bio: userData.bio,
       website: userData.html_url,
       location: userData.location,
+      is_verified: true,
     });
     setUserDataIsLoading(false);
   };

@@ -1,27 +1,29 @@
 import React, { useContext, useEffect, useState } from "react";
-import Home from "../Home/Home";
-import TweetFields from "../TweetFields/TweetFields";
-import ProfileLayout from "../Profile/ProfileLayout";
-import Explore from "../Explore/Explore";
-import Notifications from "../Notifications/Notifications";
-import Lists from "../Lists/Lists";
-import Bookmarks from "../Bookmarks/Booksmarks";
-import Communities from "../Communities/Communities";
-import Hashtag from "../Hashtag/Hashtag";
-import Tweetpage from "../TweetPage/Tweetpage";
-import Following from "../Following/Following";
-import { useParams } from "react-router-dom";
-import Foryou from "../TweetFields/Foryou/Foryou";
-import { AuthContext } from "../../useContext/AuthContext/AuthContext";
-import axios from "axios";
-import ErrorPage from "../ErrorPage/ErrorPage";
-import Editprofile from "../Editprofile/Editprofile";
-import Replies from "../Replies/Replies";
-import { TweetContext } from "../../useContext/TweetContext/TweetContext";
-import LikedTweet from "../LikedTweet/LikedTweet";
-import SingleMessagesBox from "../Messages/SingleMessagesBox";
-import Messages from "../Messages/Messages";
-import LikedUser from "../LikedUser/LikedUser";
+import {
+  Home,
+  TweetFields,
+  ProfileLayout,
+  Explore,
+  Notifications,
+  Lists,
+  Bookmarks,
+  Communities,
+  Hashtag,
+  Tweetpage,
+  Following,
+  Foryou,
+  useParams,
+  AuthContext,
+  axios,
+  ErrorPage,
+  Editprofile,
+  Replies,
+  TweetContext,
+  LikedTweet,
+  SingleMessagesBox,
+  Messages,
+  LikedUser,
+} from "./Import";
 export default function Layout({
   tweetFields,
   profile,
@@ -45,6 +47,7 @@ export default function Layout({
   edit_profile,
   socket,
   tweetLike,
+  settings,
 }) {
   const [
     showLogin,
@@ -101,9 +104,6 @@ export default function Layout({
     )
       getSpecificUser();
   }, [username]);
-  if (!isUserExist) {
-    return <ErrorPage />;
-  }
   return (
     <Home
       composetweet={composetweet}
@@ -113,6 +113,7 @@ export default function Layout({
       {tweetFields && <TweetFields socket={socket} />}
       {profile && (
         <ProfileLayout
+          isUserExist={isUserExist}
           isloading={isloading}
           userDataa={specificUserProfile}
           allTweets={allTweets}
@@ -219,6 +220,8 @@ export default function Layout({
       {edit_profile && <Editprofile socket={socket} />}
       {replies && <Replies socket={socket} />}
       {tweetLike && <LikedUser />}
+      {!isUserExist && <ErrorPage />}
+      {settings && <h2>Settings</h2>}
     </Home>
   );
 }

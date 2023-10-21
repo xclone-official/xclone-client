@@ -16,6 +16,7 @@ export default function ProfileLayout({
   isloading,
   userDataa,
   socket,
+  isUserExist,
 }) {
   const [
     showLogin,
@@ -138,7 +139,7 @@ export default function ProfileLayout({
   return (
     <>
       {isloading ? (
-        <ProfileSkeleton />
+        isUserExist && <ProfileSkeleton />
       ) : (
         <div className={"profile_container"}>
           {/* View Profile in fulll */}

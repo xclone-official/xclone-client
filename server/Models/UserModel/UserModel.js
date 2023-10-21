@@ -55,7 +55,6 @@ const UserModel = mongoose.Schema(
     },
     isActivated: {
       type: Boolean,
-      default: false,
     },
     activateToken: {
       type: String,
