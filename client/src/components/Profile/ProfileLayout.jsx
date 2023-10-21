@@ -139,7 +139,7 @@ export default function ProfileLayout({
   return (
     <>
       {isloading ? (
-        isUserExist && <ProfileSkeleton />
+        <ProfileSkeleton />
       ) : (
         <div className={"profile_container"}>
           {/* View Profile in fulll */}

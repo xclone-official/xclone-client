@@ -1,0 +1,28 @@
+.edit_profile_container {
+  width: 100vw;
+  left: 0;
+  height: 100vh;
+  position: fixed;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 10000;
+}
+.edit_profile_mid_container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  margin: auto;
+}
+.profile_edit_container {
+  width: 40%;
+  height: 80vh;
+  background-color: green;
+  border-radius: 20px;
+  margin-top: 70px;
+}
+.width_30_per {
+  height: 100vh;
+  width: 30%;
+}
