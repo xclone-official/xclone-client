@@ -8,8 +8,24 @@ import MsgAlert from "../MsgAlertComp/MsgAlert";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 export default function Login() {
-  const [showLogin, setShowLogin, , , userData, setUserData] =
-    useContext(AuthContext);
+  const [
+    showLogin,
+    setShowLogin,
+    showRegister,
+    setShowRegister,
+    userData,
+    setUserData,
+    loading,
+    setLoading,
+    allTweets,
+    setAllTweets,
+    infoLoader,
+    setInfoLoader,
+    followingTweet,
+    setFollowingTweet,
+    getAllTweets,
+    getAllTweetsFromFollowingUsers,
+  ] = useContext(AuthContext);
   const navigate = useNavigate();
   const [step1, setStep1] = useState(true);
 
@@ -99,13 +115,13 @@ export default function Login() {
               <h1>Sign in to X</h1>
             </div>
             <div className="auth_btn">
-              <div className="social_media_btn">
+              {/* <div className="social_media_btn">
                 <button>Sign in with Google</button>
                 <button>Sign in with Apple </button>
-              </div>
-              <div className="auth_or">
+              </div> */}
+              {/* <div className="auth_or">
                 <p>or,</p>
-              </div>
+              </div> */}
               <div className="login_input">
                 <input
                   value={emailUsername}
@@ -125,7 +141,15 @@ export default function Login() {
               </div>
               <div className="signUp">
                 <p>
-                  Don't have an account? <span>Sign up</span>
+                  Don't have an account?{" "}
+                  <span
+                    onClick={() => {
+                      setShowLogin(!showLogin);
+                      setShowRegister(!showRegister);
+                    }}
+                  >
+                    Sign up
+                  </span>
                 </p>
               </div>
             </div>

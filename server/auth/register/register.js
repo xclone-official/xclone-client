@@ -42,6 +42,7 @@ Router.post("/", upload.single("profilepic"), async (req, res) => {
       dob,
       gender,
       language,
+      is_verified,
     } = req.body;
     const isEmail = isEmailValid(email);
     if (!isEmail) {
@@ -68,11 +69,13 @@ Router.post("/", upload.single("profilepic"), async (req, res) => {
         dob: dob,
         gender: gender,
         language: language,
-        isActivated: false,
-        activateToken: randomNum,
+        isActivated: is_verified,
+        activateToken: is_verified === true ? "" : randomNum,
       });
       console.log("email", email);
-      sendEmail("account_activation", email, user.activateToken);
+      is_verified
+        ? sendEmail("account_opened", email, user.activateToken)
+        : sendEmail("account_activation", email, user.activateToken);
       res.status(200).send({
         status: 1,
         msg: "Account created successfully.",

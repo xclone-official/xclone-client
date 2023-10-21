@@ -4,6 +4,7 @@ const EMAIL_TYPES = {
   ACCOUNT_ACTIVATION: "account_activation",
   FORGOT_PASSWORD: "forgot_password",
   TWEET_SHARED: "tweet_shared",
+  ACCOUNT_OPENED: "account_opened",
 };
 
 var transporter = nodemailer.createTransport({
@@ -45,6 +46,20 @@ function sendEmail(emailType, toEmail, params) {
           </body>
         </html>
       `;
+      break;
+
+    case EMAIL_TYPES.ACCOUNT_OPENED:
+      subject = "Account opened success🥳";
+      htmlContent = `
+          <html>
+            <head></head>
+            <body>
+              <h1>Account opened success</h1>
+              <p>You registered your account via one of social accounts. <br/> so, your account will be activated automatically.</p>
+              <a href="${process.env.WEBSITE}/flow/login">Login to your account</a>
+            </body>
+          </html>
+        `;
       break;
     case EMAIL_TYPES.TWEET_SHARED:
       subject = "Tweet Shared Successfully";
