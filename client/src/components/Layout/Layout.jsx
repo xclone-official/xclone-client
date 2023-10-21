@@ -23,7 +23,9 @@ import {
   SingleMessagesBox,
   Messages,
   LikedUser,
+  ShowSettings,
 } from "./Import";
+
 export default function Layout({
   tweetFields,
   profile,
@@ -48,6 +50,9 @@ export default function Layout({
   socket,
   tweetLike,
   settings,
+
+  changePassword,
+  tweetPrivacy,
 }) {
   const [
     showLogin,
@@ -109,6 +114,9 @@ export default function Layout({
       composetweet={composetweet}
       messages={messages}
       showMessage={showMessage}
+      settings={settings}
+      changePassword={changePassword}
+      tweetPrivacy={tweetPrivacy}
     >
       {tweetFields && <TweetFields socket={socket} />}
       {profile && (
@@ -221,7 +229,7 @@ export default function Layout({
       {replies && <Replies socket={socket} />}
       {tweetLike && <LikedUser />}
       {!isUserExist && <ErrorPage />}
-      {settings && <h2>Settings</h2>}
+      {(settings || tweetPrivacy || changePassword) && <ShowSettings />}
     </Home>
   );
 }

@@ -1,0 +1,29 @@
+.settings_container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.settings {
+  font-size: 20px;
+  font-weight: 800;
+  padding: 14px 10px;
+}
+
+.settings_midcontainer .setting_card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 14px 10px;
+}
+.setting_card_active {
+  background-color: rgb(30, 39, 50);
+}
+.settings_midcontainer .setting_card:hover {
+  background-color: rgb(30, 39, 50);
+}
+.setting_title_name {
+  font-size: 16px;
+}
+.setting_title_svg svg {
+  width: 20px;
+}

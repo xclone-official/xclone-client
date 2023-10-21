@@ -160,12 +160,7 @@ export default function App() {
             userData ? <Layout socket={socket} following={true} /> : <Auth />
           }
         />
-        <Route
-          path="account/settings"
-          element={
-            userData ? <Layout socket={socket} settings={true} /> : <Auth />
-          }
-        />
+
         {/* /p/${userData.username}/with_replies */}
         <Route
           path="/p/:username/with_replies"
@@ -276,6 +271,29 @@ export default function App() {
           path="/:username/tweet/:tweetId/replies/:commentId"
           element={
             userData ? <Layout socket={socket} replies={true} /> : <Auth />
+          }
+        />
+        {/* Setting Route */}
+        <Route
+          path="/account/settings"
+          element={
+            userData ? <Layout socket={socket} settings={true} /> : <Auth />
+          }
+        />
+        <Route
+          path="/account/settings/change-password"
+          element={
+            userData ? (
+              <Layout socket={socket} changePassword={true} />
+            ) : (
+              <Auth />
+            )
+          }
+        />
+        <Route
+          path="/account/settings/tweet-privacy"
+          element={
+            userData ? <Layout socket={socket} tweetPrivacy={true} /> : <Auth />
           }
         />
       </Routes>

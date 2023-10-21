@@ -5,6 +5,7 @@ import Rightbar from "../Rightbar/Rightbar";
 import "./home.css";
 import Messages from "../Messages/Messages";
 import PostField from "../PostField/PostField";
+import Settings from "../Settings/Settings";
 
 export default function Home({
   children,
@@ -12,6 +13,9 @@ export default function Home({
   composetweet,
   messages,
   showMessage,
+  settings,
+  changePassword,
+  tweetPrivacy,
 }) {
   const { userId } = useParams();
   const navigate = useNavigate();
@@ -61,7 +65,11 @@ export default function Home({
             <Sidebar socket={socket} />
           </div>
         </div>
-        {messages || showMessage ? (
+        {messages ||
+        showMessage ||
+        settings ||
+        changePassword ||
+        tweetPrivacy ? (
           <>
             <div className="rightbar">
               <div className="column">
@@ -69,13 +77,15 @@ export default function Home({
                   <Messages userId={userId} />
                 ) : location.pathname === "/messages" ? (
                   <Messages />
+                ) : settings || changePassword || tweetPrivacy ? (
+                  <Settings />
                 ) : (
                   <Rightbar />
                 )}
               </div>
             </div>
             <div className="tweetfields">
-              <div className="column">{children}</div>
+              <div className="column">{children}j</div>
               {/* Tweet btn */}
 
               {!showMessage && !messages && (
