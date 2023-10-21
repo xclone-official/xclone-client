@@ -6,6 +6,7 @@ import {
   Explore,
   Notifications,
   Lists,
+  PageNotFound,
   Bookmarks,
   Communities,
   Hashtag,
@@ -31,6 +32,7 @@ export default function Layout({
   profile,
   explore,
   notifications,
+
   messages,
   lists,
   bookmarks,
@@ -53,6 +55,7 @@ export default function Layout({
 
   changePassword,
   tweetPrivacy,
+  pageNotFound,
 }) {
   const [
     showLogin,
@@ -229,7 +232,10 @@ export default function Layout({
       {replies && <Replies socket={socket} />}
       {tweetLike && <LikedUser />}
       {!isUserExist && <ErrorPage />}
-      {(settings || tweetPrivacy || changePassword) && <ShowSettings />}
+      {settings && <ShowSettings />}
+      {changePassword && <p>Change password</p>}
+      {tweetPrivacy && <>tweetPrivacy</>}
+      {pageNotFound && <PageNotFound />}
     </Home>
   );
 }

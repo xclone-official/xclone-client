@@ -85,7 +85,7 @@ export default function Home({
               </div>
             </div>
             <div className="tweetfields">
-              <div className="column">{children}j</div>
+              <div className="column">{children}</div>
               {/* Tweet btn */}
 
               {!showMessage && !messages && (

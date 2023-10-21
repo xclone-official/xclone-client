@@ -296,6 +296,12 @@ export default function App() {
             userData ? <Layout socket={socket} tweetPrivacy={true} /> : <Auth />
           }
         />
+        <Route
+          path="/*"
+          element={
+            userData ? <Layout socket={socket} pageNotFound={true} /> : <Auth />
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

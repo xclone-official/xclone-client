@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Settings.css";
 import { Link, useLocation } from "react-router-dom";
 const options = [
@@ -16,8 +16,10 @@ const options = [
   },
 ];
 export default function Settings() {
+  useEffect(() => {
+    document.title = `Settings / Xclone`;
+  }, []);
   const location = useLocation();
-  console.log(location.pathname);
   return (
     <div className="settings_container">
       <p className="settings">Settings</p>

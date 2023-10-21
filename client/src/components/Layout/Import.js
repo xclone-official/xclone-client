@@ -8,6 +8,8 @@ import Lists from "../Lists/Lists";
 import Bookmarks from "../Bookmarks/Booksmarks";
 import Communities from "../Communities/Communities";
 import Hashtag from "../Hashtag/Hashtag";
+import PageNotFound from "../404/404";
+
 import Tweetpage from "../TweetPage/Tweetpage";
 import Following from "../Following/Following";
 import Foryou from "../TweetFields/Foryou/Foryou";
@@ -48,4 +50,5 @@ export {
   Messages,
   LikedUser,
   ShowSettings,
+  PageNotFound,
 };

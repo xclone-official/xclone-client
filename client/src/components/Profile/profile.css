@@ -159,6 +159,7 @@
   object-fit: cover;
   border: 4px solid rgb(87, 90, 91);
   transition: 0.3s;
+  background-color: var(--theme-color);
 }
 
 .user_profile img:hover {
