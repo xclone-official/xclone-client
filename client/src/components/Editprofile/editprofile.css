@@ -5,7 +5,7 @@
   position: fixed;
   background: rgba(255, 255, 255, 0.2);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(5px);
   z-index: 10000;
 }
@@ -15,14 +15,117 @@
   height: 100vh;
   margin: auto;
 }
+.profile_top_edit_profile {
+  position: sticky;
+  top: 0;
+  background-color: #15202b;
+}
 .profile_edit_container {
-  width: 40%;
+  max-width: 40%;
+  overflow-y: scroll;
+  overflow-x: hidden;
   height: 80vh;
-  background-color: green;
-  border-radius: 20px;
+  background-color: #15202b;
+  border-radius: 5px;
   margin-top: 70px;
 }
+
+@media (max-width: 500px) {
+  .profile_edit_container {
+    max-width: 100%;
+    height: 100vh;
+    margin-top: 0px;
+  }
+  .width_30_per {
+    height: 100vh;
+    width: 0% !important;
+  }
+}
+
 .width_30_per {
   height: 100vh;
   width: 30%;
+}
+.save_btn {
+  display: flex;
+  justify-content: center;
+}
+.save_btn button {
+  width: 90%;
+  margin: auto;
+  padding: 5px 10px;
+  border: 1px solid var(--theme-hover-color);
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+/* .profile_edit_fields */
+.profile_edit_fields {
+  width: 100%;
+}
+.cover_edit img {
+  width: 100%;
+  height: 100%;
+}
+.cover_edit .choose_svg {
+  position: absolute;
+  margin-left: 16%;
+  margin-top: -8%;
+  cursor: pointer;
+  background-color: #15202b;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cover_edit .choose_svg svg {
+  width: 25px;
+  fill: white;
+}
+.cover_edit .choose_svg_cross svg {
+  width: 25px;
+  fill: white;
+}
+.cover_edit .choose_svg_cross {
+  position: absolute;
+  margin-left: 24%;
+  margin-top: -8%;
+  cursor: pointer;
+  background-color: #15202b;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profile_edit .choose_svg svg {
+  width: 25px;
+  fill: white;
+}
+.profile_edit .choose_svg {
+  position: fixed;
+  margin-left: 2.4%;
+  margin-top: -5%;
+  cursor: pointer;
+  background-color: transparent;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile_edit {
+  padding: 0 20px;
+}
+.profile_edit img {
+  width: 20%;
+  height: 20%;
+  border-radius: 100%;
+  object-fit: cover;
+  margin-top: -60px;
 }

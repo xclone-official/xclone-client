@@ -26,7 +26,7 @@ export default function SuggestionFriends() {
   return (
     <div className="friend_suggestion_container">
       <div className="friend_suggestion_mid_container">
-        <p className="whotofollow">Who to follow</p>
+        <p className="whotofollow">Relevant people</p>
         {userData?.followers.length > 0 ? (
           userData?.followers?.map((e) => (
             <div key={e?._id} className="friend_suggestion_card">
@@ -42,7 +42,7 @@ export default function SuggestionFriends() {
 
               <div className="friend_suggestion_follow_btn">
                 <button onClick={() => Navigate(`/p/${e?.username}`)}>
-                  Follow
+                  View
                 </button>
               </div>
             </div>
@@ -52,9 +52,11 @@ export default function SuggestionFriends() {
             <div></div>
           </div>
         )}
-        <div className="show_more_friend">
-          <p>Show more</p>
-        </div>
+        {userData?.followers.length > 0 && (
+          <div className="show_more_friend">
+            <p>Show more</p>
+          </div>
+        )}
       </div>
     </div>
   );
