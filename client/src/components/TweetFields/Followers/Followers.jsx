@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import "./following.css";
 import TweetCard from "../../../TweetCard/TweetCard";
 import { AuthContext } from "../../../useContext/AuthContext/AuthContext";
 import InfoLoader from "../../Loader/InfoLoader";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { FollowersTweetContext } from "../../../useContext/FollowersTweetContext/FollowersTweetContext";
 import CardSkeleton from "../Foryou/CardSkeleton";
 
-export default function Following({ socket }) {
+export default function Followers({ socket }) {
   const [
     showLogin,
     setShowLogin,
@@ -24,22 +24,24 @@ export default function Following({ socket }) {
     setFollowingTweet,
   ] = useContext(AuthContext);
 
+  const [followersTweet, setFollowersTweet] = useContext(FollowersTweetContext);
+
   const [initialPageCount, setInitialPageCount] = useState(15);
   const [loader, setLoader] = useState(true);
   const [showInitialArrayOfData, setShowInitialArrayOfData] = useState([]);
 
   useEffect(() => {
     // Initialize the initial data to show
-    setShowInitialArrayOfData(followingTweet.slice(0, initialPageCount));
+    setShowInitialArrayOfData(followersTweet.slice(0, initialPageCount));
     setTimeout(() => {
       setLoader(false); // Disable the loader after updating data
     }, 2000);
-  }, [followingTweet]); // Add followingTweet as a dependency
+  }, [followersTweet]); // Add followersTweet as a dependency
 
   const fetchMoreData = () => {
     setLoader(true);
     const newPageCount = initialPageCount + 2;
-    const newTweets = followingTweet.slice(
+    const newTweets = followersTweet.slice(
       initialPageCount,
       initialPageCount + 2
     );
@@ -57,11 +59,11 @@ export default function Following({ socket }) {
     <>
       {loader ? (
         <CardSkeleton />
-      ) : followingTweet.length > 0 ? (
+      ) : followersTweet.length > 0 ? (
         <InfiniteScroll
           dataLength={showInitialArrayOfData.length}
           next={fetchMoreData}
-          hasMore={showInitialArrayOfData.length < followingTweet.length}
+          hasMore={showInitialArrayOfData.length < followersTweet.length}
           loader={<InfoLoader />}
           height="640px"
           endMessage={

@@ -161,7 +161,6 @@ export default function Layout({
       {following && (
         <Following
           isloading={isloading}
-          userData={userData}
           profileData={profileData}
           allTweets={allTweets}
           with_replies={true}

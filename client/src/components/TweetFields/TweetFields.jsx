@@ -1,10 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import "./tweets.css";
 import Foryou from "./Foryou/Foryou";
 import Following from "./Following/Following";
+import Followers from "./Followers/Followers";
+
 export default function TweetFields({ socket }) {
-  const [isActive1, setIsActive1] = useState(true);
-  const [isActive2, setIsActive2] = useState(false);
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  let activeTab = searchParams.get("type");
+
+  // Default to "for-you" if activeTab is not set
+  if (!activeTab) {
+    activeTab = "for-you";
+  }
+
+  const [isActive1, setIsActive1] = useState(activeTab === "for-you");
+  const [isActive2, setIsActive2] = useState(activeTab === "following");
+  const [active3, setActive3] = useState(activeTab === "followers");
+
+  const handleTabClick = (tabType) => {
+    setIsActive1(tabType === "for-you");
+    setIsActive2(tabType === "following");
+    setActive3(tabType === "followers");
+    setSearchParams({ type: tabType });
+  };
+
+  useEffect(() => {
+    if (!activeTab) {
+      setSearchParams({ type: "for-you" });
+    }
+  }, [activeTab, setSearchParams]);
+
   return (
     <div className="margin_bottom_200px">
       <div className="profile_top_flex">
@@ -16,26 +43,27 @@ export default function TweetFields({ socket }) {
       <div className="two_tab">
         <div
           className={`for_you ${isActive1 ? "active1" : ""}`}
-          onClick={() => {
-            setIsActive1(true);
-            setIsActive2(false);
-          }}
+          onClick={() => handleTabClick("for-you")}
         >
           <p>For you</p>
         </div>
         <div
           className={`following_tab ${isActive2 ? "active1" : ""}`}
-          onClick={() => {
-            setIsActive2(true);
-            setIsActive1(false);
-          }}
+          onClick={() => handleTabClick("following")}
         >
           <p>Following</p>
+        </div>
+        <div
+          className={`following_tab ${active3 ? "active1" : ""}`}
+          onClick={() => handleTabClick("followers")}
+        >
+          <p>Followers</p>
         </div>
       </div>
 
       {isActive1 && <Foryou socket={socket} />}
       {isActive2 && <Following socket={socket} />}
+      {active3 && <Followers socket={socket} />}
     </div>
   );
 }

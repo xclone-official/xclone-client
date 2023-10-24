@@ -35,11 +35,11 @@ const AuthContextProvider = (props) => {
 
   const getAllTweets = async () => {
     try {
-      // setInfoLoader(true);
       axios
-        .get(`${backendURL}/tweetaction/getalltweet`)
+        .get(`${backendURL}/tweetaction/getalltweet/${userData?._id}`)
         .then((data) => {
-          const tweets = data.data.tweets; // Reverse the order of tweets
+          const tweets = data.data.tweets;
+          console.log("tweets", tweets);
           setAllTweets(
             tweets.sort(function (a, b) {
               return new Date(b.createdAt) - new Date(a.createdAt);
@@ -92,7 +92,9 @@ const AuthContextProvider = (props) => {
     }
   };
   useEffect(() => {
-    getAllTweets();
+    if (userData?._id) {
+      getAllTweets();
+    }
   }, [allTweets?.length, userData?._id, userData?.following?.length]);
   useEffect(() => {
     if (Cookies.get("xid")) {

@@ -5,6 +5,7 @@ import { AuthContext } from "../../../useContext/AuthContext/AuthContext";
 import InfoLoader from "../../Loader/InfoLoader";
 import InfiniteScroll from "react-infinite-scroll-component";
 import PostField from "../../PostField/PostField";
+import CardSkeleton from "./CardSkeleton";
 export default function Foryou({
   scrollbarhide,
   myAllTweets,
@@ -34,10 +35,12 @@ export default function Foryou({
   useEffect(() => {
     getAllTweets()
       .then(() => {
-        setIsLoading(false); // Set loading to false after data is fetched
+        setTimeout(() => {
+          setIsLoading(false); // Set loading to false after data is fetched
+        }, 2000);
       })
       .catch((error) => {
-        console.error("Error fetching tweets:", error);
+        console.warn("Error fetching tweets:", error);
       });
   }, []);
 
@@ -50,7 +53,7 @@ export default function Foryou({
             .filter((e) => e.authorId === profileId?._id)
             .slice(0, initialPageCount)
     );
-  }, [allTweets.length]);
+  }, [allTweets.length, allTweets]);
 
   const fetchMoreData = () => {
     const newPageCount = initialPageCount + 2;
@@ -77,7 +80,7 @@ export default function Foryou({
         </div>
       )}
       {isLoading ? ( // Show loading indicator while fetching data
-        <InfoLoader />
+        <CardSkeleton />
       ) : showInitialArrayOfData.length > 0 ? (
         <InfiniteScroll
           className={scrollbarhide && "scrollbar_hide"}
@@ -127,7 +130,7 @@ export default function Foryou({
             fontSize: "14px",
           }}
         >
-          No Tweets Found. <br />
+          {myAllTweets ? "" : "No new users have uploaded any tweets."} <br />
         </div>
       )}
     </>

@@ -2,6 +2,8 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { AuthContext } from "../AuthContext/AuthContext";
 import axios from "axios";
 import { SpecificTweets } from "../SpecificTweet/SpecificTweet";
+import { FollowersTweetContext } from "../FollowersTweetContext/FollowersTweetContext";
+import Cookies from "js-cookie";
 export const TweetContext = createContext();
 
 const TweetContextProvider = ({ children }) => {
@@ -27,18 +29,18 @@ const TweetContextProvider = ({ children }) => {
     getAllTweets,
     getAllTweetsFromFollowingUsers,
   ] = useContext(AuthContext);
-
+  const [followersTweet, setFollowersTweet, getAllTweetsFromFollowers] =
+    useContext(FollowersTweetContext);
   const [specifictweetPage, setSpecifictweetPage] = useContext(SpecificTweets);
 
   useEffect(() => {
     setInfoLoader(true);
 
-    if (sessionStorage.getItem("twitterdata")) {
-      const id = sessionStorage.getItem("twitterdata");
-      const toRemoveString = id;
-      const stringWithoutQuotes = toRemoveString.replace(/^"(.*)"$/, "$1");
+    if (Cookies.get("xid")) {
+      const id = Cookies.get("xid");
+
       const myTweets = allTweets.filter(
-        (e) => parseInt(e.authorId) === parseInt(stringWithoutQuotes)
+        (e) => parseInt(e.authorId) === parseInt(id)
       );
       setMyTweets(myTweets);
       setTimeout(() => {
@@ -47,35 +49,25 @@ const TweetContextProvider = ({ children }) => {
     } else {
       setLoading(false);
     }
-  }, [allTweets, sessionStorage]); // Make sure to include all relevant dependencies here
+  }, [allTweets, allTweets.length]);
 
   const backendURL = process.env.REACT_APP_BACKEND_URL;
 
   const likeTweet = (specifictweet_id, userData_id) => {
     try {
-      // Tweetid and userId
-      // api =>
-      console.log("liked");
       const api = `${backendURL}/tweetinteractions/liketweet/${specifictweet_id}/${userData_id}`;
-      console.log(api);
       axios
         .put(api)
-        .then((data) => {
+        .then(async (data) => {
           if (data.data.status === 1) {
-            // setSpecifictweet(data.data.tweet);
-            // setLikeBtn(<Likebtn />);
             setSpecifictweetPage(data.data.tweet);
-            getAllTweets();
-            getAllTweetsFromFollowingUsers();
-            console.log("liked inner");
+            await getAllTweetsFromFollowers();
+            await getAllTweets();
+            await getAllTweetsFromFollowingUsers();
           }
         })
-        .catch((err) => {
-          // console.log(err);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch((err) => {})
+        .catch((err) => {});
     } catch (error) {}
   };
 
@@ -83,18 +75,15 @@ const TweetContextProvider = ({ children }) => {
     try {
       // Tweetid and userId
       // api =>
-      console.log("Unliked");
       const api = `${backendURL}/tweetinteractions/unliketweet/${specifictweet_id}/${userData_id}`;
       axios
         .put(api)
         .then((data) => {
           if (data.data.status === 1) {
-            // setSpecifictweet(data.data.tweet);
-            // setLikeBtn(<UnlikeBtn />);
             setSpecifictweetPage(data.data.tweet);
+            getAllTweetsFromFollowers();
             getAllTweets();
             getAllTweetsFromFollowingUsers();
-            console.log("unliked inner");
           }
         })
         .catch((err) => {});

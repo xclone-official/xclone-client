@@ -8,6 +8,7 @@ import SpecificTweetProvider from "./useContext/SpecificTweet/SpecificTweet";
 import LikedContextProvider from "./useContext/LikedContext/LikedContext";
 import NotificationContextProvider from "./useContext/NotificationsContext/NotificationsContext";
 import MessageContextProvider from "./useContext/MessageContext/MessageContext";
+import FollowersTweetContextProvider from "./useContext/FollowersTweetContext/FollowersTweetContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -16,11 +17,13 @@ root.render(
       <AuthContextProvider>
         <LikedContextProvider>
           <SpecificTweetProvider>
-            <TweetContextProvider>
-              <MessageContextProvider>
-                <App />
-              </MessageContextProvider>
-            </TweetContextProvider>
+            <FollowersTweetContextProvider>
+              <TweetContextProvider>
+                <MessageContextProvider>
+                  <App />
+                </MessageContextProvider>
+              </TweetContextProvider>
+            </FollowersTweetContextProvider>
           </SpecificTweetProvider>
         </LikedContextProvider>
       </AuthContextProvider>

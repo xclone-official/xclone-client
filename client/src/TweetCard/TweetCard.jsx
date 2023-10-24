@@ -88,15 +88,12 @@ export default function TweetCard({ tweets, socket }) {
   }, []);
 
   const toggleFunction = () => {
-    // console.log("Toggle Functions");
     const checkIsAlreadyLiked = tweets?.likes?.some(
       (e) => e.id === userData?._id
     );
     if (!checkIsAlreadyLiked) {
-      console.log("called like");
       likeTweet(tweets?._id, userData?._id);
       setLikeBtn(<Likebtn />);
-      console.log("socket", socket);
       socket?.emit("sendLikeNotification", {
         senderUsername: userData?.username,
         receiverUsername: tweets?.authorUsername,
@@ -104,9 +101,7 @@ export default function TweetCard({ tweets, socket }) {
         tweet: tweets,
         tweetId: tweets?._id,
       });
-      // console.log("liked tweet");
     } else {
-      // console.log("called unlike");
       unlikeTweet(tweets?._id, userData?._id);
       setLikeBtn(<UnlikeBtn />);
     }
@@ -222,44 +217,15 @@ export default function TweetCard({ tweets, socket }) {
                   </svg>
                 </div>
 
-                {userData?._id === tweets?.authorId ? (
-                  <div className="like_tweet svg_width">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                      <g>
-                        <path
-                          fill="var(--theme-hover-color)"
-                          d="M20.884 13.19c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z"
-                        ></path>
-                      </g>
-                    </svg>
-                    {tweets?.likes?.length > 0 && (
-                      <p>{tweets?.likes?.length}</p>
-                    )}
-                  </div>
-                ) : (
-                  <div
-                    className="like_tweet svg_width"
-                    onClick={toggleFunction}
-                  >
-                    {likeBtn}
-                    {tweets?.likes?.length > 0 && (
-                      <p>{tweets?.likes?.length}</p>
-                    )}
-                  </div>
-                )}
-
-                {/* <div className=" svg_width">
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <g>
-                      <path d="M4 4.5C4 3.12 5.119 2 6.5 2h11C18.881 2 20 3.12 20 4.5v18.44l-8-5.71-8 5.71V4.5zM6.5 4c-.276 0-.5.22-.5.5v14.56l6-4.29 6 4.29V4.5c0-.28-.224-.5-.5-.5h-11z"></path>
-                    </g>
-                  </svg>
-                </div> */}
+                <div className="like_tweet svg_width" onClick={toggleFunction}>
+                  {likeBtn}
+                  {tweets?.likes?.length > 0 && <p>{tweets?.likes?.length}</p>}
+                </div>
 
                 <div className="tweet_share svg_width">
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <g>
-                      <path d="M12 2.59l5.7 5.7-1.41 1.42L13 6.41V16h-2V6.41l-3.3 3.3-1.41-1.42L12 2.59zM21 15l-.02 3.51c0 1.38-1.12 2.49-2.5 2.49H5.5C4.11 21 3 19.88 3 18.5V15h2v3.5c0 .28.22.5.5.5h12.98c.28 0 .5-.22.5-.5L19 15h2z"></path>
+                      <path d="M8.75 21V3h2v18h-2zM18 21V8.5h2V21h-2zM4 21l.004-10h2L6 21H4zm9.248 0v-7h2v7h-2z"></path>
                     </g>
                   </svg>
                 </div>

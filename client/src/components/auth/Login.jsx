@@ -86,7 +86,7 @@ export default function Login() {
         const uId = response.data.data._id;
         Cookies.set("xid", uId, { expires: 30 });
       }
-      navigate("/home");
+      navigate("/home?type=for-you");
       if (handler) {
         handler();
       }
