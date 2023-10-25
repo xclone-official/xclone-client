@@ -48,3 +48,153 @@
   margin: auto;
   color: white !important;
 }
+
+/* Mobile menu container */
+@media (min-width: 450px) {
+  .mobile_menu_container {
+    display: none !important;
+  }
+}
+.mobile_menu_container {
+  top: 0;
+  left: 0;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  z-index: 9999;
+  display: flex;
+}
+
+.showMenu {
+  transition: transform 0.3s ease;
+  transform: translateX(0);
+}
+
+.hideMenu {
+  transform: translateX(
+    -250%
+  ); /* Adjust the value based on your sidebar width */
+}
+.mobile_menu_mid_container {
+  width: 70%;
+  min-width: 280px;
+  background-color: #15202b;
+  overflow-y: scroll;
+}
+/* Define the initial styles for your element */
+.mobile_menu_width_25 {
+  width: 30%;
+  transition: opacity 0.5s; /* Add a transition for the opacity property */
+  background: rgba(91, 112, 131, 0.4);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(1px);
+}
+
+/* Profile content mobile menu */
+.mobile_menu_profile_three_line {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.mobile_menu_profile_three_line .mobile_menu_profile img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 100%;
+}
+.mobile_menu_three_line svg {
+  width: 30px;
+  border: 1px solid var(--theme-hover-color);
+  border-radius: 100%;
+  fill: rgb(239, 243, 244);
+  padding: 5px;
+}
+.mobile_menu_name_username {
+  display: grid;
+  gap: 3px;
+  margin-top: 10px;
+}
+.mobile_menu_name_username p {
+  font-size: 16px;
+  font-weight: 700;
+}
+.mobile_menu_name_username span {
+  font-size: 14px;
+  color: rgb(139, 152, 165);
+}
+.follower_following {
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+}
+.follower_following p {
+  font-size: 14px;
+}
+.follower_following span {
+  color: rgb(139, 152, 165);
+  font-size: 14px;
+}
+.profile_menu_top_container {
+  padding: 15px;
+}
+.mobile_menu_options {
+  display: grid;
+  width: 100%;
+}
+.mobile_menu_option {
+  padding: 11px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.mobile_menu_option:hover {
+  background-color: var(--theme-hover-color);
+}
+.mobile_menu_option_svg svg {
+  width: 25px;
+  fill: white;
+}
+.mobile_menu_option_title p {
+  font-size: 19px;
+  font-weight: 500;
+}
+.mobile_menu_options_border {
+  width: 95%;
+  margin: auto;
+  border: 1px solid var(--theme-hover-color);
+}
+.mobile_menu_other_setting {
+  display: flex;
+  justify-content: space-between;
+}
+.mobile_menu_other_settings {
+  display: grid;
+}
+.mobile_menu_other_setting {
+  padding: 15px;
+}
+.mobile_menu_other_setting:hover {
+  background-color: var(--theme-hover-color);
+}
+.mobile_menu_other_setting p {
+  font-size: 18px;
+  font-weight: 600;
+}
+.mobile_menu_other_setting span svg {
+  width: 20px;
+}
+.mobile_menu_other_setting_inner {
+  padding: 5px 15px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.mobile_menu_other_setting_inner span svg {
+  width: 20px;
+  fill: white;
+}
+.mobile_menu_other_setting_inner:hover {
+  background-color: var(--theme-hover-color);
+}
