@@ -53,7 +53,7 @@ export default function Messages() {
                 fontWeight: "600",
               }}
             >
-              <p>Search a user to chat</p>
+              <p>Search a user to chat,</p>
             </div>
           )}
         </div>

@@ -46,7 +46,7 @@ const ActiveDownArrow = () => {
 };
 export default function TweetFields({ socket }) {
   const navigate = useNavigate();
-  const [showMenu, setShowMenu] = useState(true);
+  const [showMenu, setShowMenu] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [creatorAcc, setCreatorAcc] = useState(false);
   const [settingsShow, setSettingsShow] = useState(false);

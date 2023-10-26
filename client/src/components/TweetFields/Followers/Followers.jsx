@@ -35,7 +35,7 @@ export default function Followers({ socket }) {
     setShowInitialArrayOfData(followersTweet.slice(0, initialPageCount));
     setTimeout(() => {
       setLoader(false); // Disable the loader after updating data
-    }, 2000);
+    }, 200);
   }, [followersTweet]); // Add followersTweet as a dependency
 
   const fetchMoreData = () => {

@@ -33,7 +33,7 @@ export default function Following({ socket }) {
     setShowInitialArrayOfData(followingTweet.slice(0, initialPageCount));
     setTimeout(() => {
       setLoader(false); // Disable the loader after updating data
-    }, 2000);
+    }, 200);
   }, [followingTweet]); // Add followingTweet as a dependency
 
   const fetchMoreData = () => {

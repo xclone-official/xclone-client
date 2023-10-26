@@ -231,7 +231,7 @@ export default function Layout({
       {replies && <Replies socket={socket} />}
       {tweetLike && <LikedUser />}
       {!isUserExist && <ErrorPage />}
-      {settings && <ShowSettings />}
+      {settings && <p>ShowSettings</p>}
       {changePassword && <p>Change password</p>}
       {tweetPrivacy && <>tweetPrivacy</>}
       {pageNotFound && <PageNotFound />}

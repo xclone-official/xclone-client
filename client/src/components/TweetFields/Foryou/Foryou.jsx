@@ -37,7 +37,7 @@ export default function Foryou({
       .then(() => {
         setTimeout(() => {
           setIsLoading(false); // Set loading to false after data is fetched
-        }, 2000);
+        }, 200);
       })
       .catch((error) => {
         console.warn("Error fetching tweets:", error);
