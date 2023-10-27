@@ -25,7 +25,7 @@ export function MsgType(msgType) {
     case MSG_TYPES.PASSWORD_UPDATE_ERROR:
       return "Please try again";
     case MSG_TYPES.PASSWORD_UPDATE_SUCCESS:
-      return "Password updated success";
+      return "Password updated.";
 
     case MSG_TYPES.REGISTERED_SUCCESS:
       return "Check your email for activation.";

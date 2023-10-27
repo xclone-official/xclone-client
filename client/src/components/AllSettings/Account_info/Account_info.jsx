@@ -1,9 +1,11 @@
 import React, { useContext, useState } from "react";
 import "./Account_info.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../../InputField/InputField.css";
 import bcryptjs from "bcryptjs";
 import { AuthContext } from "../../Layout/Import";
+import { convertDate } from "../../CovertDateTime/ConvertDateTime";
+
 export default function Account_info() {
   const [step1, setStep1] = useState(true);
   const [inputField, setInputField] = useState("");
@@ -30,6 +32,23 @@ export default function Account_info() {
   const goBackToPreviousPage = () => {
     navigate(-1);
   };
+  function calculateAge(dateOfBirth) {
+    const dob = new Date(dateOfBirth);
+    const currentDate = new Date();
+
+    const age = currentDate.getFullYear() - dob.getFullYear();
+
+    if (
+      currentDate.getMonth() < dob.getMonth() ||
+      (currentDate.getMonth() === dob.getMonth() &&
+        currentDate.getDate() < dob.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const forgot_password_field = document.querySelector(
@@ -49,9 +68,69 @@ export default function Account_info() {
       }
     }
   };
+  const options = [
+    {
+      title: "Username",
+      link: "/account/settings/account_info/username",
+      desc: `@${userData?.username}`,
+    },
+    {
+      title: "Phone",
+      link: "/account/settings/account_info/phone",
+      desc: `${userData?.phone || ""}`,
+    },
+    {
+      title: "Email",
+      link: "/account/settings/account_info/email",
+      desc: `${userData?.email}`,
+    },
+    {
+      title: "Verified",
+      desc: `Yes`,
+    },
+  ];
+  const impo_options = [
+    {
+      title: "Protected posts",
+      link: "/account/settings/account_info/protected_posts",
+      desc: `No`,
+    },
+    {
+      title: "Created At",
+      desc: `${convertDate(userData?.createdAt)}`,
+    },
+  ];
+  const other_options = [
+    {
+      title: "Country",
+      link: "/account/settings/account_info/update_country",
+      desc: `${userData?.location}`,
+    },
+    {
+      title: "Languages",
+      link: "/account/settings/account_info/update_language",
+      desc: `${userData?.language}`,
+    },
+    {
+      title: "Gender",
+      link: "/account/settings/account_info/update_gender",
+      desc: `${userData?.gender}`,
+    },
+    {
+      title: "Birth date",
+      desc: `${userData?.dob}`,
+      link: "/account/settings/account_info/update_dob",
+    },
+  ];
+  const another_options = [
+    {
+      title: "Age",
+      desc: `${calculateAge(userData?.dob)} years old`,
+    },
+  ];
   return (
-    <div>
-      <div className="profile_top">
+    <div className="account_info_container">
+      <div className="account_info_mid_container profile_top">
         <svg
           onClick={goBackToPreviousPage}
           fill="var(--theme-color)"
@@ -102,7 +181,254 @@ export default function Account_info() {
           </div>
         </form>
       )}
-      {step2 && <>Hello</>}
+      {step2 && (
+        <div className="settings_midcontainer">
+          <div className="important_container_info">
+            {options.map((e, index) => (
+              <div key={index}>
+                {e?.link ? (
+                  <Link to={e.link} key={index}>
+                    <div className="setting_card" style={{ padding: "18px" }}>
+                      <div style={{ display: "flex", gap: "25px" }}>
+                        <div>
+                          <p className="setting_title_name">{e.title}</p>
+                          <span className="your_acc_descrriptionn">
+                            {e.desc}
+                          </span>
+                        </div>
+                      </div>
+                      {e?.link ? (
+                        <p className="setting_title_svg">
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <g>
+                              <path
+                                fill="white"
+                                d="M14.586 12L7.543 4.96l1.414-1.42L17.414 12l-8.457 8.46-1.414-1.42L14.586 12z"
+                              ></path>
+                            </g>
+                          </svg>
+                        </p>
+                      ) : (
+                        <p className="setting_title_svg"></p>
+                      )}
+                    </div>
+                  </Link>
+                ) : (
+                  <div key={index}>
+                    <div className="setting_card" style={{ padding: "18px" }}>
+                      <div style={{ display: "flex", gap: "25px" }}>
+                        <div>
+                          <p className="setting_title_name">{e.title}</p>
+                          <span className="your_acc_descrriptionn">
+                            {e.desc}
+                          </span>
+                        </div>
+                      </div>
+                      {e?.link ? (
+                        <p className="setting_title_svg">
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <g>
+                              <path
+                                fill="white"
+                                d="M14.586 12L7.543 4.96l1.414-1.42L17.414 12l-8.457 8.46-1.414-1.42L14.586 12z"
+                              ></path>
+                            </g>
+                          </svg>
+                        </p>
+                      ) : (
+                        <p className="setting_title_svg"></p>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+          <div className="important_container_info">
+            {impo_options.map((e, index) => (
+              <div key={index}>
+                {e?.link ? (
+                  <Link to={e.link} key={index}>
+                    <div className="setting_card" style={{ padding: "18px" }}>
+                      <div style={{ display: "flex", gap: "25px" }}>
+                        <div>
+                          <p className="setting_title_name">{e.title}</p>
+                          <span className="your_acc_descrriptionn">
+                            {e.desc}
+                          </span>
+                        </div>
+                      </div>
+                      {e?.link ? (
+                        <p className="setting_title_svg">
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <g>
+                              <path
+                                fill="white"
+                                d="M14.586 12L7.543 4.96l1.414-1.42L17.414 12l-8.457 8.46-1.414-1.42L14.586 12z"
+                              ></path>
+                            </g>
+                          </svg>
+                        </p>
+                      ) : (
+                        <p className="setting_title_svg"></p>
+                      )}
+                    </div>
+                  </Link>
+                ) : (
+                  <div key={index}>
+                    <div className="setting_card" style={{ padding: "18px" }}>
+                      <div style={{ display: "flex", gap: "25px" }}>
+                        <div>
+                          <p className="setting_title_name">{e.title}</p>
+                          <span className="your_acc_descrriptionn">
+                            {e.desc}
+                          </span>
+                        </div>
+                      </div>
+                      {e?.link ? (
+                        <p className="setting_title_svg">
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <g>
+                              <path
+                                fill="white"
+                                d="M14.586 12L7.543 4.96l1.414-1.42L17.414 12l-8.457 8.46-1.414-1.42L14.586 12z"
+                              ></path>
+                            </g>
+                          </svg>
+                        </p>
+                      ) : (
+                        <p className="setting_title_svg"></p>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+          <div className="important_container_info">
+            {other_options.map((e, index) => (
+              <div key={index}>
+                {e?.link ? (
+                  <Link to={e.link} key={index}>
+                    <div className="setting_card" style={{ padding: "18px" }}>
+                      <div style={{ display: "flex", gap: "25px" }}>
+                        <div>
+                          <p className="setting_title_name">{e.title}</p>
+                          <span className="your_acc_descrriptionn">
+                            {e.desc}
+                          </span>
+                        </div>
+                      </div>
+                      {e?.link ? (
+                        <p className="setting_title_svg">
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <g>
+                              <path
+                                fill="white"
+                                d="M14.586 12L7.543 4.96l1.414-1.42L17.414 12l-8.457 8.46-1.414-1.42L14.586 12z"
+                              ></path>
+                            </g>
+                          </svg>
+                        </p>
+                      ) : (
+                        <p className="setting_title_svg"></p>
+                      )}
+                    </div>
+                  </Link>
+                ) : (
+                  <div key={index}>
+                    <div className="setting_card" style={{ padding: "18px" }}>
+                      <div style={{ display: "flex", gap: "25px" }}>
+                        <div>
+                          <p className="setting_title_name">{e.title}</p>
+                          <span className="your_acc_descrriptionn">
+                            {e.desc}
+                          </span>
+                        </div>
+                      </div>
+                      {e?.link ? (
+                        <p className="setting_title_svg">
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <g>
+                              <path
+                                fill="white"
+                                d="M14.586 12L7.543 4.96l1.414-1.42L17.414 12l-8.457 8.46-1.414-1.42L14.586 12z"
+                              ></path>
+                            </g>
+                          </svg>
+                        </p>
+                      ) : (
+                        <p className="setting_title_svg"></p>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+          <div className="">
+            {another_options.map((e, index) => (
+              <div key={index}>
+                {e?.link ? (
+                  <Link to={e.link} key={index}>
+                    <div className="setting_card" style={{ padding: "18px" }}>
+                      <div style={{ display: "flex", gap: "25px" }}>
+                        <div>
+                          <p className="setting_title_name">{e.title}</p>
+                          <span className="your_acc_descrriptionn">
+                            {e.desc}
+                          </span>
+                        </div>
+                      </div>
+                      {e?.link ? (
+                        <p className="setting_title_svg">
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <g>
+                              <path
+                                fill="white"
+                                d="M14.586 12L7.543 4.96l1.414-1.42L17.414 12l-8.457 8.46-1.414-1.42L14.586 12z"
+                              ></path>
+                            </g>
+                          </svg>
+                        </p>
+                      ) : (
+                        <p className="setting_title_svg"></p>
+                      )}
+                    </div>
+                  </Link>
+                ) : (
+                  <div key={index}>
+                    <div className="setting_card" style={{ padding: "18px" }}>
+                      <div style={{ display: "flex", gap: "25px" }}>
+                        <div>
+                          <p className="setting_title_name">{e.title}</p>
+                          <span className="your_acc_descrriptionn">
+                            {e.desc}
+                          </span>
+                        </div>
+                      </div>
+                      {e?.link ? (
+                        <p className="setting_title_svg">
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <g>
+                              <path
+                                fill="white"
+                                d="M14.586 12L7.543 4.96l1.414-1.42L17.414 12l-8.457 8.46-1.414-1.42L14.586 12z"
+                              ></path>
+                            </g>
+                          </svg>
+                        </p>
+                      ) : (
+                        <p className="setting_title_svg"></p>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

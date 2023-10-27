@@ -1,3 +1,19 @@
+.account_info_container {
+  height: 100vh;
+  overflow-y: scroll;
+  padding-bottom: 200px;
+}
+.account_info_container::-webkit-scrollbar {
+  width: 0px;
+}
+.account_info_mid_container {
+  top: 0;
+  position: sticky;
+  background: rgba(28, 38, 48, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
 .confirm_password {
   font-size: 20px;
   margin-bottom: 10px;
@@ -51,4 +67,7 @@
   margin-bottom: 20px;
   font-weight: 400;
   color: rgb(139, 152, 165);
+}
+.important_container_info {
+  border-bottom: 1px solid var(--theme-hover-color);
 }
