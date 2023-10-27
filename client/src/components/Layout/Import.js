@@ -2,7 +2,6 @@ import Home from "../Home/Home";
 import TweetFields from "../TweetFields/TweetFields";
 import ProfileLayout from "../Profile/ProfileLayout";
 import Explore from "../Explore/Explore";
-import ShowSettings from "../Settings/ShowSettings";
 import Notifications from "../Notifications/Notifications";
 import Lists from "../Lists/Lists";
 import Bookmarks from "../Bookmarks/Booksmarks";
@@ -25,7 +24,13 @@ import SingleMessagesBox from "../Messages/SingleMessagesBox";
 import Messages from "../Messages/Messages";
 import LikedUser from "../LikedUser/LikedUser";
 
+import YourAccount from "../AllSettings/YourAccount";
+import Account_info from "../AllSettings/Account_info/Account_info";
+import ForgotPassword from "../AllSettings/ForgotPassword/ForgotPassword";
 export {
+  YourAccount,
+  Account_info,
+  ForgotPassword,
   Home,
   TweetFields,
   ProfileLayout,
@@ -49,6 +54,5 @@ export {
   SingleMessagesBox,
   Messages,
   LikedUser,
-  ShowSettings,
   PageNotFound,
 };

@@ -184,7 +184,7 @@ export default function Sidebar({ socket }) {
       className: "hide_in_phone",
       name: "Setting",
       activeLogo: <AiFillSetting />,
-      href: `/account/settings`,
+      href: `/settings`,
       logo: <AiOutlineSetting />,
     },
   ];

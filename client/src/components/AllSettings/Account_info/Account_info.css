@@ -1,0 +1,54 @@
+.confirm_password {
+  font-size: 20px;
+  margin-bottom: 10px;
+  font-weight: 700;
+  padding: 10px 10px;
+}
+.confirm_password_alert {
+  font-size: 14px;
+  padding: 0px 10px;
+  margin-bottom: 20px;
+  font-weight: 400;
+  color: rgb(139, 152, 165);
+}
+.border_bottom {
+  border-bottom: 1px solid var(--theme-hover-color);
+}
+.verify_password_container_forgot_password {
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 10px;
+}
+.verify_password_container_input {
+  padding: 0px 10px;
+}
+
+.verify_password_container_forgot_password {
+  padding: 0px 10px;
+  cursor: pointer;
+  color: var(--theme-color);
+  font-size: 13px;
+  width: fit-content;
+}
+.forgot_password_submit_btn {
+  display: flex;
+  justify-content: end;
+  padding: 15px;
+}
+.forgot_password_submit_btn button {
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid var(--theme-hover-color);
+  background-color: var(--theme-color);
+  color: white;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.short_password_alert {
+  font-size: 13px;
+  margin-bottom: 20px;
+  font-weight: 400;
+  color: rgb(139, 152, 165);
+}

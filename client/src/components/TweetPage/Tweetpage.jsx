@@ -3,6 +3,7 @@ import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import { useParams } from "react-router-dom";
 import InfoLoader from "../Loader/InfoLoader";
 import TweetPageCard from "./TweetPageCard";
+import axios from "axios";
 export default function Tweetpage({ socket }) {
   const [loader, setLoader] = useState(true);
   const [filterdata, setFilterdata] = useState([]);
@@ -21,17 +22,21 @@ export default function Tweetpage({ socket }) {
     setInfoLoader,
   ] = useContext(AuthContext);
   const { tweetId } = useParams();
+  const backendURL = process.env.REACT_APP_BACKEND_URL;
   const getTweet = async () => {
     try {
-      // setLoader(true);
-      const getTweetWithId = allTweets.filter((e) => e._id === tweetId);
-      if (getTweetWithId?.length > 0) {
-        setFilterdata(getTweetWithId);
+      const getTweetWithId = await axios.get(
+        `${backendURL}/tweetaction/gettweetwithid/${tweetId}`
+      );
+      console.log(getTweetWithId?.data);
+      if (getTweetWithId?.data?.status === 1) {
+        setFilterdata(getTweetWithId?.data?.tweet);
         setLoader(false);
+      } else {
+        console.log("Nothing found");
       }
     } catch (error) {
-      setLoader(false);
-      console.log(error);
+      // setLoader(false);
     }
   };
   useEffect(() => {
@@ -40,9 +45,12 @@ export default function Tweetpage({ socket }) {
   return (
     <div>
       {loader ? (
-        <InfoLoader />
+        <>
+          <br />
+          <InfoLoader />
+        </>
       ) : (
-        <TweetPageCard socket={socket} tweetdata={filterdata[0]} />
+        <TweetPageCard socket={socket} tweetdata={filterdata} />
       )}
     </div>
   );

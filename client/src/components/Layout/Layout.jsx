@@ -1,6 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
   Home,
+  YourAccount,
+  Account_info,
+  ForgotPassword,
   TweetFields,
   ProfileLayout,
   Explore,
@@ -24,7 +27,6 @@ import {
   SingleMessagesBox,
   Messages,
   LikedUser,
-  ShowSettings,
 } from "./Import";
 
 export default function Layout({
@@ -32,7 +34,7 @@ export default function Layout({
   profile,
   explore,
   notifications,
-
+  account_info,
   messages,
   lists,
   bookmarks,
@@ -78,26 +80,29 @@ export default function Layout({
   const [isUserExist, setIsUserExist] = useState(true);
   const { username } = useParams();
   const backendURL = process.env.REACT_APP_BACKEND_URL;
+  console.log("isUserExist", isUserExist);
   const getSpecificUser = () => {
     setLoader(true);
     document.title = "Loading...";
+    setIsUserExist(true);
     try {
       axios.get(`${backendURL}/user/auth/getUser/${username}`).then((data) => {
         if (data.data.status === 1) {
           const user = data.data.data;
           setprofileData(user);
           setSpecificUserProfile(user);
+          setIsUserExist(true);
           setTimeout(() => {
             setLoader(false);
           }, 1000);
           document.title = `${user?.fullname} (@${user?.username}) / X`;
         } else {
           setIsUserExist(false);
+          setLoader(false);
         }
       });
     } catch (error) {}
   };
-
   useEffect(() => {
     if (
       profile ||
@@ -111,7 +116,9 @@ export default function Layout({
       showTweet
     )
       getSpecificUser();
+    setIsUserExist(true);
   }, [username]);
+
   return (
     <Home
       composetweet={composetweet}
@@ -120,6 +127,7 @@ export default function Layout({
       settings={settings}
       changePassword={changePassword}
       tweetPrivacy={tweetPrivacy}
+      account_info={account_info}
     >
       {tweetFields && <TweetFields socket={socket} />}
       {profile && (
@@ -231,9 +239,10 @@ export default function Layout({
       {replies && <Replies socket={socket} />}
       {tweetLike && <LikedUser />}
       {!isUserExist && <ErrorPage />}
-      {settings && <p>ShowSettings</p>}
-      {changePassword && <p>Change password</p>}
+      {settings && <YourAccount />}
+      {changePassword && <ForgotPassword />}
       {tweetPrivacy && <>tweetPrivacy</>}
+      {account_info && <Account_info />}
       {pageNotFound && <PageNotFound />}
     </Home>
   );

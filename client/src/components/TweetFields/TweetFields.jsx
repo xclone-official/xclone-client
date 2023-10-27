@@ -156,10 +156,8 @@ export default function TweetFields({ socket }) {
           </div>
           <div className="mobile_menu_options">
             {menu.map((e, index) => (
-              <div className="mobile_menu_option">
-                <div key={index} className="mobile_menu_option_svg">
-                  {e.svg}
-                </div>
+              <div key={index} className="mobile_menu_option">
+                <div className="mobile_menu_option_svg">{e.svg}</div>
                 <div className="mobile_menu_option_title">
                   <p>{e.title}</p>
                 </div>

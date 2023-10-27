@@ -39,7 +39,6 @@ const AuthContextProvider = (props) => {
         .get(`${backendURL}/tweetaction/getalltweet/${userData?._id}`)
         .then((data) => {
           const tweets = data.data.tweets;
-          console.log("tweets", tweets);
           setAllTweets(
             tweets.sort(function (a, b) {
               return new Date(b.createdAt) - new Date(a.createdAt);
@@ -70,7 +69,6 @@ const AuthContextProvider = (props) => {
         )
         .then((data) => {
           const tweets = data.data.tweets; // Reverse the order of tweets
-          // console.log(tweets);
           setFollowingTweet(
             tweets.sort(function (a, b) {
               return new Date(b.createdAt) - new Date(a.createdAt);

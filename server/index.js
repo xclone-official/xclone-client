@@ -291,6 +291,10 @@ app.use("/tweetinteractions", require("./InteractWithTweet/interactwithtweet"));
 // bookmark tweet
 app.use("/bookmark", require("./bookmarktweet/bookmarktweet"));
 
+// Update User profile
+
+app.use("/update", require("./updateUserInfo/updateUserInfo"));
+
 // Login with Github
 
 app.use("/login/oauth/access_token", async (req, res) => {

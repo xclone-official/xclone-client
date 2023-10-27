@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "./Settings.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 const options = [
   {
     title: "Your account",
@@ -20,9 +20,31 @@ export default function Settings() {
     document.title = `Settings / Xclone`;
   }, []);
   const location = useLocation();
+  const navigate = useNavigate();
+  const goBackToPreviousPage = () => {
+    navigate(-1);
+  };
+
   return (
     <div className="settings_container">
-      <p className="settings">Settings</p>
+      <div className="profile_top">
+        <svg
+          onClick={goBackToPreviousPage}
+          fill="var(--theme-color)"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <g>
+            <path d="M7.414 13l5.043 5.04-1.414 1.42L3.586 12l7.457-7.46 1.414 1.42L7.414 11H21v2H7.414z"></path>
+          </g>
+        </svg>
+        <div
+          className="top_tweetname"
+          style={{ display: "flex", alignItems: "center" }}
+        >
+          <p>Setting</p>
+        </div>
+      </div>
       <div className="settings_midcontainer">
         {options.map((e, index) => (
           <Link to={e.link} key={index}>

@@ -13,6 +13,7 @@ export default function Home({
   composetweet,
   messages,
   showMessage,
+  account_info,
   settings,
   changePassword,
   tweetPrivacy,
@@ -21,7 +22,6 @@ export default function Home({
   const navigate = useNavigate();
   const location = useLocation();
   const [widthOfWindow, setWidthOfWindow] = useState("");
-
   useEffect(() => {
     // Function to update the width when the window is resized
     const handleWindowResize = () => {
@@ -120,27 +120,39 @@ export default function Home({
               )}
             </div>
           </>
-        ) : settings || changePassword || tweetPrivacy ? (
+        ) : settings || changePassword || tweetPrivacy || account_info ? (
           <>
-            <div
-              className={` ${
-                widthOfWindow <= 820 ? "tweetfields" : "rightbar"
-              } `}
-            >
-              <div className="column">
-                {settings || changePassword || tweetPrivacy ? (
-                  <Settings />
-                ) : (
-                  <Rightbar />
-                )}
-              </div>
+            <div className={` ${"rightbar"} `}>
+              {location.pathname === "/settings" ? (
+                <div className="column">{children}</div>
+              ) : (
+                <div className="column">
+                  {settings ||
+                  changePassword ||
+                  tweetPrivacy ||
+                  account_info ? (
+                    <Settings />
+                  ) : (
+                    <Rightbar />
+                  )}
+                </div>
+              )}
             </div>
-            <div
-              className={` ${
-                widthOfWindow <= 820 ? "rightbar" : "tweetfields"
-              } `}
-            >
-              <div className="column">{children}</div>
+            <div className={` ${"tweetfields"} `}>
+              {location.pathname !== "/settings" ? (
+                <div className="column">{children}</div>
+              ) : (
+                <div className="column">
+                  {settings ||
+                  changePassword ||
+                  tweetPrivacy ||
+                  account_info ? (
+                    <Settings />
+                  ) : (
+                    <Rightbar />
+                  )}
+                </div>
+              )}
               {/* Tweet btn */}
 
               {!showMessage && !messages && (

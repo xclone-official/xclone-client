@@ -24,14 +24,12 @@ Router.get("/:userId", async (req, res) => {
       },
     });
 
-    console.log("allTweets", allTweets);
     res.status(200).send({
       status: 1,
       msg: "Tweets retrieved successfully.",
       tweets: allTweets,
     });
   } catch (error) {
-    console.error(error);
     return res.status(500).send({
       status: 2,
       msg: "Internal server error.",

@@ -1,0 +1,50 @@
+.form-input {
+  position: relative;
+  width: 100%;
+}
+
+.form-input input::placeholder {
+  opacity: 0;
+}
+
+.form-input input {
+  background-color: transparent;
+  width: 100%;
+  height: 50px;
+  font-size: 1rem;
+  color: white;
+  padding: 10px;
+  outline: none;
+  border: 0.5px solid var(--theme-hover-color);
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+.form-input .border_red {
+  border: 1px solid red !important;
+  color: red !important;
+}
+
+.form-input label {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: var(--theme-hover-color);
+  letter-spacing: 1px;
+  transition: 0.3s;
+  font-family: "Roboto", sans-serif;
+}
+
+.form-input input:focus + label,
+.form-input input:not(:placeholder-shown) + label {
+  top: 0px;
+  font-size: 0.8rem;
+  color: var(--theme-color);
+  background: #15202b;
+  padding: 7px;
+}
+
+.form-input input:focus {
+  border: 2px solid var(--theme-color);
+}

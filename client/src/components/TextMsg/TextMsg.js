@@ -15,10 +15,18 @@ const MSG_TYPES = {
 
   UPLOAD_ERROR: "UPLOAD_ERROR",
   UPLOAD_SUCCESS: "UPLOAD_SUCCESS",
+
+  PASSWORD_UPDATE_SUCCESS: "PASSWORD_UPDATE_SUCCESS",
+  PASSWORD_UPDATE_ERROR: "PASSWORD_UPDATE_ERROR",
 };
 
 export function MsgType(msgType) {
   switch (msgType) {
+    case MSG_TYPES.PASSWORD_UPDATE_ERROR:
+      return "Please try again";
+    case MSG_TYPES.PASSWORD_UPDATE_SUCCESS:
+      return "Password updated success";
+
     case MSG_TYPES.REGISTERED_SUCCESS:
       return "Check your email for activation.";
     case MSG_TYPES.SERVER_ERROR:

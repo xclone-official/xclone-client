@@ -1,0 +1,31 @@
+.Your_acc_container {
+  display: grid;
+}
+
+.your_acc_mid_container {
+  display: grid;
+}
+
+.your_acc_header {
+  padding: 10px 15px;
+  font-size: 20px;
+  font-weight: 800;
+}
+.your_acc_descrription {
+  padding: 5px 15px;
+  color: rgb(139, 152, 165);
+  font-size: 13.5px;
+  font-weight: 400;
+  margin-top: 5px;
+}
+.your_acc_descrriptionn {
+  padding: 5px 1px;
+  color: rgb(139, 152, 165);
+  font-size: 13.5px;
+  font-weight: 400;
+  margin-top: 5px;
+}
+.setting_card svg:nth-child(1) {
+  width: 20px;
+  fill: white;
+}
