@@ -48,7 +48,7 @@
 }
 .forgot_password_submit_btn {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   padding: 15px;
 }
 .forgot_password_submit_btn button {

@@ -124,7 +124,9 @@ export default function App() {
   }, [socket, allNotification?.length, allNotification]);
 
   if (Cookies.get("xid")) {
-    loading && <Loader />;
+    if (loading) {
+      return <Loader />;
+    }
   }
 
   return (

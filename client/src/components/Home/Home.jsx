@@ -17,6 +17,14 @@ export default function Home({
   settings,
   changePassword,
   tweetPrivacy,
+  update_username,
+  update_phone,
+  update_email,
+  update_protected_posts,
+  update_country,
+  update_languages,
+  update_gender,
+  update_dob,
 }) {
   const { userId } = useParams();
   const navigate = useNavigate();
@@ -120,7 +128,18 @@ export default function Home({
               )}
             </div>
           </>
-        ) : settings || changePassword || tweetPrivacy || account_info ? (
+        ) : settings ||
+          changePassword ||
+          tweetPrivacy ||
+          account_info ||
+          update_username ||
+          update_phone ||
+          update_email ||
+          update_protected_posts ||
+          update_country ||
+          update_languages ||
+          update_gender ||
+          update_dob ? (
           <>
             <div className={` ${"rightbar"} `}>
               {location.pathname === "/settings" ? (
@@ -130,7 +149,15 @@ export default function Home({
                   {settings ||
                   changePassword ||
                   tweetPrivacy ||
-                  account_info ? (
+                  account_info ||
+                  update_username ||
+                  update_phone ||
+                  update_email ||
+                  update_protected_posts ||
+                  update_country ||
+                  update_languages ||
+                  update_gender ||
+                  update_dob ? (
                     <Settings />
                   ) : (
                     <Rightbar />
@@ -146,7 +173,15 @@ export default function Home({
                   {settings ||
                   changePassword ||
                   tweetPrivacy ||
-                  account_info ? (
+                  account_info ||
+                  update_username ||
+                  update_phone ||
+                  update_email ||
+                  update_protected_posts ||
+                  update_country ||
+                  update_languages ||
+                  update_gender ||
+                  update_dob ? (
                     <Settings />
                   ) : (
                     <Rightbar />

@@ -28,6 +28,14 @@ import {
   Messages,
   LikedUser,
 } from "./Import";
+import UpdateUserName from "../AllSettings/UpdateUserName/UpdateUserName";
+import UpdateEmail from "../AllSettings/UpdateEmail/UpdateEmail";
+import Updatephone from "../AllSettings/Updatephone/Updatephone";
+import UpdateProtectedTweets from "../AllSettings/UpdateProtectedTweets/UpdateProtectedTweets";
+import UpdateCountry from "../AllSettings/UpdateCountry/UpdateCountry";
+import UpdateLanguage from "../AllSettings/UpdateLanguage/UpdateLanguage";
+import UpdateGender from "../AllSettings/UpdateGender/UpdateGender";
+import UpdateBirthDate from "../AllSettings/UpdateBirthDate/UpdateBirthDate";
 
 export default function Layout({
   tweetFields,
@@ -58,6 +66,14 @@ export default function Layout({
   changePassword,
   tweetPrivacy,
   pageNotFound,
+  update_username,
+  update_phone,
+  update_email,
+  update_protected_posts,
+  update_country,
+  update_languages,
+  update_gender,
+  update_dob,
 }) {
   const [
     showLogin,
@@ -128,6 +144,14 @@ export default function Layout({
       changePassword={changePassword}
       tweetPrivacy={tweetPrivacy}
       account_info={account_info}
+      update_username
+      update_phone
+      update_email
+      update_protected_posts
+      update_country
+      update_languages
+      update_gender
+      update_dob
     >
       {tweetFields && <TweetFields socket={socket} />}
       {profile && (
@@ -244,6 +268,14 @@ export default function Layout({
       {tweetPrivacy && <>tweetPrivacy</>}
       {account_info && <Account_info />}
       {pageNotFound && <PageNotFound />}
+      {update_username && <UpdateUserName />}
+      {update_phone && <Updatephone />}
+      {update_email && <UpdateEmail />}
+      {update_protected_posts && <UpdateProtectedTweets />}
+      {update_country && <UpdateCountry />}
+      {update_languages && <UpdateLanguage />}
+      {update_gender && <UpdateGender />}
+      {update_dob && <UpdateBirthDate />}
     </Home>
   );
 }

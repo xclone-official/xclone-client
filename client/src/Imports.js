@@ -55,35 +55,35 @@ const routes = [
   },
   {
     path: "/account/settings/account_info/username",
-    element: <Layout account_info={true} />,
+    element: <Layout update_username={true} />,
   },
   {
     path: "/account/settings/account_info/phone",
-    element: <Layout account_info={true} />,
+    element: <Layout update_phone={true} />,
   },
   {
     path: "/account/settings/account_info/email",
-    element: <Layout account_info={true} />,
+    element: <Layout update_email={true} />,
   },
   {
     path: "/account/settings/account_info/protected_posts",
-    element: <Layout account_info={true} />,
+    element: <Layout update_protected_posts={true} />,
   },
   {
     path: "/account/settings/account_info/update_country",
-    element: <Layout account_info={true} />,
+    element: <Layout update_country={true} />,
   },
   {
     path: "/account/settings/account_info/update_language",
-    element: <Layout account_info={true} />,
+    element: <Layout update_languages={true} />,
   },
   {
     path: "/account/settings/account_info/update_gender",
-    element: <Layout account_info={true} />,
+    element: <Layout update_gender={true} />,
   },
   {
     path: "/account/settings/account_info/update_dob",
-    element: <Layout account_info={true} />,
+    element: <Layout update_dob={true} />,
   },
   { path: "/settings", element: <Layout settings={true} /> },
   {
