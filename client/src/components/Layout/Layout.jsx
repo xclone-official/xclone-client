@@ -98,7 +98,6 @@ export default function Layout({
   const [isUserExist, setIsUserExist] = useState(true);
   const { username } = useParams();
   const backendURL = process.env.REACT_APP_BACKEND_URL;
-  console.log("isUserExist", isUserExist);
   const getSpecificUser = () => {
     setLoader(true);
     document.title = "Loading...";
