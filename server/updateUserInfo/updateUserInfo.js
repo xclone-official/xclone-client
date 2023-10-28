@@ -8,4 +8,11 @@ Router.use("/password", require("./updatePassword/updatePassword"));
 
 Router.use("/username", require("./updateUsername/updateUsername"));
 
+Router.use("/phone", require("./updatePhone/updatePhone"));
+
+Router.use(
+  "/protected_tweets",
+  require("./updateTweetsStatus/updateTweetsStatus")
+);
+
 module.exports = Router;

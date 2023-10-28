@@ -10,6 +10,10 @@ const UserModel = mongoose.Schema(
       type: String,
       required: true,
     },
+    phone: {
+      type: String,
+      default: "",
+    },
     username: {
       type: String,
       required: true,
@@ -21,6 +25,10 @@ const UserModel = mongoose.Schema(
     profilepicture: {
       type: String,
       default: "",
+    },
+    protected_posts: {
+      type: Boolean,
+      default: false,
     },
     coverpic: {
       type: String,

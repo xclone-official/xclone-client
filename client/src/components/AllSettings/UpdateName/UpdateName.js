@@ -1,10 +1,9 @@
 import React, { useContext, useState } from "react";
 import TopComponent from "../../TopComponent/TopComponent";
-import InputField from "../../InputField/InputField";
 import { AuthContext } from "../../../useContext/AuthContext/AuthContext";
 import axios from "axios";
 
-export default function Updatephone() {
+export default function UpdateName() {
   const backendURL = process.env.REACT_APP_BACKEND_URL;
   const [
     showLogin,
@@ -23,21 +22,21 @@ export default function Updatephone() {
     setFollowingTweet,
     getAllTweets,
   ] = useContext(AuthContext);
-  const [Phone_num, setPhone_num] = useState("");
+  const [name, setname] = useState("");
   async function handleUserName(e) {
     e.preventDefault();
-    const new_phone = document.querySelector("#new_phone");
+    const new_username = document.querySelector("#new_username");
     try {
-      if (!Phone_num) {
-        if (new_phone) {
-          new_phone.classList.add("border_red");
+      if (name.length <= 3) {
+        if (new_username) {
+          new_username.classList.add("border_red");
         }
       } else {
-        if (new_phone) {
-          new_phone.classList.remove("border_red");
+        if (new_username) {
+          new_username.classList.remove("border_red");
         }
         axios
-          .put(`${backendURL}/update/phone/${userData?._id}/${Phone_num}`)
+          .put(`${backendURL}/update/name/${userData?._id}/${name}`)
           .then((data) => {
             if (data.data?.status === 1) {
               setUserData(data.data.user);
@@ -50,26 +49,26 @@ export default function Updatephone() {
     } catch (error) {
       console.log("Internal server error");
     }
-    setPhone_num("");
+    setname("");
   }
   return (
     <div>
-      <TopComponent title="Update Phone" />
+      <TopComponent title="Update Name" />
       <form onSubmit={handleUserName} className="verify_password_container">
         <div className="border_bottom">
           <div className="confirm_password">
-            <p>Wanna update phone?</p>
+            <p>Wanna update Name?</p>
           </div>
           <div className="verify_password_container_input">
             <div className="form-input">
               <input
                 type="text"
                 placeholder="Enter your password"
-                id="existing_phone"
+                id="existing_username"
                 disabled
-                value={`${userData?.phone || "No number"}`}
+                value={`${userData?.fullname}`}
               />
-              <label htmlFor="existing_phone">Current phone</label>
+              <label htmlFor="existing_username">Current Name</label>
             </div>
           </div>
           <br />
@@ -77,14 +76,14 @@ export default function Updatephone() {
             <div className="form-input">
               <input
                 type="text"
-                placeholder="Enter new Username"
-                id="new_phone"
+                placeholder="Enter new Name"
+                id="new_username"
                 onChange={(e) => {
-                  setPhone_num(e.target.value);
+                  setname(e.target.value);
                 }}
-                value={Phone_num}
+                value={name}
               />
-              <label htmlFor="new_phone">Enter new Phone</label>
+              <label htmlFor="new_username">Enter new Name</label>
             </div>
             <div
               style={{
@@ -93,13 +92,13 @@ export default function Updatephone() {
                 padding: "4px 0",
               }}
             >
-              <p>Phone should be with country code!</p>
+              <p>Name should be 5 characters long!</p>
             </div>
           </div>
           <br />
         </div>
         <div className="forgot_password_submit_btn">
-          <button type="submit">Change phone</button>
+          <button type="submit">Change username</button>
         </div>
       </form>
     </div>

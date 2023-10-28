@@ -62,6 +62,10 @@ const routes = [
     element: <Layout update_phone={true} />,
   },
   {
+    path: "/account/settings/account_info/name",
+    element: <Layout name={true} />,
+  },
+  {
     path: "/account/settings/account_info/email",
     element: <Layout update_email={true} />,
   },

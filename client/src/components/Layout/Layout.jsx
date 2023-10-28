@@ -36,6 +36,7 @@ import UpdateCountry from "../AllSettings/UpdateCountry/UpdateCountry";
 import UpdateLanguage from "../AllSettings/UpdateLanguage/UpdateLanguage";
 import UpdateGender from "../AllSettings/UpdateGender/UpdateGender";
 import UpdateBirthDate from "../AllSettings/UpdateBirthDate/UpdateBirthDate";
+import UpdateName from "../AllSettings/UpdateName/UpdateName";
 
 export default function Layout({
   tweetFields,
@@ -74,6 +75,7 @@ export default function Layout({
   update_languages,
   update_gender,
   update_dob,
+  name,
 }) {
   const [
     showLogin,
@@ -144,14 +146,15 @@ export default function Layout({
       changePassword={changePassword}
       tweetPrivacy={tweetPrivacy}
       account_info={account_info}
-      update_username
-      update_phone
-      update_email
-      update_protected_posts
-      update_country
-      update_languages
-      update_gender
-      update_dob
+      update_username={update_username}
+      update_phone={update_phone}
+      update_email={update_email}
+      update_protected_posts={update_protected_posts}
+      update_country={update_country}
+      update_languages={update_languages}
+      update_gender={update_gender}
+      update_dob={update_dob}
+      name={name}
     >
       {tweetFields && <TweetFields socket={socket} />}
       {profile && (
@@ -269,7 +272,8 @@ export default function Layout({
       {account_info && <Account_info />}
       {pageNotFound && <PageNotFound />}
       {update_username && <UpdateUserName />}
-      {update_phone && <Updatephone />}
+      {update_phone && <h2>We are working</h2>}
+      {name && <UpdateName />}
       {update_email && <UpdateEmail />}
       {update_protected_posts && <UpdateProtectedTweets />}
       {update_country && <UpdateCountry />}

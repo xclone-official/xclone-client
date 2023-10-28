@@ -25,6 +25,7 @@ export default function Home({
   update_languages,
   update_gender,
   update_dob,
+  name,
 }) {
   const { userId } = useParams();
   const navigate = useNavigate();
@@ -139,7 +140,8 @@ export default function Home({
           update_country ||
           update_languages ||
           update_gender ||
-          update_dob ? (
+          update_dob ||
+          name ? (
           <>
             <div className={` ${"rightbar"} `}>
               {location.pathname === "/settings" ? (
@@ -157,7 +159,8 @@ export default function Home({
                   update_country ||
                   update_languages ||
                   update_gender ||
-                  update_dob ? (
+                  update_dob ||
+                  name ? (
                     <Settings />
                   ) : (
                     <Rightbar />
@@ -181,7 +184,8 @@ export default function Home({
                   update_country ||
                   update_languages ||
                   update_gender ||
-                  update_dob ? (
+                  update_dob ||
+                  name ? (
                     <Settings />
                   ) : (
                     <Rightbar />

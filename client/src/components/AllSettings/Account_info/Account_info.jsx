@@ -7,9 +7,9 @@ import { AuthContext } from "../../Layout/Import";
 import { convertDate } from "../../CovertDateTime/ConvertDateTime";
 
 export default function Account_info() {
-  const [step1, setStep1] = useState(true);
+  const [step1, setStep1] = useState(false);
   const [inputField, setInputField] = useState("");
-  const [step2, setStep2] = useState(false);
+  const [step2, setStep2] = useState(true);
   const [
     showLogin,
     setShowLogin,
@@ -75,9 +75,9 @@ export default function Account_info() {
       desc: `@${userData?.username}`,
     },
     {
-      title: "Phone",
-      link: "/account/settings/account_info/phone",
-      desc: `${userData?.phone || ""}`,
+      title: "Name",
+      link: "/account/settings/account_info/name",
+      desc: `${userData?.fullname || ""}`,
     },
     {
       title: "Email",

@@ -1,12 +1,12 @@
 const Router = require("express").Router();
 const UserModel = require("../../Models/UserModel/UserModel");
-Router.put("/:userId/:email", async (req, res) => {
+Router.put("/:userId", async (req, res) => {
   try {
-    const { userId, email } = req.params;
-    if (!userId || !email) {
+    const { userId } = req.params;
+    if (!userId) {
       return res.status(200).send({
         status: 2,
-        msg: "UserID or email can't be empty",
+        msg: "UserID or protected_posts can't be empty",
       });
     }
     const isUserExist = await UserModel.findById(userId);
@@ -16,20 +16,15 @@ Router.put("/:userId/:email", async (req, res) => {
         msg: "User not found",
       });
     }
-
-    const isemailExist = await UserModel.findOne({ email: email });
-    if (isemailExist) {
-      return res.status(200).send({
-        status: 3,
-        msg: "email already exists.",
-      });
-    }
-
-    await UserModel.findByIdAndUpdate({ _id: userId }, { email: email });
+    const getStatus = await isUserExist.protected_posts;
+    await UserModel.findByIdAndUpdate(
+      { _id: userId },
+      { protected_posts: !getStatus }
+    );
     const findTheUser = await UserModel.findById(userId);
     return res.status(200).send({
       status: 1,
-      msg: "email updated successfully",
+      msg: "phone updated successfully",
       user: findTheUser,
     });
   } catch (error) {
