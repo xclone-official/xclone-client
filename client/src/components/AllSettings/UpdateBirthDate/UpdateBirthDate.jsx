@@ -92,10 +92,7 @@ export default function UpdateBirthDate() {
                 padding: "4px 0",
               }}
             >
-              <p>
-                dob name should be correct name as Male, Female, or Prefer not
-                to say!
-              </p>
+              <p>Update date of birth!</p>
             </div>
           </div>
           <br />

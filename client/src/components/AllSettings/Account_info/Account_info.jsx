@@ -93,7 +93,7 @@ export default function Account_info() {
     {
       title: "Protected posts",
       link: "/account/settings/account_info/protected_posts",
-      desc: `No`,
+      desc: `${userData?.protected_posts}`,
     },
     {
       title: "Created At",
