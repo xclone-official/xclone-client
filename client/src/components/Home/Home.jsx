@@ -30,35 +30,18 @@ export default function Home({
   const { userId } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const [widthOfWindow, setWidthOfWindow] = useState("");
-  useEffect(() => {
-    // Function to update the width when the window is resized
-    const handleWindowResize = () => {
-      const newWidth = window.innerWidth;
-      setWidthOfWindow(newWidth);
-    };
-
-    // Initial window width
-    const initialWidth = window.innerWidth;
-    setWidthOfWindow(initialWidth);
-
-    // Attach the resize event listener
-    window.addEventListener("resize", handleWindowResize);
-
-    // Cleanup the event listener when the component unmounts
-    return () => {
-      window.removeEventListener("resize", handleWindowResize);
-    };
-  }, []);
   const goBackToPreviousPage = () => {
     navigate(-1);
   };
   useEffect(() => {
+    document.title = "Xclone / Foryou";
+  }, [location.pathname]);
+  useEffect(() => {
     if (location.pathname === "/") {
       navigate("/home");
-      document.title = "X / Home";
     }
   }, []);
+
   return (
     <div className="main_content">
       {location.pathname === "/home/compose/tweet" && (
