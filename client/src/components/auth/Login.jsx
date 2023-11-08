@@ -91,7 +91,6 @@ export default function Login() {
         handler();
       }
     } catch (error) {
-      console.log("Error:", error);
       const handler = statusHandlers[4];
       setLoader(true);
       if (handler) {

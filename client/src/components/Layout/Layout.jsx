@@ -37,6 +37,7 @@ import UpdateLanguage from "../AllSettings/UpdateLanguage/UpdateLanguage";
 import UpdateGender from "../AllSettings/UpdateGender/UpdateGender";
 import UpdateBirthDate from "../AllSettings/UpdateBirthDate/UpdateBirthDate";
 import UpdateName from "../AllSettings/UpdateName/UpdateName";
+import DeactivateAcc from "../DeactivateAcc/DeactivateAcc";
 
 export default function Layout({
   tweetFields,
@@ -76,6 +77,7 @@ export default function Layout({
   update_gender,
   update_dob,
   name,
+  deactivateAcc,
 }) {
   const [
     showLogin,
@@ -154,6 +156,7 @@ export default function Layout({
       update_gender={update_gender}
       update_dob={update_dob}
       name={name}
+      deactivateAcc={deactivateAcc}
     >
       {tweetFields && <TweetFields socket={socket} />}
       {profile && (
@@ -279,6 +282,7 @@ export default function Layout({
       {update_languages && <UpdateLanguage />}
       {update_gender && <UpdateGender />}
       {update_dob && <UpdateBirthDate />}
+      {deactivateAcc && <DeactivateAcc />}
     </Home>
   );
 }

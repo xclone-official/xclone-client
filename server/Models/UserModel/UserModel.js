@@ -30,6 +30,10 @@ const UserModel = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    flag: {
+      type: Boolean,
+      default: false,
+    },
     coverpic: {
       type: String,
       default: "",

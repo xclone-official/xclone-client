@@ -12,9 +12,6 @@ import { NotificationContext } from "./useContext/NotificationsContext/Notificat
 import { MessageContext } from "./useContext/MessageContext/MessageContext";
 import Cookies from "js-cookie";
 const routes = [
-  { path: "/", element: <Home /> },
-  { path: "/flow/login", element: <Login /> },
-  { path: "/flow/register", element: <Register /> },
   { path: "/home", element: <Layout tweetFields={true} /> },
   { path: "/home/compose/tweet", element: <Layout composetweet={true} /> },
   { path: "/p/:username", element: <Layout profile={true} /> },
@@ -97,6 +94,11 @@ const routes = [
   {
     path: "/account/settings/tweet-privacy",
     element: <Layout tweetPrivacy={true} />,
+  },
+  // Deactivate account
+  {
+    path: "/account/settings/deactivate-account",
+    element: <Layout deactivateAcc={true} />,
   },
   { path: "/*", element: <Layout pageNotFound={true} /> },
 ];

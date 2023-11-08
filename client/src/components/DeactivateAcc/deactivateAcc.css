@@ -1,0 +1,56 @@
+.deactivate_acc_container {
+  height: 100vh;
+  overflow-y: scroll;
+}
+.deactivate_acc_container::-webkit-scrollbar {
+  width: 0;
+}
+.deactivate_acc_top_ {
+  position: sticky;
+  top: 0;
+}
+
+.deactivate_acc_profile_container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 5px 0px 5px;
+  cursor: pointer;
+}
+
+.deactivate_acc_profile img {
+  height: 45px;
+  width: 45px;
+  border-radius: 100%;
+  object-fit: cover;
+}
+.deactivate_acc_name p {
+  font-size: 16px;
+}
+.deactivate_acc_name span {
+  font-size: 14px;
+  color: rgb(139, 152, 165);
+}
+.deactivate_acc_alert {
+  font-size: 14px;
+  padding: 15px 12px 0px 12px;
+}
+.deactivate_acc_desc {
+  padding: 15px 12px 0px 12px;
+  color: rgb(139, 152, 165);
+  font-size: 14px;
+}
+
+.deactivate_acc_btn button {
+  padding: 20px;
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  color: red;
+  transition: 0.3s;
+  background-color: rgba(21, 32, 43, 1);
+}
+.deactivate_acc_btn button:hover {
+  background-color: rgb(244, 46, 33, 0.1);
+  cursor: pointer;
+}

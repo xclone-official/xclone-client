@@ -22,4 +22,6 @@ Router.use("/language", require("./updateLanguage/updateLanguage"));
 Router.use("/gender", require("./updateGender/updateGender"));
 
 Router.use("/dob", require("./updateDOB/updateDOB"));
+Router.use("/flag", require("./updateFlag/updateFlag"));
+
 module.exports = Router;

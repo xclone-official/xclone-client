@@ -15,6 +15,9 @@ import {
   MessageContext,
   Cookies,
   routes,
+  Login,
+  Register,
+  Home,
 } from "./Imports";
 export default function App() {
   const [, , , , userData, , loading] = useContext(AuthContext);
@@ -132,6 +135,12 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={userData ? <Home /> : <Auth />} />
+        <Route path="/flow/login" element={userData ? <Home /> : <Login />} />
+        <Route
+          path="/flow/register"
+          element={userData ? <Home /> : <Register />}
+        />
         {routes.map((route, index) => (
           <Route
             key={index}

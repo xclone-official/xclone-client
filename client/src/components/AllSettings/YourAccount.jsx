@@ -28,7 +28,7 @@ const options = [
   },
   {
     title: "Deactivate Account",
-    link: "/account/settings/tweet-privacy",
+    link: "/account/settings/deactivate-account",
     desc: "Find out how you can deactivate your account.",
     svg: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
