@@ -106,18 +106,12 @@ export default function ProfileSkeleton({
           {/* Profile tabs */}
 
           <div className="profile_tabs">
-            <div
-              className={`tab_btn ${
-                !(with_replies || highlights || media || likes)
-                  ? "active_tabs"
-                  : ""
-              } posts_tab`}
-            >
+            <div className={`tab_btn`}>
               <div>
                 <button>Posts</button>
               </div>
             </div>
-            <div
+            {/* <div
               className={`tab_btn ${
                 with_replies ? "active_tabs" : ""
               } replies_tab`}
@@ -139,8 +133,8 @@ export default function ProfileSkeleton({
               <div>
                 <button>Media</button>
               </div>
-            </div>
-            <div className={`tab_btn ${likes ? "active_tabs" : ""} likes_tab`}>
+            </div> */}
+            <div className={`tab_btn`}>
               <div>
                 <button>Likes</button>
               </div>

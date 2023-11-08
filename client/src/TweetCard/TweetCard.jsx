@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../useContext/AuthContext/AuthContext";
 import { TweetContext } from "../useContext/TweetContext/TweetContext";
 import { customTimeFormat } from "../components/customTime/customTime";
-import { NotificationContext } from "../useContext/NotificationsContext/NotificationsContext";
 import RemoveUnnecessaryTag from "./RemoveUnnecessaryTag";
 const VerifiedAcccount = () => {
   return (
@@ -69,7 +68,6 @@ export default function TweetCard({ tweets, socket }) {
     unlikeTweet,
   ] = useContext(TweetContext);
   const [likeBtn, setLikeBtn] = useState(<UnlikeBtn />);
-  const [allNotification, setAllNotification] = useContext(NotificationContext);
   // const [tweet_data, setTweet_data] = useState(tweets);
   const navigate = useNavigate();
   const backendURL = process.env.REACT_APP_BACKEND_URL;

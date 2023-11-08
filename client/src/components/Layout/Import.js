@@ -8,7 +8,7 @@ import Bookmarks from "../Bookmarks/Booksmarks";
 import Communities from "../Communities/Communities";
 import Hashtag from "../Hashtag/Hashtag";
 import PageNotFound from "../404/404";
-
+import React, { useContext, useEffect, useState } from "react";
 import Tweetpage from "../TweetPage/Tweetpage";
 import Following from "../Following/Following";
 import Foryou from "../TweetFields/Foryou/Foryou";
@@ -27,7 +27,29 @@ import LikedUser from "../LikedUser/LikedUser";
 import YourAccount from "../AllSettings/YourAccount";
 import Account_info from "../AllSettings/Account_info/Account_info";
 import ForgotPassword from "../AllSettings/ForgotPassword/ForgotPassword";
+import UpdateUserName from "../AllSettings/UpdateUserName/UpdateUserName";
+import UpdateEmail from "../AllSettings/UpdateEmail/UpdateEmail";
+import UpdateProtectedTweets from "../AllSettings/UpdateProtectedTweets/UpdateProtectedTweets";
+import UpdateCountry from "../AllSettings/UpdateCountry/UpdateCountry";
+import UpdateLanguage from "../AllSettings/UpdateLanguage/UpdateLanguage";
+import UpdateGender from "../AllSettings/UpdateGender/UpdateGender";
+import UpdateBirthDate from "../AllSettings/UpdateBirthDate/UpdateBirthDate";
+import UpdateName from "../AllSettings/UpdateName/UpdateName";
+import DeactivateAcc from "../DeactivateAcc/DeactivateAcc";
 export {
+  React,
+  useContext,
+  useState,
+  useEffect,
+  UpdateBirthDate,
+  UpdateCountry,
+  UpdateEmail,
+  UpdateGender,
+  UpdateLanguage,
+  UpdateName,
+  UpdateProtectedTweets,
+  DeactivateAcc,
+  UpdateUserName,
   YourAccount,
   Account_info,
   ForgotPassword,

@@ -14,7 +14,7 @@ Router.get("/:tweetId", async (req, res) => {
     if (tweetId) {
       const isValidObjectId = mongoose.Types.ObjectId.isValid(tweetId);
       if (isValidObjectId) {
-        const getTweetById = await TweetModel.findById(tweetId);
+        const getTweetById = await TweetModel.find({ authorId: tweetId });
         if (getTweetById) {
           return res.status(200).send({
             status: 1,

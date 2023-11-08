@@ -20,4 +20,10 @@ Router.use(
   "/getTweetFromFollowers",
   require("./getTweetFromFollowers/getTweetFromFollowers")
 );
+
+Router.use("/getusertweet", require("./getUserTweet/getUserTweet"));
+
+Router.use("/getalltweets", require("./getAllTweets/getAllTweets"));
+
+Router.use("/userlikedtweet", require("./userLikedTweet/userLikedTweet"));
 module.exports = Router;

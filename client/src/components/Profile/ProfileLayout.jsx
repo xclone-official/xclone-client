@@ -5,8 +5,7 @@ import ProfileSkeleton from "./ProfileSkeleton";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import axios from "axios";
 import { TweetContext } from "../../useContext/TweetContext/TweetContext";
-// import { NotificationContext } from "../../useContext/NotificationsContext/NotificationsContext";
-// import axios from "axios";
+import { AllTweetContext } from "../../useContext/AllTweetContext/AllTweetContextProvider";
 export default function ProfileLayout({
   with_replies,
   highlights,
@@ -18,6 +17,7 @@ export default function ProfileLayout({
   socket,
   isUserExist,
 }) {
+  console.log("isUserExist", isUserExist);
   const [
     showLogin,
     setShowLogin,
@@ -27,8 +27,8 @@ export default function ProfileLayout({
     setUserData,
     loading,
     setLoading,
-    allTweets,
-    setAllTweets,
+    ,
+    ,
     infoLoader,
     setInfoLoader,
     followingTweet,
@@ -40,7 +40,7 @@ export default function ProfileLayout({
   const [showMedia, setShowMedia] = useState(false);
   // const [allNotification, setAllNotification] = useContext(NotificationContext);
   const [showProfile, setShowProfile] = useState(false);
-
+  const [allTweets, setAllTweets] = useContext(AllTweetContext);
   const [followBtn, setFollowBtn] = useState("Loading...");
   const navigate = useNavigate();
   const goBackToPreviousPage = () => {
@@ -335,7 +335,7 @@ export default function ProfileLayout({
                     <button>Posts</button>
                   </Link>
                 </div>
-                <div
+                {/* <div
                   className={`tab_btn ${
                     with_replies ? "active_tabs" : ""
                   } replies_tab`}
@@ -359,7 +359,7 @@ export default function ProfileLayout({
                   <Link to={`/p/${specificUserProfile?.username}/media`}>
                     <button>Media</button>
                   </Link>
-                </div>
+                </div> */}
                 <div
                   className={`tab_btn ${likes ? "active_tabs" : ""} likes_tab`}
                 >

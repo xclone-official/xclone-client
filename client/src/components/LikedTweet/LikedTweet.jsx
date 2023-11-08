@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 import InfoLoader from "../Loader/InfoLoader";
-import LikedCard from "./LikedCard";
+import TweetCard from "../../TweetCard/TweetCard";
 export default function LikedTweet({ profileData }) {
-  const [initialData, setInitialData] = useState(5);
+  const [initialData, setInitialData] = useState(15);
   const [initialLikedArray, setInitialLikedArray] = useState();
   useEffect(() => {
     setInitialLikedArray(profileData?.likedTweet?.slice(0, initialData));
@@ -52,7 +52,7 @@ export default function LikedTweet({ profileData }) {
         >
           <div>
             {initialLikedArray.map((data, index) => {
-              return <LikedCard tweets={data?.tweet} key={index} />;
+              return <TweetCard tweets={data?.tweet} key={index} />;
             })}
           </div>
         </InfiniteScroll>

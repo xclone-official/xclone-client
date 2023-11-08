@@ -1,5 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import { AllTweetContext } from "../../useContext/AllTweetContext/AllTweetContextProvider";
+import ProfilePost from "../ProfilePost/ProfilePost";
 import {
+  React,
+  useContext,
+  useState,
+  useEffect,
   Home,
   YourAccount,
   Account_info,
@@ -27,17 +32,16 @@ import {
   SingleMessagesBox,
   Messages,
   LikedUser,
+  UpdateBirthDate,
+  UpdateCountry,
+  UpdateEmail,
+  UpdateGender,
+  UpdateLanguage,
+  UpdateName,
+  UpdateProtectedTweets,
+  DeactivateAcc,
+  UpdateUserName,
 } from "./Import";
-import UpdateUserName from "../AllSettings/UpdateUserName/UpdateUserName";
-import UpdateEmail from "../AllSettings/UpdateEmail/UpdateEmail";
-import Updatephone from "../AllSettings/Updatephone/Updatephone";
-import UpdateProtectedTweets from "../AllSettings/UpdateProtectedTweets/UpdateProtectedTweets";
-import UpdateCountry from "../AllSettings/UpdateCountry/UpdateCountry";
-import UpdateLanguage from "../AllSettings/UpdateLanguage/UpdateLanguage";
-import UpdateGender from "../AllSettings/UpdateGender/UpdateGender";
-import UpdateBirthDate from "../AllSettings/UpdateBirthDate/UpdateBirthDate";
-import UpdateName from "../AllSettings/UpdateName/UpdateName";
-import DeactivateAcc from "../DeactivateAcc/DeactivateAcc";
 
 export default function Layout({
   tweetFields,
@@ -64,7 +68,6 @@ export default function Layout({
   socket,
   tweetLike,
   settings,
-
   changePassword,
   tweetPrivacy,
   pageNotFound,
@@ -79,20 +82,8 @@ export default function Layout({
   name,
   deactivateAcc,
 }) {
-  const [
-    showLogin,
-    setShowLogin,
-    showRegister,
-    setShowRegister,
-    userData,
-    setUserData,
-    loading,
-    setLoading,
-    allTweets,
-    setAllTweets,
-    infoLoader,
-    setInfoLoader,
-  ] = useContext(AuthContext);
+  const [, , , , userData, , loading, , , , , ,] = useContext(AuthContext);
+  const [allTweets, setAllTweets] = useContext(AllTweetContext);
   const [myTweets, setMyTweets, specificUserProfile, setSpecificUserProfile] =
     useContext(TweetContext);
   const [profileData, setprofileData] = useState();
@@ -159,24 +150,7 @@ export default function Layout({
       deactivateAcc={deactivateAcc}
     >
       {tweetFields && <TweetFields socket={socket} />}
-      {profile && (
-        <ProfileLayout
-          isUserExist={isUserExist}
-          isloading={isloading}
-          userDataa={specificUserProfile}
-          allTweets={allTweets}
-          socket={socket}
-        >
-          {!loading && (
-            <Foryou
-              scrollbarhide={true}
-              profileId={specificUserProfile}
-              myAllTweets={true}
-              socket={socket}
-            />
-          )}
-        </ProfileLayout>
-      )}
+
       {explore && <Explore socket={socket} />}
       {notifications && <Notifications socket={socket} />}
       {messages && (
@@ -216,54 +190,28 @@ export default function Layout({
           socket={socket}
         />
       )}
-      {with_replies && (
-        <ProfileLayout
-          isloading={isloading}
-          userData={userData}
-          profileData={profileData}
-          allTweets={allTweets}
-          with_replies={true}
-          socket={socket}
-        >
-          <p>With Replies</p>
-        </ProfileLayout>
-      )}
-      {highlights && (
-        <ProfileLayout
-          socket={socket}
-          isloading={isloading}
-          userData={userData}
-          profileData={profileData}
-          allTweets={allTweets}
-          highlights={highlights}
-        >
-          <p>With highlights</p>
-        </ProfileLayout>
-      )}
-      {media && (
-        <ProfileLayout
-          socket={socket}
-          isloading={isloading}
-          userData={userData}
-          profileData={profileData}
-          allTweets={allTweets}
-          media={media}
-        >
-          <p>media</p>
-        </ProfileLayout>
-      )}
-      {likes && (
-        <ProfileLayout
-          socket={socket}
-          isloading={isloading}
-          userData={userData}
-          profileData={profileData}
-          allTweets={allTweets}
-          likes={likes}
-        >
-          <LikedTweet socket={socket} profileData={profileData} />
-        </ProfileLayout>
-      )}
+      <ProfileLayout
+        socket={socket}
+        isloading={isloading}
+        userData={userData}
+        profileData={profileData}
+        allTweets={allTweets}
+        likes={likes}
+        isUserExist={isUserExist}
+      >
+        {profile && !loading && (
+          <ProfilePost
+            scrollbarhide={true}
+            profileId={specificUserProfile}
+            myAllTweets={true}
+            socket={socket}
+          />
+        )}
+        {with_replies && <p>With Replies</p>}
+        {highlights && <p>With highlights</p>}
+        {media && <p>media</p>}
+        {likes && <LikedTweet socket={socket} profileData={profileData} />}
+      </ProfileLayout>
       {edit_profile && <Editprofile socket={socket} />}
       {replies && <Replies socket={socket} />}
       {tweetLike && <LikedUser />}

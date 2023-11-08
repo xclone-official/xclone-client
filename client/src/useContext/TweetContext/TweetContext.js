@@ -4,6 +4,7 @@ import axios from "axios";
 import { SpecificTweets } from "../SpecificTweet/SpecificTweet";
 import { FollowersTweetContext } from "../FollowersTweetContext/FollowersTweetContext";
 import Cookies from "js-cookie";
+import { AllTweetContext } from "../AllTweetContext/AllTweetContextProvider";
 export const TweetContext = createContext();
 
 const TweetContextProvider = ({ children }) => {
@@ -20,8 +21,8 @@ const TweetContextProvider = ({ children }) => {
     setUserData,
     loading,
     setLoading,
-    allTweets,
-    setAllTweets,
+    ,
+    ,
     infoLoader,
     setInfoLoader,
     followingTweet,
@@ -31,27 +32,33 @@ const TweetContextProvider = ({ children }) => {
   ] = useContext(AuthContext);
   const [followersTweet, setFollowersTweet, getAllTweetsFromFollowers] =
     useContext(FollowersTweetContext);
+  const [allTweets, setAllTweets, getAllTweet] = useContext(AllTweetContext);
   const [specifictweetPage, setSpecifictweetPage] = useContext(SpecificTweets);
-
+  const backendURL = process.env.REACT_APP_BACKEND_URL;
+  async function fetchData(id) {
+    console.log(id);
+    const myTweets = await axios.get(
+      `${backendURL}/tweetaction/getusertweet/${id}`
+    );
+    const parseTweet = myTweets.data;
+    if (parseTweet.status === 1) {
+      setMyTweets(parseTweet);
+    } else {
+      alert("Error: Fetching tweets");
+    }
+    setTimeout(() => {
+      setInfoLoader(false);
+    }, 2000);
+  }
   useEffect(() => {
     setInfoLoader(true);
-
     if (Cookies.get("xid")) {
       const id = Cookies.get("xid");
-
-      const myTweets = allTweets.filter(
-        (e) => parseInt(e.authorId) === parseInt(id)
-      );
-      setMyTweets(myTweets);
-      setTimeout(() => {
-        setInfoLoader(false);
-      }, 2000);
+      fetchData(id);
     } else {
       setLoading(false);
     }
   }, [allTweets, allTweets.length]);
-
-  const backendURL = process.env.REACT_APP_BACKEND_URL;
 
   const likeTweet = (specifictweet_id, userData_id) => {
     try {
@@ -63,6 +70,7 @@ const TweetContextProvider = ({ children }) => {
             setSpecifictweetPage(data.data.tweet);
             await getAllTweetsFromFollowers();
             await getAllTweets();
+            await getAllTweet();
             await getAllTweetsFromFollowingUsers();
           }
         })
@@ -83,6 +91,7 @@ const TweetContextProvider = ({ children }) => {
             setSpecifictweetPage(data.data.tweet);
             getAllTweetsFromFollowers();
             getAllTweets();
+            getAllTweet();
             getAllTweetsFromFollowingUsers();
           }
         })

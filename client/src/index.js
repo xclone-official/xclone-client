@@ -9,24 +9,27 @@ import LikedContextProvider from "./useContext/LikedContext/LikedContext";
 import NotificationContextProvider from "./useContext/NotificationsContext/NotificationsContext";
 import MessageContextProvider from "./useContext/MessageContext/MessageContext";
 import FollowersTweetContextProvider from "./useContext/FollowersTweetContext/FollowersTweetContext";
+import AllTweetContextProvider from "./useContext/AllTweetContext/AllTweetContextProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <NotificationContextProvider>
-      <AuthContextProvider>
-        <LikedContextProvider>
-          <SpecificTweetProvider>
-            <FollowersTweetContextProvider>
-              <TweetContextProvider>
-                <MessageContextProvider>
-                  <App />
-                </MessageContextProvider>
-              </TweetContextProvider>
-            </FollowersTweetContextProvider>
-          </SpecificTweetProvider>
-        </LikedContextProvider>
-      </AuthContextProvider>
+      <AllTweetContextProvider>
+        <AuthContextProvider>
+          <LikedContextProvider>
+            <SpecificTweetProvider>
+              <FollowersTweetContextProvider>
+                <TweetContextProvider>
+                  <MessageContextProvider>
+                    <App />
+                  </MessageContextProvider>
+                </TweetContextProvider>
+              </FollowersTweetContextProvider>
+            </SpecificTweetProvider>
+          </LikedContextProvider>
+        </AuthContextProvider>
+      </AllTweetContextProvider>
     </NotificationContextProvider>
   </React.StrictMode>
 );

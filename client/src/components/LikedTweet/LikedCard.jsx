@@ -101,31 +101,6 @@ export default function TweetCard({ tweets }) {
     // }
   };
 
-  function formatTextWithLinks(text) {
-    const words = text?.split(" ");
-
-    const coloredText = words?.map((word, index) => {
-      if (word.includes("#")) {
-        return (
-          <span key={index}>
-            <Link className="red-word" to={`/hashtag/${word?.split("#")[1]}`}>
-              {word}
-            </Link>
-          </span>
-        );
-      }
-      if (word.includes(".")) {
-        return (
-          <span key={index}>
-            {word} <br /> <br />
-          </span>
-        );
-      }
-      return <span key={index}>{word} </span>;
-    });
-
-    return coloredText;
-  }
   return (
     <>
       <div className="tweetcard_container ">
