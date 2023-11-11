@@ -89,12 +89,12 @@ export default function Layout({
   const [profileData, setprofileData] = useState();
   const [isloading, setLoader] = useState(false);
   const [isUserExist, setIsUserExist] = useState(true);
+  const [is_deactivated, setIs_deactivated] = useState(true);
   const { username } = useParams();
   const backendURL = process.env.REACT_APP_BACKEND_URL;
   const getSpecificUser = () => {
     setLoader(true);
     document.title = "Loading...";
-    setIsUserExist(true);
     try {
       axios.get(`${backendURL}/user/auth/getUser/${username}`).then((data) => {
         if (data.data.status === 1) {
@@ -106,6 +106,9 @@ export default function Layout({
             setLoader(false);
           }, 1000);
           document.title = `${user?.fullname} (@${user?.username}) / X`;
+          if (user.flag) {
+            return setIs_deactivated(true);
+          } else return setIs_deactivated(false);
         } else {
           setIsUserExist(false);
           setLoader(false);
@@ -127,8 +130,8 @@ export default function Layout({
     )
       getSpecificUser();
     setIsUserExist(true);
+    setIs_deactivated(false);
   }, [username]);
-
   return (
     <Home
       composetweet={composetweet}
@@ -190,29 +193,38 @@ export default function Layout({
           socket={socket}
         />
       )}
-      <ProfileLayout
-        socket={socket}
-        isloading={isloading}
-        userData={userData}
-        profileData={profileData}
-        allTweets={allTweets}
-        likes={likes}
-        isUserExist={isUserExist}
-      >
-        {profile && !loading && (
-          <ProfilePost
-            scrollbarhide={true}
-            profileId={specificUserProfile}
-            myAllTweets={true}
-            socket={socket}
-          />
-        )}
-        {with_replies && <p>With Replies</p>}
-        {highlights && <p>With highlights</p>}
-        {media && <p>media</p>}
-        {likes && <LikedTweet socket={socket} profileData={profileData} />}
-      </ProfileLayout>
-      {edit_profile && <Editprofile socket={socket} />}
+      {(profile ||
+        edit_profile ||
+        with_replies ||
+        highlights ||
+        media ||
+        likes) && (
+        <ProfileLayout
+          is_deactivated={is_deactivated}
+          socket={socket}
+          isloading={isloading}
+          userData={userData}
+          profileData={profileData}
+          allTweets={allTweets}
+          likes={likes}
+          isUserExist={isUserExist}
+        >
+          {profile && !loading && !is_deactivated && (
+            <ProfilePost
+              scrollbarhide={true}
+              profileId={specificUserProfile}
+              myAllTweets={true}
+              socket={socket}
+            />
+          )}
+          {edit_profile && <Editprofile socket={socket} />}
+          {with_replies && <p>With Replies</p>}
+          {highlights && <p>With highlights</p>}
+          {media && <p>media</p>}
+          {likes && <LikedTweet socket={socket} profileData={profileData} />}
+        </ProfileLayout>
+      )}
+
       {replies && <Replies socket={socket} />}
       {tweetLike && <LikedUser />}
       {!isUserExist && <ErrorPage />}

@@ -6,6 +6,7 @@ import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import axios from "axios";
 import { TweetContext } from "../../useContext/TweetContext/TweetContext";
 import { AllTweetContext } from "../../useContext/AllTweetContext/AllTweetContextProvider";
+import DeactivateProfileAcc from "./DeactivatedProfile";
 export default function ProfileLayout({
   with_replies,
   highlights,
@@ -16,6 +17,7 @@ export default function ProfileLayout({
   userDataa,
   socket,
   isUserExist,
+  is_deactivated,
 }) {
   console.log("isUserExist", isUserExist);
   const [
@@ -136,6 +138,9 @@ export default function ProfileLayout({
         });
     } catch (error) {}
   };
+  if (is_deactivated) {
+    return <DeactivateProfileAcc />;
+  }
   return (
     <>
       {isloading ? (

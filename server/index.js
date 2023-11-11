@@ -284,6 +284,9 @@ app.use(
   require("./userRelationshipApis/userRelationshipApis")
 );
 
+// relevantPeople
+app.use("/relevantPeople", require("./relevantPeople/getRelevantPeople"));
+
 // Like And Unlike Tweet
 
 app.use("/tweetinteractions", require("./InteractWithTweet/interactwithtweet"));

@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { NotificationContext } from "../NotificationsContext/NotificationsContext";
 import Cookies from "js-cookie";
+import ShowDeactivationPromptToActivate from "../../components/auth/ShowDeactivationPromptToActivate";
 
 export const AuthContext = createContext();
 
@@ -13,19 +14,29 @@ const AuthContextProvider = (props) => {
   const [allTweets, setAllTweets] = useState([]);
   const [infoLoader, setInfoLoader] = useState(true);
   const [followingTweet, setFollowingTweet] = useState([]);
+  const [
+    show_deactivation_prompt_to_activate,
+    setShow_deactivation_prompt_to_activate,
+  ] = useState(false);
   const backendURL = process.env.REACT_APP_BACKEND_URL;
   const [allNotification, setAllNotification] = useContext(NotificationContext);
   const fetchUser = async (id) => {
     try {
       await axios.get(`${backendURL}/user/auth/getUser/${id}`).then((data) => {
-        const allData = data.data.data;
-        setUserData(allData);
-        const getAllNotifications = allData.allNotifications;
-        setAllNotification(
-          getAllNotifications?.sort(function (a, b) {
-            return new Date(b.date) - new Date(a.date);
-          })
-        );
+        const allData = data.data;
+        if (allData.status === 1) {
+          if (allData.data.flag) {
+            Cookies.remove("xid");
+            window.location = "/";
+          }
+          setUserData(allData.data);
+          const getAllNotifications = allData.data.allNotifications;
+          setAllNotification(
+            getAllNotifications?.sort(function (a, b) {
+              return new Date(b.date) - new Date(a.date);
+            })
+          );
+        }
         setLoading(false); // Set loading to false when data is fetched
       });
     } catch (error) {
@@ -109,6 +120,9 @@ const AuthContextProvider = (props) => {
       getAllTweetsFromFollowingUsers();
     }
   }, [userData?._id, userData?.following?.length]);
+  if (show_deactivation_prompt_to_activate) {
+    return <ShowDeactivationPromptToActivate />;
+  }
   return (
     <AuthContext.Provider
       value={[

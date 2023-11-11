@@ -1,5 +1,6 @@
 .edit_profile_container {
   width: 100vw;
+  top: 0;
   left: 0;
   height: 100vh;
   position: fixed;

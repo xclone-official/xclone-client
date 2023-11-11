@@ -12,6 +12,7 @@ import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import { convertDate } from "../CovertDateTime/ConvertDateTime";
 import axios from "axios";
 import Loader from "../Loader/InfoLoader";
+import ErrorPage from "../ErrorPage/ErrorPage";
 export default function SingleMessagesBox({ socket }) {
   const [
     showLogin,
@@ -33,8 +34,8 @@ export default function SingleMessagesBox({ socket }) {
   ] = useContext(AuthContext);
   const [allMessages, setAllMessages] = useContext(MessageContext);
   const [count, setCount] = useState(0);
-  const MSE_APIKEY = process.env.REACT_APP_MCE_KEY;
   const [message, setMessage] = useState("");
+  const [flaggedStatus, setFlaggedStatus] = useState(false);
   const { userId } = useParams();
   const [file, setFile] = useState("");
   const [isUserExists, setIsUserExists] = useState(false);
@@ -61,7 +62,9 @@ export default function SingleMessagesBox({ socket }) {
         .then((data) => {
           const response = data.data;
           if (response.status === 1) {
-            setProfileData(data.data.data);
+            setProfileData(response.data);
+            setFlaggedStatus(response.data.flag);
+            console.log("deactivated", response.data.flag);
             setIsUserExists(true);
           } else {
             setIsUserExists(false);
@@ -94,20 +97,6 @@ export default function SingleMessagesBox({ socket }) {
   const goBackToPreviousPage = () => {
     navigate(-1);
   };
-
-  // function handleMessage(e) {
-  //   e.preventDefault();
-  //   const fd = new FormData();
-  //   fd.append("senderId", userData?._id);
-  //   fd.append("senderUsername", userData?.username);
-  //   fd.append("receiverId", userId);
-  //   fd.append("message", message);
-  //   fd.append("file", file);
-
-  //   socket?.emit("addMsg", fd);
-  //   setMessage("");
-  //   setFile("");
-  // }
   function handleMessage(e) {
     e.preventDefault();
     setCount(count + 1);
@@ -126,7 +115,7 @@ export default function SingleMessagesBox({ socket }) {
     setFile(""); // Clear the file input if needed
   }
 
-  return isUserExists ? (
+  return (
     <div style={{ width: "100%" }}>
       <div className="profile_top">
         <svg
@@ -143,7 +132,11 @@ export default function SingleMessagesBox({ socket }) {
           className="top_tweetname"
           style={{ display: "flex", alignItems: "center" }}
         >
-          <p>{profileData?.fullname}</p>
+          <p>
+            {isUserExists && flaggedStatus === false
+              ? profileData?.fullname
+              : "The account has been deactivated!"}
+          </p>
         </div>
       </div>
       {isLoading ? (
@@ -155,26 +148,37 @@ export default function SingleMessagesBox({ socket }) {
               {/* Messages */}
 
               <div className="users_conversation" ref={chatContainerRef}>
-                <div className="user_credentials_messages">
-                  <div className="message_user_profile">
-                    <img
-                      src={`${backendURL}/${profileData?.profilepicture}`}
-                      alt=""
-                    />
+                {isUserExists && flaggedStatus === false ? (
+                  <div className="user_credentials_messages">
+                    <div className="message_user_profile">
+                      <img
+                        src={backendURL + "/" + profileData?.profilepicture}
+                        alt=""
+                      />
+                    </div>
+                    <div className="messsage_username_name">
+                      <p>{profileData?.fullname}</p>
+                      <span>@{profileData?.username}</span>
+                    </div>
+                    <div className="message_user_bio">
+                      <p>{profileData?.bio}</p>
+                    </div>
+                    <div className="joined_and_followers_num">
+                      <p>{convertDate(profileData?.createdAt)}</p>
+                      {"  •  "}
+                      <p>{profileData?.followers?.length} followers</p>
+                    </div>
                   </div>
-                  <div className="messsage_username_name">
-                    <p>{profileData?.fullname}</p>
-                    <span>@{profileData?.username}</span>
+                ) : (
+                  <div className="user_credentials_messages">
+                    <div className="message_user_profile">
+                      <img src={`/xlogo.png`} alt="" />
+                    </div>
+                    <div className="messsage_username_name">
+                      <p>This account has been deactivated!</p>
+                    </div>
                   </div>
-                  <div className="message_user_bio">
-                    <p>{profileData?.bio}</p>
-                  </div>
-                  <div className="joined_and_followers_num">
-                    <p>{convertDate(profileData?.createdAt)}</p>
-                    {"  •  "}
-                    <p>{profileData?.followers?.length} followers</p>
-                  </div>
-                </div>
+                )}
                 {allMessages.length > 0
                   ? allMessages?.map((e, i) => (
                       <div key={i} className="user_conversation_container">
@@ -202,50 +206,34 @@ export default function SingleMessagesBox({ socket }) {
           </div>
           <div className="message_input_form">
             <form onSubmit={handleMessage} id="message_input" action="">
-              {/* <input
-          type="file"
-          onChange={(e) => {
-            console.log(e.target.files[0]);
-            setFile(e.target.files[0]);
-          }}
-          name=""
-          disabled={count === 1}
-          id=""
-          className="send_files"
-        /> */}
               <input
                 value={message}
                 onChange={(e) => {
                   setMessage(e.target.value);
                 }}
                 id="msg_input"
-                placeholder="Enter Message"
+                placeholder={
+                  isUserExists && flaggedStatus === false
+                    ? "Enter Message"
+                    : "This account has been deactivated."
+                }
                 autoComplete="off"
+                disabled={
+                  isUserExists && flaggedStatus === false ? false : true
+                }
               />
-
-              {/* <Editor
-            apiKey={MSE_APIKEY}
-            value={message}
-            onEditorChange={(content) => setMessage(content)}
-            name="post"
-            id="msg_input"
-            init={{
-              placeholder: "Enter message",
-              color_cols: "red",
-              content_style:
-                "body {color: white; line-height: .3;background : #15202b;} textarea {background-color:transparent ;} ",
-              // Other TinyMCE configuration options go here
-            }}
-          /> */}
-              <button className="message_input_btn">Send</button>
+              <button
+                className="message_input_btn"
+                disabled={
+                  isUserExists && flaggedStatus === false ? false : true
+                }
+              >
+                Send
+              </button>
             </form>
           </div>
         </>
       )}
-    </div>
-  ) : (
-    <div>
-      <p>User doesn't exist</p>
     </div>
   );
 }

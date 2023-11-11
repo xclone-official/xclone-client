@@ -1,0 +1,90 @@
+.show_deactivation_to_activate_container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.show_activation_mid_container {
+  margin: auto;
+  background: #15202b;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  position: relative;
+  width: 100%;
+  max-width: 35%;
+  height: 80vh;
+  top: 10%;
+  border-radius: 20px;
+  bottom: 10%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add shadow here */
+}
+
+@media (max-width: 600px) {
+  .show_activation_mid_container {
+    max-width: 100%;
+  }
+}
+
+/* Content */
+
+.cross_sign_show_activation_container p {
+  width: fit-content;
+  font-size: 25px;
+  padding: 5px 10px;
+  background-color: var(--theme-hover-color);
+  border-top-left-radius: 20px;
+  border-bottom-right-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.activation_prompt_content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.activation_prompt_content_img {
+  margin: auto;
+}
+.activation_prompt_content_img img {
+  width: 80px;
+}
+.activation_prompt_content_head_text {
+  font-size: 20px;
+}
+.deactivation_content {
+  padding: 0px 80px;
+  display: flex;
+  flex-direction: column;
+}
+.activation_prompt_content_text {
+  font-size: 15px;
+  margin-top: 5px;
+}
+.activation_prompt_content_head_buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.activation_prompt_content_head_buttons button {
+  padding: 11px;
+  font-weight: 700;
+  font-size: 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  border: 0;
+}
+.activation_prompt_content_head_buttons button:last-child {
+  background-color: transparent;
+  color: white;
+  transition: 0.4s;
+  border: 1px solid var(--theme-hover-color);
+}
+.activation_prompt_content_head_buttons button:hover {
+  background-color: var(--theme-hover-color);
+}
+.activation_prompt_content_head_buttons button:first-child:hover {
+  background-color: rgb(202, 200, 200);
+}

@@ -7,6 +7,7 @@ import Loader from "../Loader/Loader";
 import MsgAlert from "../MsgAlertComp/MsgAlert";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import ShowDeactivationPromptToActivate from "./ShowDeactivationPromptToActivate";
 export default function Login() {
   const [
     showLogin,
@@ -28,11 +29,13 @@ export default function Login() {
   ] = useContext(AuthContext);
   const navigate = useNavigate();
   const [step1, setStep1] = useState(true);
-
+  const [
+    show_deactivation_prompt_to_activate,
+    setShow_deactivation_prompt_to_activate,
+  ] = useState(false);
   const [loader, setLoader] = useState(false);
   const [msgType, setMsgType] = useState("");
   const [showMsg, setShowMsg] = useState(false);
-
   const [emailUsername, setEmailUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -79,14 +82,24 @@ export default function Login() {
         username: emailUsername,
         password: password,
       });
-      const status = response.data.status;
+
+      const get_data = response.data;
+      const status = get_data.status;
       const handler = statusHandlers[status];
-      setUserData(response.data.data);
-      if (response.data.status === 1) {
-        const uId = response.data.data._id;
+      if (get_data.status === 1) {
+        localStorage.setItem("xid", get_data.data._id);
+        console.log("get_data.data.flag_outside", true);
+        if (get_data.data.flag) {
+          navigate("/home?settings=reactivate_account");
+          console.log("get_data.data.flag_inside", true);
+          return setShow_deactivation_prompt_to_activate(true);
+        }
+        console.log("get_data.data.flag_outside_again", true);
+        navigate("/home?type=for-you");
+        setUserData(get_data.data);
+        const uId = get_data.data._id;
         Cookies.set("xid", uId, { expires: 30 });
       }
-      navigate("/home?type=for-you");
       if (handler) {
         handler();
       }
@@ -99,6 +112,9 @@ export default function Login() {
       }
     }
   };
+  if (show_deactivation_prompt_to_activate === true) {
+    return <ShowDeactivationPromptToActivate />;
+  }
   return (
     <>
       <div className="login_page">
