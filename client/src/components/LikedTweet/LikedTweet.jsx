@@ -4,11 +4,11 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import InfoLoader from "../Loader/InfoLoader";
 import TweetCard from "../../TweetCard/TweetCard";
 export default function LikedTweet({ profileData }) {
-  const [initialData, setInitialData] = useState(15);
+  const [initialData] = useState(15);
   const [initialLikedArray, setInitialLikedArray] = useState();
   useEffect(() => {
     setInitialLikedArray(profileData?.likedTweet?.slice(0, initialData));
-  }, [profileData]);
+  }, [profileData, initialData]);
   const fetchMoreData = () => {
     if (profileData?.likedTweet) {
       // Calculate the next index based on the current length of initialLikedArray

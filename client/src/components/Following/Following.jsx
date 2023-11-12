@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import "./following.css";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import FollowersViewPage from "../FollowersViewPage/FollowersViewPage";
 import FollowingViewPage from "../FollowingViewPage/FollowingViewPage";

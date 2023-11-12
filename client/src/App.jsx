@@ -22,7 +22,7 @@ import {
 export default function App() {
   const [, , , , userData, , loading] = useContext(AuthContext);
   const [allNotification, setAllNotification] = useContext(NotificationContext);
-  const [allMessages, setAllMessages] = useContext(MessageContext);
+  const [, setAllMessages] = useContext(MessageContext);
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
@@ -56,7 +56,13 @@ export default function App() {
     return () => {
       socket?.off("followed", handleFollowed);
     };
-  }, [socket, allNotification?.length, allNotification]);
+  }, [
+    socket,
+    allNotification?.length,
+    allNotification,
+    setAllNotification,
+    setAllMessages,
+  ]);
   // Like socket
   useEffect(() => {
     const handleLiked = (data) => {
@@ -79,7 +85,13 @@ export default function App() {
     return () => {
       socket?.off("likedtweet", handleLiked);
     };
-  }, [socket, allNotification?.length, allNotification]);
+  }, [
+    socket,
+    allNotification?.length,
+    allNotification,
+    setAllNotification,
+    setAllMessages,
+  ]);
 
   // allMsg
   useEffect(() => {
@@ -94,7 +106,7 @@ export default function App() {
     return () => {
       socket?.off("setAllMsg", handleAllMsg);
     };
-  }, [socket]);
+  }, [socket, setAllMessages]);
 
   // Add msg
   useEffect(() => {
@@ -110,7 +122,7 @@ export default function App() {
     return () => {
       socket?.off("sendAddMsg", handleAllMsg);
     };
-  }, [socket]);
+  }, [socket, setAllMessages]);
 
   // reply socket
   useEffect(() => {
@@ -124,7 +136,13 @@ export default function App() {
     return () => {
       socket?.off("replytweet", handleLiked);
     };
-  }, [socket, allNotification?.length, allNotification]);
+  }, [
+    socket,
+    allNotification?.length,
+    allNotification,
+    setAllNotification,
+    setAllMessages,
+  ]);
 
   if (Cookies.get("xid")) {
     if (loading) {

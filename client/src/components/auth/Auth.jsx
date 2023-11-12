@@ -3,13 +3,11 @@ import "./auth.css";
 import Login from "./Login";
 import Register from "./Register";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
-// import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 export default function Auth() {
   const [showLogin, setShowLogin, showRegister, setShowRegister] =
     useContext(AuthContext);
-  // const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [is_verified, setIs_verified] = useState(false);
@@ -19,9 +17,7 @@ export default function Auth() {
   };
   const googleAuthSuccess = (data) => {
     try {
-      // console.log(data);
       const decodedData = jwt_decode(data.credential);
-      // console.log(decodedData);
       const decoded_email = decodedData.email;
       const decoded_name = decodedData.name;
       const decoded_email_verified = decodedData.email_verified;
@@ -34,9 +30,6 @@ export default function Auth() {
     }
   };
   const REACT_APP_GITHUB_CLIENT_ID = process.env.REACT_APP_GITHUB_CLIENT_ID;
-
-  const REACT_APP_GITHUB_CLIENT_SECRET =
-    process.env.REACT_APP_GITHUB_CLIENT_SECRET;
   const googleAuthError = () => {};
   const handleGithubLogin = () => {
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${REACT_APP_GITHUB_CLIENT_ID}&scope=read:user,user:email`;

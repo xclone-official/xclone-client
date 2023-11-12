@@ -5,23 +5,8 @@ import axios from "axios";
 
 export default function UpdateCountry() {
   const backendURL = process.env.REACT_APP_BACKEND_URL;
-  const [
-    showLogin,
-    setShowLogin,
-    showRegister,
-    setShowRegister,
-    userData,
-    setUserData,
-    loading,
-    setLoading,
-    allTweets,
-    setAllTweets,
-    infoLoader,
-    setInfoLoader,
-    followingTweet,
-    setFollowingTweet,
-    getAllTweets,
-  ] = useContext(AuthContext);
+  const [, , , , userData, setUserData, , , , , , , , , ,] =
+    useContext(AuthContext);
   const [country, setcountry] = useState("");
   async function handleUsercountry(e) {
     e.preventDefault();

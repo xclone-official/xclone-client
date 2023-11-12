@@ -1,30 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import TweetCard from "../../../TweetCard/TweetCard";
-import { AuthContext } from "../../../useContext/AuthContext/AuthContext";
 import InfoLoader from "../../Loader/InfoLoader";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FollowersTweetContext } from "../../../useContext/FollowersTweetContext/FollowersTweetContext";
 import CardSkeleton from "../Foryou/CardSkeleton";
 
 export default function Followers({ socket }) {
-  const [
-    showLogin,
-    setShowLogin,
-    showRegister,
-    setShowRegister,
-    userData,
-    setUserData,
-    loading,
-    setLoading,
-    allTweets,
-    setAllTweets,
-    infoLoader,
-    setInfoLoader,
-    followingTweet,
-    setFollowingTweet,
-  ] = useContext(AuthContext);
-
-  const [followersTweet, setFollowersTweet] = useContext(FollowersTweetContext);
+  const [followersTweet] = useContext(FollowersTweetContext);
 
   const [initialPageCount, setInitialPageCount] = useState(15);
   const [loader, setLoader] = useState(true);
@@ -35,8 +17,8 @@ export default function Followers({ socket }) {
     setShowInitialArrayOfData(followersTweet.slice(0, initialPageCount));
     setTimeout(() => {
       setLoader(false); // Disable the loader after updating data
-    }, 200);
-  }, [followersTweet]); // Add followersTweet as a dependency
+    }, 10000);
+  }, [followersTweet, initialPageCount]); // Add followersTweet as a dependency
 
   const fetchMoreData = () => {
     setLoader(true);

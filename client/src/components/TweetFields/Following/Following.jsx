@@ -7,22 +7,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import CardSkeleton from "../Foryou/CardSkeleton";
 
 export default function Following({ socket }) {
-  const [
-    showLogin,
-    setShowLogin,
-    showRegister,
-    setShowRegister,
-    userData,
-    setUserData,
-    loading,
-    setLoading,
-    allTweets,
-    setAllTweets,
-    infoLoader,
-    setInfoLoader,
-    followingTweet,
-    setFollowingTweet,
-  ] = useContext(AuthContext);
+  const [, , , , , , , , , , , , followingTweet] = useContext(AuthContext);
 
   const [initialPageCount, setInitialPageCount] = useState(15);
   const [loader, setLoader] = useState(true);
@@ -34,7 +19,7 @@ export default function Following({ socket }) {
     setTimeout(() => {
       setLoader(false); // Disable the loader after updating data
     }, 200);
-  }, [followingTweet]); // Add followingTweet as a dependency
+  }, [followingTweet, initialPageCount]); // Add followingTweet as a dependency
 
   const fetchMoreData = () => {
     setLoader(true);

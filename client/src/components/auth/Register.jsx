@@ -7,7 +7,7 @@ import MsgAlert from "../MsgAlertComp/MsgAlert";
 import axios from "axios";
 import { getAccessToken, getUserData } from "./callback";
 
-export default function Register({ name, email, is_verified }) {
+export default function Register({ name, email }) {
   const backendURL = process.env.REACT_APP_BACKEND_URL;
   const initialFormData = {
     email: email || "",
@@ -106,22 +106,6 @@ export default function Register({ name, email, is_verified }) {
     }
   };
 
-  const getUserDetails = async () => {
-    const userData = await getUserData();
-    // console.log("userData", userData);
-    setFormData({
-      ...formData,
-      fullname: userData.name,
-      username: userData.login,
-      email: userData.email,
-      bio: userData.bio,
-      website: userData.html_url,
-      location: userData.location,
-      is_verified: true,
-    });
-    setUserDataIsLoading(false);
-  };
-
   useEffect(() => {
     setUserDataIsLoading(true);
     async function fetchToken() {
@@ -129,6 +113,20 @@ export default function Register({ name, email, is_verified }) {
         const res = await getAccessToken();
         if (res) {
           localStorage.setItem("Xtempdata", res);
+          const getUserDetails = async () => {
+            const userData = await getUserData();
+            setFormData({
+              ...formData,
+              fullname: userData.name,
+              username: userData.login,
+              email: userData.email,
+              bio: userData.bio,
+              website: userData.html_url,
+              location: userData.location,
+              is_verified: true,
+            });
+            setUserDataIsLoading(false);
+          };
           getUserDetails();
         } else {
           setUserDataIsLoading(false);
@@ -138,7 +136,7 @@ export default function Register({ name, email, is_verified }) {
       }
     }
     fetchToken();
-  }, []);
+  }, [setFormData, formData]);
 
   const nextStep = () => {
     setStep(step + 1);

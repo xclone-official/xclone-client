@@ -4,8 +4,8 @@ import React from "react";
 import "./TweetCardSkeleton.css";
 
 const CardSkeleton = () => {
-  return (
-    <div className="border_bottom_skeleton">
+  return [1, 2, 3, 4, 5].map((e) => (
+    <div key={e} className="border_bottom_skeleton">
       <div className="tweetcard-skeleton">
         <div className="skeleton-user-profile"></div>
         <div className="skeleton-other-content">
@@ -71,7 +71,7 @@ const CardSkeleton = () => {
         </div>
       </div>
     </div>
-  );
+  ));
 };
 
 export default CardSkeleton;

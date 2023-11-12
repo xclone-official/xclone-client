@@ -11,24 +11,8 @@ export default function ForgotPassword() {
   const [confirm_password, setConfirm_password] = useState("");
   const [msgType, setMsgType] = useState("");
   const [showMsg, setShowMsg] = useState(false);
-  const [
-    showLogin,
-    setShowLogin,
-    showRegister,
-    setShowRegister,
-    userData,
-    setUserData,
-    loading,
-    setLoading,
-    allTweets,
-    setAllTweets,
-    infoLoader,
-    setInfoLoader,
-    followingTweet,
-    setFollowingTweet,
-    getAllTweets,
-    getAllTweetsFromFollowingUsers,
-  ] = useContext(AuthContext);
+  const [, , , , userData, setUserData, , , , , , , , , , ,] =
+    useContext(AuthContext);
   const statusHandlers = {
     1: () => {
       setMsgType("PASSWORD_UPDATE_SUCCESS");

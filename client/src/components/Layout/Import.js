@@ -25,7 +25,7 @@ import Messages from "../Messages/Messages";
 import LikedUser from "../LikedUser/LikedUser";
 
 import YourAccount from "../AllSettings/YourAccount";
-import Account_info from "../AllSettings/Account_info/Account_info";
+import Accountinfo from "../AllSettings/Account_info/Account_info";
 import ForgotPassword from "../AllSettings/ForgotPassword/ForgotPassword";
 import UpdateUserName from "../AllSettings/UpdateUserName/UpdateUserName";
 import UpdateEmail from "../AllSettings/UpdateEmail/UpdateEmail";
@@ -51,7 +51,7 @@ export {
   DeactivateAcc,
   UpdateUserName,
   YourAccount,
-  Account_info,
+  Accountinfo,
   ForgotPassword,
   Home,
   TweetFields,

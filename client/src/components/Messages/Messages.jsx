@@ -7,24 +7,7 @@ export default function Messages() {
   React.useEffect(() => {
     document.title = "X / Messages";
   }, []);
-  const [
-    showLogin,
-    setShowLogin,
-    showRegister,
-    setShowRegister,
-    userData,
-    setUserData,
-    loading,
-    setLoading,
-    allTweets,
-    setAllTweets,
-    infoLoader,
-    setInfoLoader,
-    followingTweet,
-    setFollowingTweet,
-    getAllTweets,
-    getAllTweetsFromFollowingUsers,
-  ] = useContext(AuthContext);
+  const [, , , , userData, , , , , , , , , , , ,] = useContext(AuthContext);
   return (
     <div>
       <div className="profile_top" style={{ padding: "9.9px" }}>

@@ -20,28 +20,14 @@ export default function ProfileLayout({
   is_deactivated,
 }) {
   console.log("isUserExist", isUserExist);
-  const [
-    showLogin,
-    setShowLogin,
-    showRegister,
-    setShowRegister,
-    userData,
-    setUserData,
-    loading,
-    setLoading,
-    ,
-    ,
-    infoLoader,
-    setInfoLoader,
-    followingTweet,
-    setFollowingTweet,
-  ] = useContext(AuthContext);
-  const [myTweets, setMyTweets, specificUserProfile, setSpecificUserProfile] =
+  const [, , , , userData, setUserData, , , , , , , , , ,] =
+    useContext(AuthContext);
+  const [, , specificUserProfile, setSpecificUserProfile] =
     useContext(TweetContext);
   const backendURL = process.env.REACT_APP_BACKEND_URL;
   const [showMedia, setShowMedia] = useState(false);
-  // const [allNotification, setAllNotification] = useContext(NotificationContext);
   const [showProfile, setShowProfile] = useState(false);
+  // eslint-disable-next-line
   const [allTweets, setAllTweets] = useContext(AllTweetContext);
   const [followBtn, setFollowBtn] = useState("Loading...");
   const navigate = useNavigate();
@@ -102,15 +88,15 @@ export default function ProfileLayout({
         });
     } catch (error) {}
   };
-  const getFollowedSign = () => {
-    userData?.following?.some((user) => user.id === specificUserProfile?._id)
-      ? setFollowBtn("Unfollow")
-      : setFollowBtn("Follow");
-  };
 
   useEffect(() => {
+    const getFollowedSign = () => {
+      userData?.following?.some((user) => user.id === specificUserProfile?._id)
+        ? setFollowBtn("Unfollow")
+        : setFollowBtn("Follow");
+    };
     getFollowedSign();
-  }, [userDataa]);
+  }, [userDataa, specificUserProfile?._id, userData?.following]);
 
   const toggleFunction = () => {
     const isFollowing = userData?.following?.some(

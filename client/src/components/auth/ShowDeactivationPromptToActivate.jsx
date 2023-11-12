@@ -1,28 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import "./ShowDeactivationPromptToActivate.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import Cookies from "js-cookie";
 export default function ShowDeactivationPromptToActivate() {
-  const [
-    showLogin,
-    setShowLogin,
-    showRegister,
-    setShowRegister,
-    userData,
-    setUserData,
-    loading,
-    setLoading,
-    allTweets,
-    setAllTweets,
-    infoLoader,
-    setInfoLoader,
-    followingTweet,
-    setFollowingTweet,
-    getAllTweets,
-    getAllTweetsFromFollowingUsers,
-  ] = useContext(AuthContext);
+  const [, , , , , setUserData, , , , , , , , , , ,] = useContext(AuthContext);
   const navigate = useNavigate();
   const backendURL = process.env.REACT_APP_BACKEND_URL;
   async function handleDeactivateFunc() {

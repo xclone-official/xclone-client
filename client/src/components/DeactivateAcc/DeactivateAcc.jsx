@@ -7,23 +7,7 @@ import bcryptjs from "bcryptjs";
 import axios from "axios";
 import Cookies from "js-cookie";
 export default function DeactivateAcc() {
-  const [
-    showLogin,
-    setShowLogin,
-    showRegister,
-    setShowRegister,
-    userData,
-    setUserData,
-    loading,
-    setLoading,
-    allTweets,
-    setAllTweets,
-    infoLoader,
-    setInfoLoader,
-    followingTweet,
-    setFollowingTweet,
-    getAllTweets,
-  ] = useContext(AuthContext);
+  const [, , , , userData, , , , , , , , , , ,] = useContext(AuthContext);
   const navigate = useNavigate();
   const [showPasswordForm, setShowPasswordForm] = useState(false);
   const backendURL = process.env.REACT_APP_BACKEND_URL;

@@ -1,41 +1,24 @@
 import React, { useContext, useEffect } from "react";
 import "./editprofile.css";
 import { useNavigate, useParams } from "react-router-dom";
-import { TweetContext } from "../../useContext/TweetContext/TweetContext";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 export default function Editprofile() {
-  const [
-    showLogin,
-    setShowLogin,
-    showRegister,
-    setShowRegister,
-    userData,
-    setUserData,
-    loading,
-    setLoading,
-    allTweets,
-    setAllTweets,
-    infoLoader,
-    setInfoLoader,
-    followingTweet,
-    setFollowingTweet,
-  ] = useContext(AuthContext);
+  const [, , , , userData, , , , , , , , , , ,] = useContext(AuthContext);
   const navigate = useNavigate();
   const { username } = useParams();
   useEffect(() => {
     document.title = `${userData.fullname} / Edit Profile - Xclone`;
-  }, []);
+  }, [userData.fullname]);
   const goBackToPreviousPage = () => {
     navigate(-1);
   };
-  const [myTweets, setMyTweets] = useContext(TweetContext);
   useEffect(() => {
     if (username) {
       if (username !== userData.username) {
         navigate("/home");
       }
     }
-  }, []);
+  }, [userData.username, username, navigate]);
   return (
     <div className="edit_profile_container">
       <div className="edit_profile_mid_container">

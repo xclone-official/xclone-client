@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import "./sidebar.css";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import { Link, NavLink, useNavigate } from "react-router-dom";
@@ -21,29 +21,13 @@ import {
 import { NotificationContext } from "../../useContext/NotificationsContext/NotificationsContext";
 import Cookies from "js-cookie";
 
-export default function Sidebar({ socket }) {
+export default function Sidebar() {
   const [showLogoutBtn, setShowLogoutBtn] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const [
-    showLogin,
-    setShowLogin,
-    showRegister,
-    setShowRegister,
-    userData,
-    setUserData,
-    loading,
-    setLoading,
-    allTweets,
-    setAllTweets,
-    infoLoader,
-    setInfoLoader,
-    followingTweet,
-    setFollowingTweet,
-    getAllTweets,
-    getAllTweetsFromFollowingUsers,
-  ] = useContext(AuthContext);
-  const [allNotification, setAllNotification] = useContext(NotificationContext);
+  const [, , , , userData, , , , , , , , , , getAllTweets, ,] =
+    useContext(AuthContext);
+  const [allNotification] = useContext(NotificationContext);
 
   const Links = [
     {

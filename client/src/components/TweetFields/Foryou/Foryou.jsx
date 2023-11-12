@@ -12,23 +12,8 @@ export default function Foryou({
   profileId,
   socket,
 }) {
-  const [
-    showLogin,
-    setShowLogin,
-    showRegister,
-    setShowRegister,
-    userData,
-    setUserData,
-    loading,
-    setLoading,
-    allTweets,
-    setAllTweets,
-    infoLoader,
-    setInfoLoader,
-    followingTweet,
-    setFollowingTweet,
-    getAllTweets,
-  ] = useContext(AuthContext);
+  const [, , , , , , , , allTweets, , , , , , getAllTweets] =
+    useContext(AuthContext);
   const [initialPageCount, setInitialPageCount] = useState(15);
   const [showInitialArrayOfData, setShowInitialArrayOfData] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // Loading state
@@ -42,7 +27,7 @@ export default function Foryou({
       .catch((error) => {
         console.warn("Error fetching tweets:", error);
       });
-  }, []);
+  }, [getAllTweets]);
 
   useEffect(() => {
     // Update showInitialArrayOfData when allTweets changes
@@ -53,7 +38,13 @@ export default function Foryou({
             .filter((e) => e.authorId === profileId?._id)
             .slice(0, initialPageCount)
     );
-  }, [allTweets.length, allTweets]);
+  }, [
+    allTweets.length,
+    allTweets,
+    initialPageCount,
+    myAllTweets,
+    profileId?._id,
+  ]);
 
   const fetchMoreData = () => {
     const newPageCount = initialPageCount + 2;

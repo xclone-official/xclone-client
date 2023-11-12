@@ -41,49 +41,25 @@ const UnlikeBtn = () => {
   );
 };
 export default function TweetCard({ tweets, socket }) {
-  const [
-    showLogin,
-    setShowLogin,
-    showRegister,
-    setShowRegister,
-    userData,
-    setUserData,
-    loading,
-    setLoading,
-    allTweets,
-    setAllTweets,
-    infoLoader,
-    setInfoLoader,
-    followingTweet,
-    setFollowingTweet,
-  ] = useContext(AuthContext);
-  const [
-    myTweets,
-    setMyTweets,
-    specificUserProfile,
-    setSpecificUserProfile,
-    ,
-    ,
-    likeTweet,
-    unlikeTweet,
-  ] = useContext(TweetContext);
+  const [, , , , userData, , , , , , , , , ,] = useContext(AuthContext);
+  const [, , , , , , likeTweet, unlikeTweet] = useContext(TweetContext);
   const [likeBtn, setLikeBtn] = useState(<UnlikeBtn />);
   // const [tweet_data, setTweet_data] = useState(tweets);
   const navigate = useNavigate();
   const backendURL = process.env.REACT_APP_BACKEND_URL;
 
-  const getFollowedSign = () => {
-    const IsAlreadyLiked = tweets?.likes?.some((e) => e.id === userData?._id);
-    if (IsAlreadyLiked) {
-      setLikeBtn(<Likebtn />);
-    } else {
-      setLikeBtn(<UnlikeBtn />);
-    }
-  };
-
   useEffect(() => {
+    const getFollowedSign = () => {
+      const IsAlreadyLiked = tweets?.likes?.some((e) => e.id === userData?._id);
+      if (IsAlreadyLiked) {
+        setLikeBtn(<Likebtn />);
+      } else {
+        setLikeBtn(<UnlikeBtn />);
+      }
+    };
+
     getFollowedSign();
-  }, []);
+  }, [tweets?.likes, userData?._id]);
 
   const toggleFunction = () => {
     const checkIsAlreadyLiked = tweets?.likes?.some(
@@ -172,7 +148,7 @@ export default function TweetCard({ tweets, socket }) {
                     className="imglast-child video"
                     controls
                     src={`${backendURL}/${tweets?.video[0]}`}
-                    alt="video"
+                    alt=""
                   />
                 ) : tweets?.photos?.length > 0 ? (
                   tweets?.photos?.length > 1 ? (
@@ -181,14 +157,14 @@ export default function TweetCard({ tweets, socket }) {
                         key={e}
                         className="imgfirst-child"
                         src={`${backendURL}/${e}`}
-                        alt="photo"
+                        alt=""
                       />
                     ))
                   ) : (
                     <img
                       className="imglast-child"
                       src={`${backendURL}/${tweets?.photos[0]}`}
-                      alt="photo"
+                      alt=""
                     />
                   )
                 ) : (

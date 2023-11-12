@@ -1,9 +1,10 @@
-import React, { useState, useEffect, createRef } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { useSearchParams } from "react-router-dom";
 import "./tweets.css";
 import Foryou from "./Foryou/Foryou";
 import Following from "./Following/Following";
 import Followers from "./Followers/Followers";
+import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 const menu = [
   {
     title: "Profile",
@@ -45,7 +46,6 @@ const ActiveDownArrow = () => {
   );
 };
 export default function TweetFields({ socket }) {
-  const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [creatorAcc, setCreatorAcc] = useState(false);
@@ -53,7 +53,7 @@ export default function TweetFields({ socket }) {
   const [supportsShow, setSupportsShow] = useState(false);
   const [docsShow, setDocsShow] = useState(false);
   let activeTab = searchParams.get("type");
-
+  const [, , , , userData, , , , , , , , , , ,] = useContext(AuthContext);
   // Default to "for-you" if activeTab is not set
   if (!activeTab) {
     activeTab = "for-you";
@@ -63,6 +63,7 @@ export default function TweetFields({ socket }) {
   const [isActive2, setIsActive2] = useState(activeTab === "following");
   const [active3, setActive3] = useState(activeTab === "followers");
 
+  const backendURL = process.env.REACT_APP_BACKEND_URL;
   const handleTabClick = (tabType) => {
     setIsActive1(tabType === "for-you");
     setIsActive2(tabType === "following");
@@ -83,7 +84,7 @@ export default function TweetFields({ socket }) {
           <h3 className="home_btn">Home</h3>
           <div className="profile_image">
             <img
-              src="/pfp.png"
+              src={backendURL + "/" + userData.profilepicture}
               alt=""
               onClick={() => {
                 setShowMenu(!showMenu);

@@ -12,24 +12,9 @@ export default function ProfilePost({
   profileId,
   socket,
 }) {
-  const [
-    showLogin,
-    setShowLogin,
-    showRegister,
-    setShowRegister,
-    userData,
-    setUserData,
-    loading,
-    setLoading,
-    ,
-    ,
-    infoLoader,
-    setInfoLoader,
-    followingTweet,
-    setFollowingTweet,
-    getAllTweets,
-  ] = useContext(AuthContext);
+  const [, , , , , , , , , , , , , , getAllTweets] = useContext(AuthContext);
   const [initialPageCount, setInitialPageCount] = useState(15);
+  // eslint-disable-next-line
   const [allTweets, setAllTweets] = useContext(AllTweetContext);
   const [showInitialArrayOfData, setShowInitialArrayOfData] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // Loading state
@@ -43,7 +28,7 @@ export default function ProfilePost({
       .catch((error) => {
         console.warn("Error fetching tweets:", error);
       });
-  }, []);
+  }, [getAllTweets]);
 
   useEffect(() => {
     // Update showInitialArrayOfData when allTweets changes
@@ -54,7 +39,13 @@ export default function ProfilePost({
             .filter((e) => e.authorId === profileId?._id)
             .slice(0, initialPageCount)
     );
-  }, [allTweets.length, allTweets]);
+  }, [
+    allTweets.length,
+    allTweets,
+    initialPageCount,
+    myAllTweets,
+    profileId?._id,
+  ]);
 
   const fetchMoreData = () => {
     const newPageCount = initialPageCount + 2;

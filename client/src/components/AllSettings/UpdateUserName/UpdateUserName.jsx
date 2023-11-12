@@ -5,23 +5,8 @@ import axios from "axios";
 
 export default function UpdateUserName() {
   const backendURL = process.env.REACT_APP_BACKEND_URL;
-  const [
-    showLogin,
-    setShowLogin,
-    showRegister,
-    setShowRegister,
-    userData,
-    setUserData,
-    loading,
-    setLoading,
-    allTweets,
-    setAllTweets,
-    infoLoader,
-    setInfoLoader,
-    followingTweet,
-    setFollowingTweet,
-    getAllTweets,
-  ] = useContext(AuthContext);
+  const [, , , , userData, setUserData, , , , , , , , , ,] =
+    useContext(AuthContext);
   const [user_name, setUser_name] = useState("");
   async function handleUserName(e) {
     e.preventDefault();

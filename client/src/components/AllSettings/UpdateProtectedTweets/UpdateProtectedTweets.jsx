@@ -1,27 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import TopComponent from "../../TopComponent/TopComponent";
 import { AuthContext } from "../../../useContext/AuthContext/AuthContext";
 import axios from "axios";
 
 export default function UpdateProtectedTweets() {
   const backendURL = process.env.REACT_APP_BACKEND_URL;
-  const [
-    showLogin,
-    setShowLogin,
-    showRegister,
-    setShowRegister,
-    userData,
-    setUserData,
-    loading,
-    setLoading,
-    allTweets,
-    setAllTweets,
-    infoLoader,
-    setInfoLoader,
-    followingTweet,
-    setFollowingTweet,
-    getAllTweets,
-  ] = useContext(AuthContext);
+  const [, , , , userData, setUserData, , , , , , , , , ,] =
+    useContext(AuthContext);
 
   async function handleUserName(e) {
     e.preventDefault();

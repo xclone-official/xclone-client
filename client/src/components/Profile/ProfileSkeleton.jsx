@@ -1,12 +1,6 @@
 import React from "react";
 import "./skeleton.css";
-import { Link } from "react-router-dom";
-export default function ProfileSkeleton({
-  with_replies,
-  highlights,
-  media,
-  likes,
-}) {
+export default function ProfileSkeleton() {
   return (
     <div>
       <div className={"profile_container "}>

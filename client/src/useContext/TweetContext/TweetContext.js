@@ -13,52 +13,51 @@ const TweetContextProvider = ({ children }) => {
   const [specifictweet, setSpecifictweet] = useState([]);
 
   const [
-    showLogin,
-    setShowLogin,
-    showRegister,
-    setShowRegister,
-    userData,
-    setUserData,
-    loading,
+    ,
+    ,
+    ,
+    ,
+    ,
+    ,
+    ,
     setLoading,
     ,
     ,
-    infoLoader,
+    ,
     setInfoLoader,
-    followingTweet,
-    setFollowingTweet,
+    ,
+    ,
     getAllTweets,
     getAllTweetsFromFollowingUsers,
   ] = useContext(AuthContext);
-  const [followersTweet, setFollowersTweet, getAllTweetsFromFollowers] =
-    useContext(FollowersTweetContext);
-  const [allTweets, setAllTweets, getAllTweet] = useContext(AllTweetContext);
-  const [specifictweetPage, setSpecifictweetPage] = useContext(SpecificTweets);
+  const [, , getAllTweetsFromFollowers] = useContext(FollowersTweetContext);
+  const [allTweets, , getAllTweet] = useContext(AllTweetContext);
+  const [, setSpecifictweetPage] = useContext(SpecificTweets);
   const backendURL = process.env.REACT_APP_BACKEND_URL;
-  async function fetchData(id) {
-    console.log(id);
-    const myTweets = await axios.get(
-      `${backendURL}/tweetaction/getusertweet/${id}`
-    );
-    const parseTweet = myTweets.data;
-    if (parseTweet.status === 1) {
-      setMyTweets(parseTweet);
-    } else {
-      alert("Error: Fetching tweets");
-    }
-    setTimeout(() => {
-      setInfoLoader(false);
-    }, 2000);
-  }
+
   useEffect(() => {
-    setInfoLoader(true);
     if (Cookies.get("xid")) {
       const id = Cookies.get("xid");
+      async function fetchData(id) {
+        console.log(id);
+        const myTweets = await axios.get(
+          `${backendURL}/tweetaction/getusertweet/${id}`
+        );
+        const parseTweet = myTweets.data;
+        if (parseTweet.status === 1) {
+          setMyTweets(parseTweet);
+        } else {
+          alert("Error: Fetching tweets");
+        }
+        setTimeout(() => {
+          setInfoLoader(false);
+        }, 2000);
+      }
       fetchData(id);
     } else {
       setLoading(false);
     }
-  }, [allTweets, allTweets.length]);
+  }, [allTweets, allTweets.length, setLoading, backendURL, setInfoLoader]);
 
   const likeTweet = (specifictweet_id, userData_id) => {
     try {

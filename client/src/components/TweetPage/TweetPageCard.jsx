@@ -35,53 +35,35 @@ export default function TweetPageCard({ tweetdata, socket }) {
     navigate(-1);
   };
   const backendURL = process.env.REACT_APP_BACKEND_URL;
-  const [
-    showLogin,
-    setShowLogin,
-    showRegister,
-    setShowRegister,
-    userData,
-    setUserData,
-    loading,
-    setLoading,
-    allTweets,
-    setAllTweets,
-    infoLoader,
-    setInfoLoader,
-    followingTweet,
-    setFollowingTweet,
-  ] = useContext(AuthContext);
+  const [, , , , userData, , , , , , , , , , ,] = useContext(AuthContext);
 
-  const [
-    myTweets,
-    setMyTweets,
-    specificUserProfile,
-    setSpecificUserProfile,
-    ,
-    ,
-    likeTweet,
-    unlikeTweet,
-  ] = useContext(TweetContext);
+  const [, , , , , , likeTweet, unlikeTweet] = useContext(TweetContext);
   const [showShare, setShowShare] = useState(false);
   const [specifictweetPage, setSpecifictweetPage] = useContext(SpecificTweets);
-  const getFollowedSign = () => {
-    const IsAlreadyLiked = tweetdata?.likes?.some(
-      (e) => e.id === userData?._id
-    );
-    if (IsAlreadyLiked) {
-      setLikeBtn(<Likebtn />);
-    } else {
-      setLikeBtn(<UnlikeBtn />);
-    }
-  };
+
   useEffect(() => {
     if (tweetdata) {
       setSpecifictweetPage(tweetdata);
     }
-  }, [tweetdata.authorId, tweetdata, tweetdata?.authorUsername]);
+  }, [
+    tweetdata.authorId,
+    tweetdata,
+    tweetdata?.authorUsername,
+    setSpecifictweetPage,
+  ]);
   useEffect(() => {
+    const getFollowedSign = () => {
+      const IsAlreadyLiked = tweetdata?.likes?.some(
+        (e) => e.id === userData?._id
+      );
+      if (IsAlreadyLiked) {
+        setLikeBtn(<Likebtn />);
+      } else {
+        setLikeBtn(<UnlikeBtn />);
+      }
+    };
     getFollowedSign();
-  }, [tweetdata.authorId, tweetdata, tweetdata?.authorUsername]);
+  }, [tweetdata.authorId, tweetdata, tweetdata?.authorUsername, userData?._id]);
 
   const toggleFunction = () => {
     const checkIsAlreadyLiked = specifictweetPage?.likes?.some(
@@ -208,7 +190,7 @@ export default function TweetPageCard({ tweetdata, socket }) {
                   className="border"
                   controls
                   src={`${backendURL}/${specifictweetPage.video[0]}`}
-                  alt="video"
+                  alt=""
                 />
               ) : specifictweetPage.photos?.length > 0 ? (
                 specifictweetPage.photos?.length > 1 ? (
@@ -217,14 +199,14 @@ export default function TweetPageCard({ tweetdata, socket }) {
                       key={i}
                       className="imgfirst-child"
                       src={`${backendURL}/${e}`}
-                      alt="photo"
+                      alt=""
                     />
                   ))
                 ) : (
                   <img
                     className="imglast-child"
                     src={`${backendURL}/${specifictweetPage.photos[0]}`}
-                    alt="photo"
+                    alt=""
                   />
                 )
               ) : (

@@ -6,53 +6,39 @@ import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 export default function SuggestionFriends() {
   const navigate = useNavigate();
   const { username } = useParams();
-  const [
-    showLogin,
-    setShowLogin,
-    showRegister,
-    setShowRegister,
-    userData,
-    setUserData,
-    loading,
-    setLoading,
-    allTweets,
-    setAllTweets,
-    infoLoader,
-    setInfoLoader,
-    followingTweet,
-    setFollowingTweet,
-    getAllTweets,
-    getAllTweetsFromFollowingUsers,
-  ] = useContext(AuthContext);
+  const [, , , , userData, , , , , , , , , , ,] = useContext(AuthContext);
   const backendURL = process.env.REACT_APP_BACKEND_URL;
   const [allPeople, setAllPeople] = useState([]);
-  const [loader, setLoader] = useState(true);
-  async function getRelevantPeople() {
-    setLoader(true);
-    try {
-      await axios
-        .get(
-          `${backendURL}/relevantpeople/${username ? username : userData?._id}`
-        )
-        .then((data) => {
-          if (data.data.status === 1) {
-            return setAllPeople(data.data.tweets);
-          }
-          return;
-        })
-        .then(() => {
-          setLoader(false);
-        })
-        .catch((err) => {
-          console.log("first", err);
-        });
-    } catch (error) {
-      alert("Some error occured");
-    }
-  }
+  const [, setLoader] = useState(true);
+
   useEffect(() => {
+    async function getRelevantPeople() {
+      setLoader(true);
+      try {
+        await axios
+          .get(
+            `${backendURL}/relevantpeople/${
+              username ? username : userData?._id
+            }`
+          )
+          .then((data) => {
+            if (data.data.status === 1) {
+              return setAllPeople(data.data.tweets);
+            }
+            return;
+          })
+          .then(() => {
+            setLoader(false);
+          })
+          .catch((err) => {
+            console.log("first", err);
+          });
+      } catch (error) {
+        alert("Some error occured");
+      }
+    }
     getRelevantPeople();
-  }, [username]);
+  }, [username, backendURL, userData?._id]);
   return (
     <div className="friend_suggestion_container">
       <div className="friend_suggestion_mid_container">

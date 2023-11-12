@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^7.1.0",
     "@react-oauth/google": "^0.11.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
@@ -10,7 +11,7 @@
     "@tinymce/tinymce-react": "^4.3.0",
     "axios": "^1.5.0",
     "bcryptjs": "^2.4.3",
-    "crypto-browserify": "^3.12.0",
+    "craco-alias": "^3.0.1",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.4",

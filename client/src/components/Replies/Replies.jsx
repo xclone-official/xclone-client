@@ -34,65 +34,43 @@ export default function Replies({ tweetdata }) {
     navigate(-1);
   };
   const backendURL = process.env.REACT_APP_BACKEND_URL;
-  const [
-    showLogin,
-    setShowLogin,
-    showRegister,
-    setShowRegister,
-    userData,
-    setUserData,
-    loading,
-    setLoading,
-    allTweets,
-    setAllTweets,
-    infoLoader,
-    setInfoLoader,
-    followingTweet,
-    setFollowingTweet,
-  ] = useContext(AuthContext);
+  const [, , , , userData, , , , , , , , , ,] = useContext(AuthContext);
 
-  const [
-    myTweets,
-    setMyTweets,
-    specificUserProfile,
-    setSpecificUserProfile,
-    ,
-    ,
-    likeTweet,
-    unlikeTweet,
-  ] = useContext(TweetContext);
+  const [, , , , , , likeTweet, unlikeTweet] = useContext(TweetContext);
   const [specifictweetPage, setSpecifictweetPage] = useContext(SpecificTweets);
-  const getFollowedSign = () => {
-    const IsAlreadyLiked = tweetdata?.likes?.some(
-      (e) => e.id === userData?._id
-    );
-    if (IsAlreadyLiked) {
-      setLikeBtn(<Likebtn />);
-    } else {
-      setLikeBtn(<UnlikeBtn />);
-    }
-  };
+
   const { tweetId, commentId } = useParams();
-  const getSpecificTweet = async () => {
-    try {
-      axios
-        .get(`${backendURL}/tweetaction/gettweetwithid/${tweetId}`)
-        .then((data) => {
-          if (data.data.status === 1) {
-            setSpecifictweetPage(data.data.tweet);
-          }
-        })
-        .catch((err) => {
-          console.log("Err", err);
-        });
-    } catch (error) {}
-  };
+
   useEffect(() => {
+    const getFollowedSign = () => {
+      const IsAlreadyLiked = tweetdata?.likes?.some(
+        (e) => e.id === userData?._id
+      );
+      if (IsAlreadyLiked) {
+        setLikeBtn(<Likebtn />);
+      } else {
+        setLikeBtn(<UnlikeBtn />);
+      }
+    };
     getFollowedSign();
-  }, []);
+  }, [tweetdata?.likes, userData?._id]);
   useEffect(() => {
+    const getSpecificTweet = async () => {
+      try {
+        axios
+          .get(`${backendURL}/tweetaction/gettweetwithid/${tweetId}`)
+          .then((data) => {
+            if (data.data.status === 1) {
+              setSpecifictweetPage(data.data.tweet);
+            }
+          })
+          .catch((err) => {
+            console.log("Err", err);
+          });
+      } catch (error) {}
+    };
     getSpecificTweet();
-  }, []);
+  }, [backendURL, tweetId, setSpecifictweetPage]);
   const toggleFunction = () => {
     const checkIsAlreadyLiked = specifictweetPage?.likes?.some(
       (e) => e.id === userData?._id
@@ -109,21 +87,17 @@ export default function Replies({ tweetdata }) {
   };
   useEffect(() => {
     if (specifictweetPage) {
-      // Create a temporary DOM element
       const tempDiv = document.createElement("div");
 
-      // Set the HTML content
       tempDiv.innerHTML = specifictweetPage?.comments?.find(
         (e) => e._id === commentId
       )?.commentText;
 
-      // Get the plain text content
       const plainTextContent = tempDiv.textContent;
 
-      // Set the document title with the parsed plain text
       document.title = `${specifictweetPage?.authorName} on X: "${plainTextContent}"`;
     }
-  }, [specifictweetPage]);
+  }, [specifictweetPage, commentId]);
   return (
     <>
       {!specifictweetPage?.comments?.some((e) => e._id === commentId) ||
@@ -229,7 +203,7 @@ export default function Replies({ tweetdata }) {
                       (e) => e._id === commentId
                     )?.video[0]
                   }`}
-                  alt="video"
+                  alt=""
                 />
               ) : specifictweetPage?.comments?.find((e) => e._id === commentId)
                   ?.photos?.length > 0 ? (
@@ -242,7 +216,7 @@ export default function Replies({ tweetdata }) {
                         key={e}
                         className="imgfirst-child"
                         src={`${backendURL}/${e}`}
-                        alt="photo"
+                        alt=""
                       />
                     ))
                 ) : (
@@ -253,7 +227,7 @@ export default function Replies({ tweetdata }) {
                         (e) => e._id === commentId
                       )?.photos[0]
                     }`}
-                    alt="photo"
+                    alt=""
                   />
                 )
               ) : (

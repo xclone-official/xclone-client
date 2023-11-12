@@ -7,7 +7,7 @@ import {
   useEffect,
   Home,
   YourAccount,
-  Account_info,
+  Accountinfo,
   ForgotPassword,
   TweetFields,
   ProfileLayout,
@@ -20,7 +20,6 @@ import {
   Hashtag,
   Tweetpage,
   Following,
-  Foryou,
   useParams,
   AuthContext,
   axios,
@@ -83,8 +82,8 @@ export default function Layout({
   deactivateAcc,
 }) {
   const [, , , , userData, , loading, , , , , ,] = useContext(AuthContext);
-  const [allTweets, setAllTweets] = useContext(AllTweetContext);
-  const [myTweets, setMyTweets, specificUserProfile, setSpecificUserProfile] =
+  const [allTweets] = useContext(AllTweetContext);
+  const [, , specificUserProfile, setSpecificUserProfile] =
     useContext(TweetContext);
   const [profileData, setprofileData] = useState();
   const [isloading, setLoader] = useState(false);
@@ -92,30 +91,7 @@ export default function Layout({
   const [is_deactivated, setIs_deactivated] = useState(true);
   const { username } = useParams();
   const backendURL = process.env.REACT_APP_BACKEND_URL;
-  const getSpecificUser = () => {
-    setLoader(true);
-    document.title = "Loading...";
-    try {
-      axios.get(`${backendURL}/user/auth/getUser/${username}`).then((data) => {
-        if (data.data.status === 1) {
-          const user = data.data.data;
-          setprofileData(user);
-          setSpecificUserProfile(user);
-          setIsUserExist(true);
-          setTimeout(() => {
-            setLoader(false);
-          }, 1000);
-          document.title = `${user?.fullname} (@${user?.username}) / X`;
-          if (user.flag) {
-            return setIs_deactivated(true);
-          } else return setIs_deactivated(false);
-        } else {
-          setIsUserExist(false);
-          setLoader(false);
-        }
-      });
-    } catch (error) {}
-  };
+
   useEffect(() => {
     if (
       profile ||
@@ -127,11 +103,51 @@ export default function Layout({
       likes ||
       highlights ||
       showTweet
-    )
+    ) {
+      const getSpecificUser = () => {
+        setLoader(true);
+        document.title = "Loading...";
+        try {
+          axios
+            .get(`${backendURL}/user/auth/getUser/${username}`)
+            .then((data) => {
+              if (data.data.status === 1) {
+                const user = data.data.data;
+                setprofileData(user);
+                setSpecificUserProfile(user);
+                setIsUserExist(true);
+                setTimeout(() => {
+                  setLoader(false);
+                }, 1000);
+                document.title = `${user?.fullname} (@${user?.username}) / X`;
+                if (user.flag) {
+                  return setIs_deactivated(true);
+                } else return setIs_deactivated(false);
+              } else {
+                setIsUserExist(false);
+                setLoader(false);
+              }
+            });
+        } catch (error) {}
+      };
       getSpecificUser();
+    }
     setIsUserExist(true);
     setIs_deactivated(false);
-  }, [username]);
+  }, [
+    username,
+    edit_profile,
+    followers,
+    following,
+    highlights,
+    likes,
+    media,
+    profile,
+    showTweet,
+    with_replies,
+    backendURL,
+    setSpecificUserProfile,
+  ]);
   return (
     <Home
       composetweet={composetweet}
@@ -231,7 +247,7 @@ export default function Layout({
       {settings && <YourAccount />}
       {changePassword && <ForgotPassword />}
       {tweetPrivacy && <>tweetPrivacy</>}
-      {account_info && <Account_info />}
+      {account_info && <Accountinfo />}
       {pageNotFound && <PageNotFound />}
       {update_username && <UpdateUserName />}
       {update_phone && <h2>We are working</h2>}

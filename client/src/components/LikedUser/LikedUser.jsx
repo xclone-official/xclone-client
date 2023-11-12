@@ -9,32 +9,33 @@ export default function LikedUser() {
   const navigate = useNavigate();
   const [likedUser, setLikedUser] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const getLikeUserFromTweet = () => {
-    setIsLoading(true);
-    try {
-      axios
-        .get(`${backendURL}/tweetaction/getALlLikes/${tweetId}`)
-        .then((data) => {
-          if (data.data.status === 1) {
-            const allLikes = data.data.like;
-            setLikedUser(allLikes);
-            console.log(allLikes);
-            setIsLoading(false);
-          }
-        })
-        .catch((err) => {
-          console.log("err", err);
-        });
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
+
   const goBackToPreviousPage = () => {
     navigate(-1);
   };
   useEffect(() => {
+    const getLikeUserFromTweet = () => {
+      setIsLoading(true);
+      try {
+        axios
+          .get(`${backendURL}/tweetaction/getALlLikes/${tweetId}`)
+          .then((data) => {
+            if (data.data.status === 1) {
+              const allLikes = data.data.like;
+              setLikedUser(allLikes);
+              console.log(allLikes);
+              setIsLoading(false);
+            }
+          })
+          .catch((err) => {
+            console.log("err", err);
+          });
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
     getLikeUserFromTweet();
-  }, [tweetId, username]);
+  }, [tweetId, username, backendURL]);
 
   return isLoading ? (
     <Loader />

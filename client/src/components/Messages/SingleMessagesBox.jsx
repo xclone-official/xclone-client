@@ -12,26 +12,8 @@ import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import { convertDate } from "../CovertDateTime/ConvertDateTime";
 import axios from "axios";
 import Loader from "../Loader/InfoLoader";
-import ErrorPage from "../ErrorPage/ErrorPage";
 export default function SingleMessagesBox({ socket }) {
-  const [
-    showLogin,
-    setShowLogin,
-    showRegister,
-    setShowRegister,
-    userData,
-    setUserData,
-    loading,
-    setLoading,
-    allTweets,
-    setAllTweets,
-    infoLoader,
-    setInfoLoader,
-    followingTweet,
-    setFollowingTweet,
-    getAllTweets,
-    getAllTweetsFromFollowingUsers,
-  ] = useContext(AuthContext);
+  const [, , , , userData, , , , , , , , , , , ,] = useContext(AuthContext);
   const [allMessages, setAllMessages] = useContext(MessageContext);
   const [count, setCount] = useState(0);
   const [message, setMessage] = useState("");
@@ -55,34 +37,35 @@ export default function SingleMessagesBox({ socket }) {
   useLayoutEffect(() => {
     scrollToBottom();
   }, [allMessages, userId, chatContainerRef]);
-  const fetchUser = async (userId) => {
-    try {
-      await axios
-        .get(`${backendURL}/user/auth/getUser/${userId}`)
-        .then((data) => {
-          const response = data.data;
-          if (response.status === 1) {
-            setProfileData(response.data);
-            setFlaggedStatus(response.data.flag);
-            console.log("deactivated", response.data.flag);
-            setIsUserExists(true);
-          } else {
-            setIsUserExists(false);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    } catch (error) {
-      console.log("error"); // Set loading to false in case of an error
-    }
-  };
+
   useEffect(() => {
+    const fetchUser = async (userId) => {
+      try {
+        await axios
+          .get(`${backendURL}/user/auth/getUser/${userId}`)
+          .then((data) => {
+            const response = data.data;
+            if (response.status === 1) {
+              setProfileData(response.data);
+              setFlaggedStatus(response.data.flag);
+              console.log("deactivated", response.data.flag);
+              setIsUserExists(true);
+            } else {
+              setIsUserExists(false);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+          .finally(() => {
+            setIsLoading(false);
+          });
+      } catch (error) {
+        console.log("error"); // Set loading to false in case of an error
+      }
+    };
     fetchUser(userId);
-  }, [userId]);
+  }, [userId, backendURL, setAllMessages, socket, userData?._id]);
   useEffect(() => {
     setIsLoading(true);
     setAllMessages([]);
@@ -92,7 +75,7 @@ export default function SingleMessagesBox({ socket }) {
       receiverId: userId,
     });
     setIsLoading(false);
-  }, [userId]);
+  }, [userId, setAllMessages, socket, userData?._id, userData?.username]);
   const navigate = useNavigate();
   const goBackToPreviousPage = () => {
     navigate(-1);

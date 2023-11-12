@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import Rightbar from "../Rightbar/Rightbar";
@@ -10,7 +10,6 @@ import Settings from "../Settings/Settings";
 export default function Home({
   children,
   socket,
-  composetweet,
   messages,
   showMessage,
   account_info,
@@ -41,7 +40,7 @@ export default function Home({
     if (location.pathname === "/") {
       navigate("/home");
     }
-  }, []);
+  }, [location.pathname, navigate]);
 
   return (
     <div className="main_content">

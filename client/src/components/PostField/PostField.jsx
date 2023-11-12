@@ -14,22 +14,8 @@ export default function PostField({
   receiverUsername,
   tweetdata,
 }) {
-  const [
-    showLogin,
-    setShowLogin,
-    showRegister,
-    setShowRegister,
-    userData,
-    setUserData,
-    loading,
-    setLoading,
-    allTweets,
-    setAllTweets,
-    infoLoader,
-    setInfoLoader,
-    followingTweet,
-    setFollowingTweet,
-  ] = useContext(AuthContext);
+  const [, , , , userData, , , , , setAllTweets, , , , setFollowingTweet] =
+    useContext(AuthContext);
   const [files, setFiles] = useState([]);
   const [isVideo, setIsVideo] = useState(false);
   const [msgType, setMsgType] = useState("");
@@ -60,7 +46,7 @@ export default function PostField({
     },
   };
   const MSE_APIKEY = process.env.REACT_APP_MCE_KEY;
-  const [specifictweetPage, setSpecifictweetPage] = useContext(SpecificTweets);
+  const [, setSpecifictweetPage] = useContext(SpecificTweets);
   const [count, setCount] = useState(0);
   const handleFileChange = (e) => {
     const selectedFiles = Array.from(e.target.files);
@@ -253,7 +239,7 @@ export default function PostField({
                   key={index}
                   className="choosen_img_1"
                   src={URL.createObjectURL(file)}
-                  alt={`Selected Image ${index + 1}`}
+                  alt=""
                 />
                 <p onClick={() => removeFile(index)} className="delete_photo">
                   X
@@ -263,11 +249,7 @@ export default function PostField({
           ) : (
             files?.map((file, index) => (
               <>
-                <img
-                  key={index}
-                  src={URL.createObjectURL(file)}
-                  alt={`Selected Image ${index + 1}`}
-                />
+                <img key={index} src={URL.createObjectURL(file)} alt="" />
                 <p onClick={() => removeFile(index)} className="delete_photo">
                   X
                 </p>

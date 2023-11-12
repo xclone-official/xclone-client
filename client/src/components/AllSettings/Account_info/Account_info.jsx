@@ -6,28 +6,11 @@ import bcryptjs from "bcryptjs";
 import { AuthContext } from "../../Layout/Import";
 import { convertDate } from "../../CovertDateTime/ConvertDateTime";
 
-export default function Account_info() {
+export default function Accountinfo() {
   const [step1, setStep1] = useState(false);
   const [inputField, setInputField] = useState("");
   const [step2, setStep2] = useState(true);
-  const [
-    showLogin,
-    setShowLogin,
-    showRegister,
-    setShowRegister,
-    userData,
-    setUserData,
-    loading,
-    setLoading,
-    allTweets,
-    setAllTweets,
-    infoLoader,
-    setInfoLoader,
-    followingTweet,
-    setFollowingTweet,
-    getAllTweets,
-    getAllTweetsFromFollowingUsers,
-  ] = useContext(AuthContext);
+  const [, , , , userData, , , , , , , , , , , ,] = useContext(AuthContext);
   const navigate = useNavigate();
   const goBackToPreviousPage = () => {
     navigate(-1);
@@ -36,7 +19,7 @@ export default function Account_info() {
     const dob = new Date(dateOfBirth);
     const currentDate = new Date();
 
-    const age = currentDate.getFullYear() - dob.getFullYear();
+    let age = currentDate.getFullYear() - dob.getFullYear();
 
     if (
       currentDate.getMonth() < dob.getMonth() ||
