@@ -96,7 +96,6 @@ export default function App() {
   // allMsg
   useEffect(() => {
     const handleAllMsg = (data) => {
-      // console.log("allMsg", data);
       data?.length > 0 && setAllMessages(data);
     };
 

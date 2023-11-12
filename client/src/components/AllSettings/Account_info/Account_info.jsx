@@ -7,9 +7,9 @@ import { AuthContext } from "../../Layout/Import";
 import { convertDate } from "../../CovertDateTime/ConvertDateTime";
 
 export default function Accountinfo() {
-  const [step1, setStep1] = useState(false);
+  const [step1, setStep1] = useState(true);
   const [inputField, setInputField] = useState("");
-  const [step2, setStep2] = useState(true);
+  const [step2, setStep2] = useState(false);
   const [, , , , userData, , , , , , , , , , , ,] = useContext(AuthContext);
   const navigate = useNavigate();
   const goBackToPreviousPage = () => {
