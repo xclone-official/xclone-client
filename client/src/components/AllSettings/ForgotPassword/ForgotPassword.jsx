@@ -6,6 +6,7 @@ import { AuthContext } from "../../../useContext/AuthContext/AuthContext";
 import axios from "axios";
 import MsgAlert from "../../MsgAlertComp/MsgAlert";
 export default function ForgotPassword() {
+  // eslint-disable-next-line
   const [inputField, setInputField] = useState("");
   const [new_password, setNew_password] = useState("");
   const [confirm_password, setConfirm_password] = useState("");
@@ -60,8 +61,6 @@ export default function ForgotPassword() {
       axios
         .put(`${backendURL}/update/password/${userData?._id}/${new_password}`)
         .then((data) => {
-          console.log(data.data);
-          console.log(data.data.data);
           if (data?.data?.status === 1) {
             setUserData(data?.data?.data);
           }
@@ -83,6 +82,7 @@ export default function ForgotPassword() {
       inputField,
       userData?.password
     );
+    // const isPasswordMatched = true;
     const forgot_password_input = document.querySelector(
       "#forgot_password_input"
     );

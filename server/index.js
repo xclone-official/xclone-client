@@ -6,13 +6,14 @@ const { users, getUser, removeUser, addNewUser } = require("./userStore");
 const axios = require("axios");
 require("./connection/conn");
 require("dotenv").config();
+const FRONTEND_WEBSITE = process.env.FRONTEND_WEBSITE;
 const cors = require("cors");
 const httpServer = require("http").createServer(app);
 express.json();
 express.urlencoded({ extended: true });
 const io = require("socket.io")(httpServer, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: FRONTEND_WEBSITE,
     methods: ["GET", "POST"],
     allowedHeaders: ["my-custom-header"],
     credentials: true,
@@ -238,7 +239,7 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 
 const corsOptions = {
-  origin: "http://localhost:3000", // ReactJS URL
+  origin: FRONTEND_WEBSITE, // ReactJS URL
 };
 
 app.use(cors(corsOptions));
@@ -249,7 +250,7 @@ app.use(function (req, res, next) {
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
   );
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Origin", FRONTEND_WEBSITE);
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, OPTIONS, PUT, PATCH, DELETE"
