@@ -27,7 +27,7 @@ export default function Foryou({
       .catch((error) => {
         console.warn("Error fetching tweets:", error);
       });
-  }, [getAllTweets]);
+  }, []);
 
   useEffect(() => {
     // Update showInitialArrayOfData when allTweets changes

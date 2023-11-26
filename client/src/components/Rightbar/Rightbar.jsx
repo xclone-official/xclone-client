@@ -3,7 +3,8 @@ import "./rightbar.css";
 import TrendingComponent from "../TrendingComponent/TrendingComponent";
 import SearchInput from "../SearchInput/SearchInput";
 import PremiumBox from "../PremiumBox/PremiumBox";
-import SuggestionFriends from "../SuggestionFriends/SuggestionFriends";
+import SuggestionFollowers from "../SuggestionFriends/SuggestionFollowers";
+import SuggestionsFriendFollowing from "../SuggestionFriends/SuggestionsFriendFollowing";
 export default function Rightbar() {
   return (
     <div className="rightbar_container">
@@ -11,7 +12,8 @@ export default function Rightbar() {
         <SearchInput />
         <PremiumBox />
         <TrendingComponent />
-        <SuggestionFriends />
+        <SuggestionFollowers />
+        <SuggestionsFriendFollowing />
       </div>
     </div>
   );

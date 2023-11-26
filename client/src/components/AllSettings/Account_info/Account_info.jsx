@@ -43,6 +43,7 @@ export default function Accountinfo() {
         inputField,
         userData?.password
       );
+      // let isPasswordMatched = true;
       if (isPasswordMatched) {
         setStep1(!step1);
         setStep2(!step2);

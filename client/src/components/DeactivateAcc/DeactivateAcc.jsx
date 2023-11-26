@@ -22,6 +22,7 @@ export default function DeactivateAcc() {
         password,
         userData?.password
       );
+      // let matchPassword = true;
       if (!password || !matchPassword) {
         return deactivate_password_field.classList.add("border_red");
       }

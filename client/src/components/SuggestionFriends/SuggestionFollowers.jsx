@@ -3,7 +3,7 @@ import "./SuggestionFriends.css";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
-export default function SuggestionFriends() {
+export default function SuggestionFollowers() {
   const navigate = useNavigate();
   const { username } = useParams();
   const [, , , , userData, , , , , , , , , , ,] = useContext(AuthContext);
@@ -43,8 +43,8 @@ export default function SuggestionFriends() {
     <div className="friend_suggestion_container">
       <div className="friend_suggestion_mid_container">
         <p className="whotofollow">Your Followers</p>
-        {userData?.following?.length > 0 ? (
-          userData?.following?.map((e) => (
+        {userData?.followers?.length > 0 ? (
+          userData?.followers?.map((e) => (
             <div
               key={e?._id}
               className="friend_suggestion_card"
@@ -68,7 +68,7 @@ export default function SuggestionFriends() {
             <div>Can't find user at the moment.</div>
           </div>
         )}
-        {userData?.following?.length > 0 && (
+        {userData?.followers?.length > 0 && (
           <div className="show_more_friend">
             <p>Show more</p>
           </div>

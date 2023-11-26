@@ -3,11 +3,8 @@ let users = [];
 
 const addNewUser = (username, socketId) => {
   if (username) {
-    console.log("addded");
     !users.some((user) => user.username === username) &&
       users.push({ username, socketId });
-    // console.log("Added inner");
-    // console.log(username);
   }
 };
 
