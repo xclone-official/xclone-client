@@ -39,7 +39,6 @@ const TweetContextProvider = ({ children }) => {
     if (Cookies.get("xid")) {
       const id = Cookies.get("xid");
       async function fetchData(id) {
-        console.log(id);
         const myTweets = await axios.get(
           `${backendURL}/tweetaction/getusertweet/${id}`
         );

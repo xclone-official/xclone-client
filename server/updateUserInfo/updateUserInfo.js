@@ -23,5 +23,5 @@ Router.use("/gender", require("./updateGender/updateGender"));
 
 Router.use("/dob", require("./updateDOB/updateDOB"));
 Router.use("/flag", require("./updateFlag/updateFlag"));
-
+Router.use("/allNotification", require("./allNotification/allNotification"));
 module.exports = Router;

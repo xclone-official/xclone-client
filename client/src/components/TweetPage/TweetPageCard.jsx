@@ -89,10 +89,10 @@ export default function TweetPageCard({ tweetdata, socket }) {
       setLikeBtn(<Likebtn />);
       socket?.emit("sendLikeNotification", {
         senderUsername: userData?.username,
-        receiverUsername: tweetdata?.authorUsername,
+        receiverUsername: specifictweetPage?.authorUsername,
         type: "liketweet",
-        tweet: tweetdata,
-        tweetId: tweetdata?._id,
+        tweet: specifictweetPage,
+        tweetId: specifictweetPage?._id,
       });
     } else {
       unlikeTweet(specifictweetPage?._id, userData?._id);

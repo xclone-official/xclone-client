@@ -48,21 +48,16 @@ export default function SingleMessagesBox({ socket }) {
             if (response.status === 1) {
               setProfileData(response.data);
               setFlaggedStatus(response.data.flag);
-              console.log("deactivated", response.data.flag);
               setIsUserExists(true);
             } else {
               setIsUserExists(false);
             }
           })
-          .catch((err) => {
-            console.log(err);
-          })
+          .catch((err) => {})
           .finally(() => {
             setIsLoading(false);
           });
-      } catch (error) {
-        console.log("error"); // Set loading to false in case of an error
-      }
+      } catch (error) {}
     };
     fetchUser(userId);
   }, [userId, backendURL, setAllMessages, socket, userData?._id]);
@@ -83,7 +78,6 @@ export default function SingleMessagesBox({ socket }) {
   function handleMessage(e) {
     e.preventDefault();
     setCount(count + 1);
-    console.log(count);
     const data = {
       senderId: userData?._id,
       senderUsername: userData?.username,

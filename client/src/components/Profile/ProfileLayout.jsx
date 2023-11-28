@@ -79,7 +79,7 @@ export default function ProfileLayout({
             setFollowBtn("Unfollow");
             socket?.emit("sendFollowNotification", {
               senderUsername: userData?.username,
-              receiverUsername: userDataa?.username,
+              receiverUsername: specificUserProfile?.username,
               type: type,
             });
           }
@@ -111,11 +111,11 @@ export default function ProfileLayout({
     try {
       axios
         .post(
-          `${backendURL}/relationship/userHasChatted/${userData?._id}/${userDataa?._id}`
+          `${backendURL}/relationship/userHasChatted/${userData?._id}/${specificUserProfile?._id}`
         )
         .then((data) => {
           if (data.data.status === 1) setUserData(data.data.data);
-          navigate(`/messages/${userDataa?._id}`);
+          navigate(`/messages/${specificUserProfile?._id}`);
         })
         .catch((err) => {});
     } catch (error) {}

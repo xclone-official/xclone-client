@@ -88,13 +88,10 @@ export default function Login() {
       const handler = statusHandlers[status];
       if (get_data.status === 1) {
         localStorage.setItem("xid", get_data.data._id);
-        console.log("get_data.data.flag_outside", true);
         if (get_data.data.flag) {
           navigate("/home?settings=reactivate_account");
-          console.log("get_data.data.flag_inside", true);
           return setShow_deactivation_prompt_to_activate(true);
         }
-        console.log("get_data.data.flag_outside_again", true);
         navigate("/home?type=for-you");
         setUserData(get_data.data);
         const uId = get_data.data._id;

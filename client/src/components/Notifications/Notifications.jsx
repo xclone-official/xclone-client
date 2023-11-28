@@ -1,13 +1,29 @@
 import React, { useContext, useEffect } from "react";
 import "./Notifications.css";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { NotificationContext } from "../../useContext/NotificationsContext/NotificationsContext";
 import { customTimeFormat } from "../customTime/customTime";
 import RemoveUnnecessaryTag from "../../TweetCard/RemoveUnnecessaryTag";
+import { AuthContext } from "../Layout/Import";
 export default function Lists() {
+  const [, , , , userData, , , , , , , , , , , ,] = useContext(AuthContext);
   const navigate = useNavigate();
   const [allNotification, setAllNotification] = useContext(NotificationContext);
   const backendURL = process.env.REACT_APP_BACKEND_URL;
+
+  useEffect(() => {
+    const makeAllNotificationToSeenTrue = async () => {
+      try {
+        await axios.post(
+          `${backendURL}/update/allNotification/${userData?._id}`
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    makeAllNotificationToSeenTrue();
+  }, [backendURL, userData?._id, allNotification?.length]);
   useEffect(() => {
     document.title = `${
       allNotification.filter((notification) => !notification.isSeen)?.length > 0
@@ -23,7 +39,7 @@ export default function Lists() {
     }));
 
     // Update the state with the new array
-    const timeOutId = setTimeout(() => {
+    const timeOutId = setTimeout(async () => {
       setAllNotification(updatedNotifications);
       document.title = "X / Notifications";
     }, 3000);

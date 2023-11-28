@@ -28,7 +28,8 @@ export default function ProfilePost({
       .catch((error) => {
         console.warn("Error fetching tweets:", error);
       });
-  }, [getAllTweets]);
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     // Update showInitialArrayOfData when allTweets changes

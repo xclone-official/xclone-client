@@ -1,28 +1,12 @@
 import React, { useContext, useState } from "react";
 import TopComponent from "../../TopComponent/TopComponent";
-import InputField from "../../InputField/InputField";
 import { AuthContext } from "../../../useContext/AuthContext/AuthContext";
 import axios from "axios";
 
 export default function Updatephone() {
   const backendURL = process.env.REACT_APP_BACKEND_URL;
-  const [
-    showLogin,
-    setShowLogin,
-    showRegister,
-    setShowRegister,
-    userData,
-    setUserData,
-    loading,
-    setLoading,
-    allTweets,
-    setAllTweets,
-    infoLoader,
-    setInfoLoader,
-    followingTweet,
-    setFollowingTweet,
-    getAllTweets,
-  ] = useContext(AuthContext);
+  const [, , , , userData, setUserData, , , , , , , , , ,] =
+    useContext(AuthContext);
   const [Phone_num, setPhone_num] = useState("");
   async function handleUserName(e) {
     e.preventDefault();

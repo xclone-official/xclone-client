@@ -38,7 +38,6 @@ export default function App() {
   // Follow socket
   useEffect(() => {
     const handleFollowed = (data) => {
-      console.log(data);
       if (
         !allNotification.some(
           (notification) =>
@@ -66,7 +65,6 @@ export default function App() {
   // Like socket
   useEffect(() => {
     const handleLiked = (data) => {
-      // console.log("handleLike", data);
       if (
         !allNotification.some(
           (notification) =>
@@ -110,8 +108,6 @@ export default function App() {
   // Add msg
   useEffect(() => {
     const handleAllMsg = (data) => {
-      // console.log("sendAddMsg", data);
-
       data?.length > 0 && setAllMessages(data);
     };
 
