@@ -18,6 +18,7 @@ export default function Foryou({
   const [showInitialArrayOfData, setShowInitialArrayOfData] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // Loading state
   useEffect(() => {
+    // eslint-disable-next-line
     getAllTweets()
       .then(() => {
         setTimeout(() => {
@@ -27,7 +28,8 @@ export default function Foryou({
       .catch((error) => {
         console.warn("Error fetching tweets:", error);
       });
-  });
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     // Update showInitialArrayOfData when allTweets changes
