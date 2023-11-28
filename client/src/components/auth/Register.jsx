@@ -28,7 +28,6 @@ export default function Register({ name, email }) {
   const [msgType, setMsgType] = useState("");
   const [showMsg, setShowMsg] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
-  const [userDataIsLoading, setUserDataIsLoading] = useState(false);
   const handleInputChange = (e) => {
     const { name, value, type } = e.target;
     setFormData({
@@ -107,7 +106,6 @@ export default function Register({ name, email }) {
   };
 
   useEffect(() => {
-    setUserDataIsLoading(true);
     async function fetchToken() {
       try {
         const res = await getAccessToken();
@@ -125,11 +123,9 @@ export default function Register({ name, email }) {
               location: userData.location,
               is_verified: true,
             });
-            setUserDataIsLoading(false);
           };
           getUserDetails();
         } else {
-          setUserDataIsLoading(false);
         }
       } catch (error) {
         console.log("error", error);
@@ -151,9 +147,7 @@ export default function Register({ name, email }) {
             <img src="/x-logo.png" alt="logo" />
           </div>
         </div>
-        {userDataIsLoading ? (
-          <Loader />
-        ) : (
+        {
           <>
             {step === 1 && (
               <div className="login_content">
@@ -341,7 +335,7 @@ export default function Register({ name, email }) {
               </div>
             )}
           </>
-        )}
+        }
 
         {loader && <Loader />}
       </div>
