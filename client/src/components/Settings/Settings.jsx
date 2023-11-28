@@ -4,15 +4,15 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 const options = [
   {
     title: "Your account",
-    link: "/account/settings",
+    link: "/settings/account",
   },
   {
     title: "Change password",
-    link: "/account/settings/change-password",
+    link: "/settings/account/change-password",
   },
   {
     title: "Tweet privacy",
-    link: "/account/settings/tweet-privacy",
+    link: "/settings/account/tweet-privacy",
   },
 ];
 export default function Settings() {

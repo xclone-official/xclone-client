@@ -45,59 +45,59 @@ const routes = [
     path: "/:username/tweet/:tweetId/replies/:commentId",
     element: <Layout replies={true} />,
   },
-  { path: "/account/settings", element: <Layout settings={true} /> },
+  { path: "/settings/account", element: <Layout settings={true} /> },
   {
-    path: "/account/settings/account_info",
+    path: "/settings/account/account_info",
     element: <Layout account_info={true} />,
   },
   {
-    path: "/account/settings/account_info/username",
+    path: "/settings/account/account_info/username",
     element: <Layout update_username={true} />,
   },
   {
-    path: "/account/settings/account_info/phone",
+    path: "/settings/account/account_info/phone",
     element: <Layout update_phone={true} />,
   },
   {
-    path: "/account/settings/account_info/name",
+    path: "/settings/account/account_info/name",
     element: <Layout name={true} />,
   },
   {
-    path: "/account/settings/account_info/email",
+    path: "/settings/account/account_info/email",
     element: <Layout update_email={true} />,
   },
   {
-    path: "/account/settings/account_info/protected_posts",
+    path: "/settings/account/account_info/protected_posts",
     element: <Layout update_protected_posts={true} />,
   },
   {
-    path: "/account/settings/account_info/update_country",
+    path: "/settings/account/account_info/update_country",
     element: <Layout update_country={true} />,
   },
   {
-    path: "/account/settings/account_info/update_language",
+    path: "/settings/account/account_info/update_language",
     element: <Layout update_languages={true} />,
   },
   {
-    path: "/account/settings/account_info/update_gender",
+    path: "/settings/account/account_info/update_gender",
     element: <Layout update_gender={true} />,
   },
   {
-    path: "/account/settings/account_info/update_dob",
+    path: "/settings/account/account_info/update_dob",
     element: <Layout update_dob={true} />,
   },
   { path: "/settings", element: <Layout settings={true} /> },
   {
-    path: "/account/settings/change-password",
+    path: "/settings/account/change-password",
     element: <Layout changePassword={true} />,
   },
   {
-    path: "/account/settings/tweet-privacy",
+    path: "/settings/account/tweet-privacy",
     element: <Layout tweetPrivacy={true} />,
   },
   // Deactivate account
   {
-    path: "/account/settings/deactivate-account",
+    path: "/settings/account/deactivate-account",
     element: <Layout deactivateAcc={true} />,
   },
   { path: "/*", element: <Layout pageNotFound={true} /> },

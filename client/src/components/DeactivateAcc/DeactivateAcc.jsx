@@ -3,9 +3,9 @@ import "./deactivateAcc.css";
 import TopComponent from "../TopComponent/TopComponent";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import { useNavigate } from "react-router-dom";
-import bcryptjs from "bcryptjs";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { checkPass } from "../../checkPasswordFunc/checkPass";
 export default function DeactivateAcc() {
   const [, , , , userData, , , , , , , , , , ,] = useContext(AuthContext);
   const navigate = useNavigate();
@@ -18,12 +18,11 @@ export default function DeactivateAcc() {
       const deactivate_password_field = document.querySelector(
         "#deactivate_password_field"
       );
-      const matchPassword = await bcryptjs.compare(
-        password,
-        userData?.password
-      );
+      const matchPassword = password
+        ? await checkPass(userData?.email, password)
+        : 0;
       // let matchPassword = true;
-      if (!password || !matchPassword) {
+      if (!password || matchPassword !== 1) {
         return deactivate_password_field.classList.add("border_red");
       }
       deactivate_password_field.classList.remove("border_red");

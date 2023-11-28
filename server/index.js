@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-const messageImage = require("./multer/messageImage");
 const { users, getUser, removeUser, addNewUser } = require("./userStore");
 // Connection
 const axios = require("axios");
@@ -350,6 +349,9 @@ app.use("/github/getUser/:access_token", async (req, res) => {
     console.log("error", error);
   }
 });
+
+// Check password, email
+app.use("/check", require("./check/check"));
 
 httpServer.listen(PORT, () => {
   console.log(`App is listening at http://localhost:${PORT}`);

@@ -8,6 +8,7 @@ export default function SuggestionsFriendFollowing() {
   const { username } = useParams();
   const [, , , , userData, , , , , , , , , , ,] = useContext(AuthContext);
   const backendURL = process.env.REACT_APP_BACKEND_URL;
+  // eslint-disable-next-line
   const [allPeople, setAllPeople] = useState([]);
   const [, setLoader] = useState(true);
 

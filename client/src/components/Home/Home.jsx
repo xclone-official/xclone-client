@@ -129,7 +129,22 @@ export default function Home({
           <>
             <div className={` ${"rightbar"} `}>
               {location.pathname === "/settings" ? (
-                <div className="column">{children}</div>
+                <div
+                  className="column"
+                  style={{
+                    height: "100vh",
+                    display: "flex",
+                    alignItems: "center",
+                    marginLeft: "20px",
+                  }}
+                >
+                  <div>
+                    <h2>Open Settings</h2>
+                    <p style={{ marginLeft: "5px", marginTop: "5px" }}>
+                      Click on the right tab to open!
+                    </p>
+                  </div>
+                </div>
               ) : (
                 <div className="column">
                   {settings ||

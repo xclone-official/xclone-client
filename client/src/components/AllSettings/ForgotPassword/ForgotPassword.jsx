@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
 import "./forgotpassword.css";
 import { useNavigate } from "react-router-dom";
-import bcryptjs from "bcryptjs";
 import { AuthContext } from "../../../useContext/AuthContext/AuthContext";
 import axios from "axios";
 import MsgAlert from "../../MsgAlertComp/MsgAlert";
+import { checkPass } from "../../../checkPasswordFunc/checkPass";
 export default function ForgotPassword() {
   // eslint-disable-next-line
   const [inputField, setInputField] = useState("");
@@ -78,10 +78,9 @@ export default function ForgotPassword() {
   }
   async function handleSubmit(e) {
     e.preventDefault();
-    const isPasswordMatched = await bcryptjs.compare(
-      inputField,
-      userData?.password
-    );
+    const isPasswordMatched = inputField
+      ? await checkPass(userData?.email, inputField)
+      : 0;
     // const isPasswordMatched = true;
     const forgot_password_input = document.querySelector(
       "#forgot_password_input"
@@ -91,13 +90,12 @@ export default function ForgotPassword() {
       "#forgot_password_field"
     );
     if (forgot_password_input) {
-      if (isPasswordMatched) {
+      if (isPasswordMatched === 1) {
         forgot_password_input.classList.remove("border_red");
         if (new_password === confirm_password) {
           if (new_password.length <= 7) {
             forgot_password_field.classList.remove("border_red");
             enter_new_password.classList.add("border_red");
-            console.log(new_password.length);
           } else {
             enter_new_password.classList.remove("border_red");
             changePassword();

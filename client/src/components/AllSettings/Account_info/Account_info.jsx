@@ -2,9 +2,9 @@ import React, { useContext, useState } from "react";
 import "./Account_info.css";
 import { Link, useNavigate } from "react-router-dom";
 import "../../InputField/InputField.css";
-import bcryptjs from "bcryptjs";
 import { AuthContext } from "../../Layout/Import";
 import { convertDate } from "../../CovertDateTime/ConvertDateTime";
+import { checkPass } from "../../../checkPasswordFunc/checkPass";
 
 export default function Accountinfo() {
   const [step1, setStep1] = useState(true);
@@ -39,12 +39,10 @@ export default function Accountinfo() {
     );
 
     if (forgot_password_field) {
-      const isPasswordMatched = await bcryptjs.compare(
-        inputField,
-        userData?.password
-      );
-      // let isPasswordMatched = true;
-      if (isPasswordMatched) {
+      const isPasswordMatched = inputField
+        ? await checkPass(userData?.email, inputField)
+        : 0;
+      if (isPasswordMatched === 1) {
         setStep1(!step1);
         setStep2(!step2);
       } else {

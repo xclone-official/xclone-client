@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 const options = [
   {
     title: "Account Information",
-    link: "/account/settings/account_info",
+    link: "/settings/account/account_info",
     desc: "See your account information like your phone number and email address.",
     svg: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -16,7 +16,7 @@ const options = [
   },
   {
     title: "Change password",
-    link: "/account/settings/change-password",
+    link: "/settings/account/change-password",
     desc: "Change your password at any time.",
     svg: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -28,7 +28,7 @@ const options = [
   },
   {
     title: "Deactivate Account",
-    link: "/account/settings/deactivate-account",
+    link: "/settings/account/deactivate-account",
     desc: "Find out how you can deactivate your account.",
     svg: (
       <svg viewBox="0 0 24 24" aria-hidden="true">
