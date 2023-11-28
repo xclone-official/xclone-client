@@ -116,13 +116,7 @@ export default function Sidebar() {
         <div className="sidebar_links">
           {Links.map((e, index) => {
             return e.href ? (
-              <NavLink
-                key={index}
-                to={e.href}
-                isActive={() => {
-                  return location.pathname.startsWith(e.href);
-                }}
-              >
+              <NavLink key={index} to={e.href}>
                 <div className={`sidebar_home ${e.className}`}>
                   {e.msg}
                   <p>

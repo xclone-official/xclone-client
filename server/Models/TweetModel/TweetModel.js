@@ -22,6 +22,7 @@ const TweetModel = mongoose.Schema(
       type: String,
       required: true,
     },
+    bookmark: [],
     likes: [
       {
         name: {

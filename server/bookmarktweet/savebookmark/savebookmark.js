@@ -4,7 +4,6 @@ const TweetModel = require("../../Models/TweetModel/TweetModel");
 Router.post("/:tweetId/:userId", async (req, res) => {
   try {
     const { tweetId, userId } = req.params;
-    console.log("tweetId, userId", tweetId, userId);
     if (!tweetId || !userId) {
       return res.status(200).send({
         status: "2",
@@ -20,31 +19,46 @@ Router.post("/:tweetId/:userId", async (req, res) => {
       });
     }
     const isTweetBookMarkAlreadyExist = isUserExist.bookmark.some(
-      (e) => e?._id === tweetId
+      (e) => e?.tweetId === tweetId
     );
-    isUserExist.bookmark.forEach((e) => {
-      console.log(e);
-      console.log(e === tweetId);
-    });
 
-    if (!isTweetBookMarkAlreadyExist) {
-      await isUserExist.bookmark.push(isTweetExist);
+    const isOnTweeBookmarkUserIdExist = isTweetExist.bookmark.some(
+      (e) => e?.userId === userId
+    );
+
+    const toSaveTweet = { tweetId: tweetId };
+    if (!isTweetBookMarkAlreadyExist && !isOnTweeBookmarkUserIdExist) {
+      await isUserExist.bookmark.push(toSaveTweet);
+      await isTweetExist.bookmark.push({ userId: userId });
       await isUserExist.save();
+      await isTweetExist.save();
       return res.status(200).send({
-        status: "1",
+        status: 1,
         msg: "Tweet saved successfully.",
+        user: isUserExist,
+        tweet: isTweetExist,
+      });
+    } else {
+      isUserExist.bookmark = isUserExist.bookmark.filter(
+        (e) => e.tweetId !== tweetId
+      );
+      isTweetExist.bookmark = isTweetExist.bookmark.filter(
+        (e) => e.userId !== userId
+      );
+      await isUserExist.save();
+      await isTweetExist.save();
+      return res.status(200).send({
+        status: 1,
+        msg: "Tweet removed successfully.",
+        user: isUserExist,
+        tweet: isTweetExist,
       });
     }
-    return res.status(200).send({
-      status: "1",
-      msg: "Tweet already saved.",
-    });
   } catch (error) {
     res.status(500).send({
       status: 3,
       msg: "Internal server error.",
     });
-    console.log(error);
   }
 });
 module.exports = Router;

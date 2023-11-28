@@ -15,12 +15,10 @@ export default function Tweetpage({ socket }) {
         const getTweetWithId = await axios.get(
           `${backendURL}/tweetaction/gettweetwithid/${tweetId}`
         );
-        console.log(getTweetWithId?.data);
         if (getTweetWithId?.data?.status === 1) {
           setFilterdata(getTweetWithId?.data?.tweet);
           setLoader(false);
         } else {
-          console.log("Nothing found");
         }
       } catch (error) {}
     };
