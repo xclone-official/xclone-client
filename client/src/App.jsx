@@ -27,7 +27,7 @@ export default function App() {
 
   useEffect(() => {
     setSocket(
-      io("http://localhost:5000", {
+      io(process.env.REACT_APP_BACKEND_URL, {
         withCredentials: true,
       })
     );
