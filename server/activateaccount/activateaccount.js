@@ -6,9 +6,6 @@ Router.get("/:uemail/:token", async (req, res) => {
     const findUser = await UserModel.findOne({ email: uemail });
     if (findUser) {
       const userToken = await findUser.activateToken;
-
-      //   console.log(findUser);
-
       const isUserTokenAndProvidedTokenMatched =
         parseInt(userToken) === parseInt(token);
       if (isUserTokenAndProvidedTokenMatched) {

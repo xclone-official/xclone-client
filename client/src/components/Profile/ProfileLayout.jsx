@@ -19,7 +19,6 @@ export default function ProfileLayout({
   isUserExist,
   is_deactivated,
 }) {
-  console.log("isUserExist", isUserExist);
   const [, , , , userData, setUserData, , , , , , , , , ,] =
     useContext(AuthContext);
   const [, , specificUserProfile, setSpecificUserProfile] =
@@ -83,7 +82,6 @@ export default function ProfileLayout({
               receiverUsername: userDataa?.username,
               type: type,
             });
-            console.log("FOllowed");
           }
         });
     } catch (error) {}
@@ -119,9 +117,7 @@ export default function ProfileLayout({
           if (data.data.status === 1) setUserData(data.data.data);
           navigate(`/messages/${userDataa?._id}`);
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch((err) => {});
     } catch (error) {}
   };
   if (is_deactivated) {
