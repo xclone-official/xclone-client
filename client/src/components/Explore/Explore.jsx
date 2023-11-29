@@ -1,48 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./explore.css";
-import SearchInput from "../SearchInput/SearchInput";
+import TopComponent from "../TopComponent/TopComponent";
+import SearchComponent from "../SearchComponent/SearchComponent";
 import TrendingComponent from "../TrendingComponent/TrendingComponent";
-import PremiumBox from "../PremiumBox/PremiumBox";
-import { useNavigate } from "react-router-dom";
 export default function Explore() {
-  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState();
   useEffect(() => {
     document.title = "X / Explore";
   }, []);
-  const goBackToPreviousPage = () => {
-    navigate(-1);
-  };
   return (
-    <>
-      <div className="profile_top">
-        <svg
-          onClick={goBackToPreviousPage}
-          fill="var(--theme-color)"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-          <g>
-            <path d="M7.414 13l5.043 5.04-1.414 1.42L3.586 12l7.457-7.46 1.414 1.42L7.414 11H21v2H7.414z"></path>
-          </g>
-        </svg>
-        <div
-          className="top_tweetname"
-          style={{ display: "flex", alignItems: "center" }}
-        >
-          <p>Explore</p>
-        </div>
-      </div>
+    <div className="explore_container">
+      <TopComponent title="Explore" />
       <div style={{ padding: "5px" }}>
-        <SearchInput />
-        <div className="explore_component">
-          <div className="premium_box">
-            <PremiumBox />
-          </div>
-          <div className="trending_page">
-            <TrendingComponent />
-          </div>
+        <div className="right_searchbar">
+          <input
+            type="text"
+            placeholder="Search X"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
         </div>
       </div>
-    </>
+      <div className="border_bottom"></div>
+      <div className="explore_page_search_element">
+        <div className="search_term_container">
+          <SearchComponent searchQuery={searchQuery} />
+        </div>
+      </div>
+    </div>
   );
 }

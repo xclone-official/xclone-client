@@ -10,4 +10,6 @@ Router.use(
 );
 
 Router.use("/getAllBookmarkById", require("./getAllBookmark/getAllBookmark"));
+
+Router.use("/all", require("./all/all"));
 module.exports = Router;

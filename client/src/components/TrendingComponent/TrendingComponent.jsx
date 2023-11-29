@@ -1,5 +1,8 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect } from "react";
 export default function TrendingComponent() {
+  const backendURL = process.env.REACT_APP_BACKEND_URL;
+
   return (
     <div className="trends_rightbar">
       <h1 className="head_rightbar" style={{ paddingTop: "15px" }}>

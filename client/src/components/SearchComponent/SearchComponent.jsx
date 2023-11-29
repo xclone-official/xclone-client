@@ -1,44 +1,44 @@
 import React, { useEffect, useState } from "react";
-import "./LikedUser.css";
-import { Link, useParams } from "react-router-dom";
+import "../LikedUser/LikedUser.css";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import Loader from "../Loader/InfoLoader";
-import TopComponent from "../TopComponent/TopComponent";
-export default function LikedUser() {
-  const { username, tweetId } = useParams();
+export default function SearchComponent({ searchQuery }) {
   const backendURL = process.env.REACT_APP_BACKEND_URL;
-  const [likedUser, setLikedUser] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [allUser, setAllUser] = useState([]);
+  const [searchedUser, setSearchedUser] = useState([]);
+  useEffect(() => {
+    async function getAllUsers() {
+      const getUsers = await axios.get(`${backendURL}/getPeople/all`);
+      const res = getUsers.data;
+      if (res.status === 1) {
+        setAllUser(res.allPeople);
+      }
+    }
+    getAllUsers();
+  }, []);
 
   useEffect(() => {
-    const getLikeUserFromTweet = () => {
-      setIsLoading(true);
-      try {
-        axios
-          .get(`${backendURL}/tweetaction/getALlLikes/${tweetId}`)
-          .then((data) => {
-            if (data.data.status === 1) {
-              const allLikes = data.data.like;
-              setLikedUser(allLikes);
-              console.log(allLikes);
-              setIsLoading(false);
-            }
-          })
-          .catch((err) => {
-            console.log("err", err);
-          });
-      } catch (error) {
-        console.log("error", error);
-      }
-    };
-    getLikeUserFromTweet();
-  }, [tweetId, username, backendURL]);
+    searchQuery && handleSearch();
+    !searchQuery && setSearchedUser([]);
+  }, [searchQuery]);
+
+  const handleSearch = () => {
+    setIsLoading(true);
+    const filteredUsers = allUser.filter((user) =>
+      `${user.fullname} ${user.email} ${user.bio}`
+        .toLowerCase()
+        .includes(searchQuery?.toLowerCase())
+    );
+    setIsLoading(false);
+    setSearchedUser(filteredUsers);
+  };
 
   return isLoading ? (
     <Loader />
   ) : (
     <div className="friend_suggestion_container">
-      <TopComponent />
       <div
         className="friend_suggestion_mid_container"
         style={{
@@ -47,15 +47,14 @@ export default function LikedUser() {
           backgroundColor: "transparent",
         }}
       >
-        <p className="whotofollow">User who Liked</p>
-        {likedUser.length > 0 ? (
-          likedUser?.map((e) => (
+        {searchedUser.length > 0 ? (
+          searchedUser?.map((e) => (
             <div key={e?._id} className="friend_suggestion_card">
               <Link to={`/p/${e?.username}`}>
                 <div className="friend_suggestion_image">
-                  <img src={backendURL + `/${e?.profile}`} alt="" />
+                  <img src={backendURL + `/${e?.profilepicture}`} alt="" />
                   <div className="friend_suggestion_credentials">
-                    <p>{e?.name}</p>
+                    <p>{e?.fullname}</p>
                     <p className="friend_suggestion_username">@{e?.username}</p>
                   </div>
                 </div>
@@ -68,7 +67,7 @@ export default function LikedUser() {
           ))
         ) : (
           <div>
-            <div></div>
+            <h3 style={{ textAlign: "center" }}>Search a user</h3>
           </div>
         )}
       </div>

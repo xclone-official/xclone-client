@@ -19,6 +19,7 @@ import {
   Register,
   Home,
 } from "./Imports";
+import ForgotPassWithoutAuth from "./components/ForgotPassWithoutAuth/ForgotPassWithoutAuth";
 export default function App() {
   const [, , , , userData, , loading] = useContext(AuthContext);
   const [allNotification, setAllNotification] = useContext(NotificationContext);
@@ -153,6 +154,11 @@ export default function App() {
         <Route
           path="/flow/register"
           element={userData ? <Home /> : <Register />}
+        />
+
+        <Route
+          path="/settings/account/reset-password-without-auth"
+          element={userData ? <Home /> : <ForgotPassWithoutAuth />}
         />
         {routes.map((route, index) => (
           <Route

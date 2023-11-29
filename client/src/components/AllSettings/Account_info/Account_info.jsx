@@ -53,17 +53,17 @@ export default function Accountinfo() {
   const options = [
     {
       title: "Username",
-      link: "/account/settings/account_info/username",
+      link: "/settings/account/account_info/username",
       desc: `@${userData?.username}`,
     },
     {
       title: "Name",
-      link: "/account/settings/account_info/name",
+      link: "/settings/account/account_info/name",
       desc: `${userData?.fullname || ""}`,
     },
     {
       title: "Email",
-      link: "/account/settings/account_info/email",
+      link: "/settings/account/account_info/email",
       desc: `${userData?.email}`,
     },
     {
@@ -74,7 +74,7 @@ export default function Accountinfo() {
   const impo_options = [
     {
       title: "Protected posts",
-      link: "/account/settings/account_info/protected_posts",
+      link: "/settings/account/account_info/protected_posts",
       desc: `${userData?.protected_posts}`,
     },
     {
@@ -85,23 +85,23 @@ export default function Accountinfo() {
   const other_options = [
     {
       title: "Country",
-      link: "/account/settings/account_info/update_country",
+      link: "/settings/account/account_info/update_country",
       desc: `${userData?.location}`,
     },
     {
       title: "Languages",
-      link: "/account/settings/account_info/update_language",
+      link: "/settings/account/account_info/update_language",
       desc: `${userData?.language}`,
     },
     {
       title: "Gender",
-      link: "/account/settings/account_info/update_gender",
+      link: "/settings/account/account_info/update_gender",
       desc: `${userData?.gender}`,
     },
     {
       title: "Birth date",
       desc: `${userData?.dob}`,
-      link: "/account/settings/account_info/update_dob",
+      link: "/settings/account/account_info/update_dob",
     },
   ];
   const another_options = [

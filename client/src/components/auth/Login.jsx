@@ -150,7 +150,7 @@ export default function Login() {
                   </button>
                   <button
                     onClick={() => {
-                      navigate(`/settings/account/forgot-password`);
+                      navigate(`/settings/account/reset-password-without-auth`);
                     }}
                     className="forgot_pass"
                   >

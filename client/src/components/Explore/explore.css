@@ -1,14 +1,8 @@
-.explore_component {
-    overflow-y: scroll;
-    margin-bottom: 200px;
-    height: 93vh;
+.explore_page_search_element {
+  width: 100%;
+  background-color: transparent;
+  overflow-y: scroll;
 }
-
-.explore_component::-webkit-scrollbar {
-    width: 0px;
-    /* background-color: var(--theme-hover-color); */
-}
-
-.trending_page {
-    margin-bottom: 100px;
+.trending_component {
+  padding: 10px;
 }
