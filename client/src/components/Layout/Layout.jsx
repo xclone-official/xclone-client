@@ -1,4 +1,5 @@
 import { AllTweetContext } from "../../useContext/AllTweetContext/AllTweetContextProvider";
+import ForgotPass from "../ForgotPass/ForgotPass";
 import ProfilePost from "../ProfilePost/ProfilePost";
 import {
   React,
@@ -80,6 +81,7 @@ export default function Layout({
   update_dob,
   name,
   deactivateAcc,
+  forgotPass,
 }) {
   const [, , , , userData, , loading, , , , , ,] = useContext(AuthContext);
   const [allTweets] = useContext(AllTweetContext);
@@ -155,6 +157,7 @@ export default function Layout({
       showMessage={showMessage}
       settings={settings}
       changePassword={changePassword}
+      forgotPass={forgotPass}
       tweetPrivacy={tweetPrivacy}
       account_info={account_info}
       update_username={update_username}
@@ -248,6 +251,7 @@ export default function Layout({
       {changePassword && <ForgotPassword />}
       {tweetPrivacy && <>tweetPrivacy</>}
       {account_info && <Accountinfo />}
+      {forgotPass && <ForgotPass />}
       {pageNotFound && <PageNotFound />}
       {update_username && <UpdateUserName />}
       {update_phone && <h2>We are working</h2>}

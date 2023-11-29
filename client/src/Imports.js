@@ -100,6 +100,10 @@ const routes = [
     path: "/settings/account/deactivate-account",
     element: <Layout deactivateAcc={true} />,
   },
+  {
+    path: "/settings/account/forgot-password",
+    element: <Layout forgotPass={true} />,
+  },
   { path: "/*", element: <Layout pageNotFound={true} /> },
 ];
 export {

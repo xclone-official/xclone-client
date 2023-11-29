@@ -152,7 +152,13 @@ export default function ForgotPassword() {
             </div>
 
             <div className="verify_password_container_forgot_password">
-              <p>Forgot password?</p>
+              <p
+                onClick={() => {
+                  navigate(`/settings/account/forgot-password`);
+                }}
+              >
+                Forgot password?
+              </p>
             </div>
             <br />
           </div>

@@ -72,6 +72,10 @@ const UserModel = mongoose.Schema(
       type: String,
       default: "",
     },
+    otp: {
+      type: String,
+      default: "",
+    },
     following: [
       {
         name: {

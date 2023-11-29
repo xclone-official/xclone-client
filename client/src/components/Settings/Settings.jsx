@@ -14,6 +14,10 @@ const options = [
     title: "Tweet privacy",
     link: "/settings/account/tweet-privacy",
   },
+  {
+    title: "Forgot Password",
+    link: "/settings/account/forgot-password",
+  },
 ];
 export default function Settings() {
   useEffect(() => {

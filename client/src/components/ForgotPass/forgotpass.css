@@ -1,0 +1,101 @@
+.forgot_password_container {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  left: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+}
+.forgot_password_midcontainer {
+  position: fixed;
+  height: 90vh;
+  width: 40vw;
+  top: 5%;
+  background-color: #15202b;
+  border-radius: 20px;
+  border: 1px solid rgb(63, 62, 62);
+}
+.top_element_forgot_password_generator {
+  position: sticky;
+  top: 0;
+  background: rgba(51, 50, 50, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.forgot_password_midcontainer::-webkit-scrollbar {
+  width: 0;
+}
+.forgot_password_content {
+  margin-top: 15px;
+  /* text-align: center; */
+}
+.forgot_password_content_title p {
+  font-size: 20px;
+  font-weight: 600;
+}
+.forgot_password_content_title span {
+  font-size: 13px;
+  font-weight: 500;
+}
+.forgot_password_content_title {
+  margin-left: 10px;
+}
+@media (max-width: 1000px) {
+  .forgot_password_midcontainer {
+    width: 60vw;
+  }
+}
+@media (max-width: 700px) {
+  .forgot_password_midcontainer {
+    width: 80vw;
+  }
+}
+@media (max-width: 500px) {
+  .forgot_password_midcontainer {
+    width: 90vw;
+  }
+}
+@media (max-width: 500px) {
+  .forgot_password_midcontainer {
+    width: 100vw;
+    top: 0;
+    height: 100vh;
+    border-radius: 0;
+  }
+}
+.hide_step_2_forgot_pass {
+  opacity: 0;
+  display: none;
+  animation: hideOpacityAnimation 0.4s alternate linear;
+}
+
+@keyframes hideOpacityAnimation {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.show_step_2_forgot_pass {
+  display: block;
+  opacity: 1;
+  animation: opacityAnimation 0.4s alternate linear;
+}
+
+@keyframes opacityAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

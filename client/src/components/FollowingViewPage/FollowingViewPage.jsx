@@ -1,21 +1,35 @@
-import React, { useContext } from "react";
+import React, { useEffect, useState } from "react";
 import "./followingviewpage.css";
-import { AuthContext } from "../../useContext/AuthContext/AuthContext";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 import FollowersFollowingCard from "../FollowersFollowingCard/FollowersFollowingCard";
 export default function FollowingViewPage() {
-  const [, , , , userData, , , , , , , , , , ,] = useContext(AuthContext);
-  console.log(userData?.following);
+  const [allFollowing, setAllFollowing] = useState([]);
+  const { username } = useParams();
+  const backendURL = process.env.REACT_APP_BACKEND_URL;
+  useEffect(() => {
+    async function fetchAllFollowings() {
+      const allFollowing = await axios.get(
+        `${backendURL}/getPeople/getFollowingFromUserId/${username}`
+      );
+      if (allFollowing.data.status === 1) {
+        setAllFollowing(allFollowing.data.following);
+      }
+      try {
+      } catch (error) {}
+    }
+    fetchAllFollowings();
+    // eslint-disable-next-line
+  }, [username]);
   return (
     <div className="follower_following_card_container">
       <div className="follower_following_card_midContainer">
-        {userData?.following?.length > 0 ? (
-          userData?.following?.map((e) => (
-            <FollowersFollowingCard key={e} data={e} />
-          ))
+        {allFollowing?.length > 0 ? (
+          allFollowing?.map((e) => <FollowersFollowingCard key={e} data={e} />)
         ) : (
           <div className="msg_following">
             <div>
-              <p>When you follow someone</p> <p>It appears here.</p>
+              <p>When this account follow someone</p> <p>It appears here.</p>
             </div>
           </div>
         )}

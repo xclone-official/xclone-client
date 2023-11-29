@@ -117,7 +117,13 @@ export default function DeactivateAcc() {
             </div>
           </div>
           <div className="verify_password_container_forgot_password">
-            <p>Forgot password?</p>
+            <p
+              onClick={() => {
+                navigate(`/settings/account/forgot-password`);
+              }}
+            >
+              Forgot password?
+            </p>
           </div>
           <div className="forgot_password_submit_btn">
             <button

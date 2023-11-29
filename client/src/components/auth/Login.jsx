@@ -148,7 +148,14 @@ export default function Login() {
                   >
                     Next
                   </button>
-                  <button className="forgot_pass">Forgot password</button>
+                  <button
+                    onClick={() => {
+                      navigate(`/settings/account/forgot-password`);
+                    }}
+                    className="forgot_pass"
+                  >
+                    Forgot password
+                  </button>
                 </div>
               </div>
               <div className="signUp">

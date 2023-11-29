@@ -322,31 +322,6 @@ export default function ProfileLayout({
                     <button>Posts</button>
                   </Link>
                 </div>
-                {/* <div
-                  className={`tab_btn ${
-                    with_replies ? "active_tabs" : ""
-                  } replies_tab`}
-                >
-                  <Link to={`/p/${specificUserProfile?.username}/with_replies`}>
-                    <button>Replies</button>
-                  </Link>
-                </div>
-                <div
-                  className={`tab_btn ${
-                    highlights ? "active_tabs" : ""
-                  } highlights_tab`}
-                >
-                  <Link to={`/p/${specificUserProfile?.username}/highlights`}>
-                    <button>Highlights</button>
-                  </Link>
-                </div>
-                <div
-                  className={`tab_btn ${media ? "active_tabs" : ""} media_tab`}
-                >
-                  <Link to={`/p/${specificUserProfile?.username}/media`}>
-                    <button>Media</button>
-                  </Link>
-                </div> */}
                 <div
                   className={`tab_btn ${likes ? "active_tabs" : ""} likes_tab`}
                 >

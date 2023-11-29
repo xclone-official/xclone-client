@@ -63,7 +63,6 @@ export default function PostField({
           setIsVideo(true);
         } else {
           // Display an error message or take other actions as needed
-          console.error("You can select only one video file.");
         }
       } else {
         // If it's not a video, allow two image files
@@ -72,7 +71,6 @@ export default function PostField({
           setIsVideo(false);
         } else {
           // Display an error message or take other actions as needed
-          // console.error("You can select up to two image files.");
           const msgText = statusHandlers[1];
           msgText();
         }
@@ -106,19 +104,14 @@ export default function PostField({
             msgText();
           }
         })
-        .catch((err) => {
-          console.log("Err", err);
-        });
-    } catch (error) {
-      console.log(error);
-    }
+        .catch((err) => {});
+    } catch (error) {}
     setIsVideo(false);
     setTextContent("");
     setFiles([]);
   };
 
   const saveComment = () => {
-    console.log("socket", socket);
     try {
       const commentData = {
         commentText: textContent,
@@ -145,25 +138,21 @@ export default function PostField({
               })
             );
 
-            socket?.emit("sendRepliesNotification", {
-              senderUsername: userData?.username,
-              receiverUsername: receiverUsername,
-              type: "replytweet",
-              tweet: tweetdata,
-              tweetId: tweetId,
-              commentText: textContent,
-            });
-            console.log("Socket called");
+            tweetId !== userData?.Id &&
+              socket?.emit("sendRepliesNotification", {
+                senderUsername: userData?.username,
+                receiverUsername: receiverUsername,
+                type: "replytweet",
+                tweet: tweetdata,
+                tweetId: tweetId,
+                commentText: textContent,
+              });
           } else {
             alert("Error");
           }
         })
-        .catch((err) => {
-          console.log("err", err);
-        });
-    } catch (error) {
-      console.log("error", error);
-    }
+        .catch((err) => {});
+    } catch (error) {}
     setTextContent("");
   };
   const saveReply = () => {};

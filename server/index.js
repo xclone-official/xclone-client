@@ -297,6 +297,11 @@ app.use("/bookmark", require("./bookmarktweet/bookmarktweet"));
 // Update User profile
 
 app.use("/update", require("./updateUserInfo/updateUserInfo"));
+
+// Send Email
+
+app.use("/send-email", require("./sendEmail/sendEmail"));
+
 // Login with Github
 
 app.use("/login/oauth/access_token", async (req, res) => {
@@ -351,6 +356,10 @@ app.use("/github/getUser/:access_token", async (req, res) => {
 
 // Check password, email
 app.use("/check", require("./check/check"));
+
+// get peopel
+
+app.use("/getPeople", require("./people_actions/people_actions"));
 
 httpServer.listen(PORT, () => {
   console.log(`App is listening at http://localhost:${PORT}`);

@@ -5,6 +5,8 @@ const EMAIL_TYPES = {
   FORGOT_PASSWORD: "forgot_password",
   TWEET_SHARED: "tweet_shared",
   ACCOUNT_OPENED: "account_opened",
+
+  SEND_OTP: "send_otp",
 };
 
 var transporter = nodemailer.createTransport({
@@ -70,6 +72,19 @@ function sendEmail(emailType, toEmail, params) {
             <h1>Tweet Shared Successfully</h1>
             <p>Click the link below to reset your password:</p>
             <a href="${process.env.WEBSITE}/reset-password/${params}">View your tweet</a>
+          </body>
+        </html>
+      `;
+      break;
+    case EMAIL_TYPES.SEND_OTP:
+      subject = "Here is your OTP.";
+      htmlContent = `
+        <html>
+          <head></head>
+          <body>
+            <h1>OTP to reset password!</h1>
+            <p>Below is your OTP:</p>
+            <p>Use this to reset your password: ${params}</p>
           </body>
         </html>
       `;
