@@ -4,8 +4,9 @@ export const SpecificTweets = createContext();
 
 const SpecificTweetProvider = ({ children }) => {
   const [specifictweetPage, setSpecifictweetPage] = useState([]);
+  const allValues = [specifictweetPage, setSpecifictweetPage];
   return (
-    <SpecificTweets.Provider value={[specifictweetPage, setSpecifictweetPage]}>
+    <SpecificTweets.Provider value={allValues}>
       {children}
     </SpecificTweets.Provider>
   );

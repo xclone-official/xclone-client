@@ -3,10 +3,9 @@ export const LikedContext = createContext();
 
 const LikedContextProvider = ({ children }) => {
   const [likedTweet, setLikedTweet] = useState([]);
+  const allValues = [likedTweet, setLikedTweet];
   return (
-    <LikedContext.Provider value={[likedTweet, setLikedTweet]}>
-      {children}
-    </LikedContext.Provider>
+    <LikedContext.Provider value={allValues}>{children}</LikedContext.Provider>
   );
 };
 

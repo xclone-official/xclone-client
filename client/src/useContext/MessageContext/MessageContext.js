@@ -4,8 +4,9 @@ export const MessageContext = createContext();
 
 const MessageContextProvider = ({ children }) => {
   const [allMessages, setAllMessages] = useState([]);
+  const allValues = [allMessages, setAllMessages];
   return (
-    <MessageContext.Provider value={[allMessages, setAllMessages]}>
+    <MessageContext.Provider value={allValues}>
       {children}
     </MessageContext.Provider>
   );

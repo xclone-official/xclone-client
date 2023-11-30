@@ -4,6 +4,7 @@ import CardSkeleton from "../TweetFields/Foryou/CardSkeleton";
 import InfiniteScroll from "react-infinite-scroll-component";
 import TweetCard from "../../TweetCard/TweetCard";
 import axios from "axios";
+import "./bookmarks.css";
 import InfoLoader from "../Loader/InfoLoader";
 import TopComponent from "../TopComponent/TopComponent";
 export default function Bookmarks({ socket }) {
@@ -53,7 +54,7 @@ export default function Bookmarks({ socket }) {
   };
 
   return (
-    <>
+    <div className="bookMark_container">
       <TopComponent title="Bookmarks" />
       {loader ? (
         <CardSkeleton />
@@ -63,7 +64,7 @@ export default function Bookmarks({ socket }) {
           next={fetchMoreData}
           hasMore={showInitialArrayOfData.length < getAllBookMark.length}
           loader={<InfoLoader />}
-          height="640px"
+          height="100vh"
           endMessage={
             <div
               style={{
@@ -98,6 +99,6 @@ export default function Bookmarks({ socket }) {
           No Tweets Found.
         </div>
       )}
-    </>
+    </div>
   );
 }

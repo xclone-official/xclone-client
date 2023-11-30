@@ -54,10 +54,13 @@ const FollowersTweetContextProvider = ({ children }) => {
       getAllTweetsFromFollowers();
     }
   }, [userData, backendURL]);
+  const allValues = [
+    followersTweet,
+    setFollowersTweet,
+    getAllTweetsFromFollowers,
+  ];
   return (
-    <FollowersTweetContext.Provider
-      value={[followersTweet, setFollowersTweet, getAllTweetsFromFollowers]}
-    >
+    <FollowersTweetContext.Provider value={allValues}>
       {children}
     </FollowersTweetContext.Provider>
   );

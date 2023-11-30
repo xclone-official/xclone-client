@@ -249,7 +249,7 @@ export default function Layout({
       {!isUserExist && <ErrorPage />}
       {settings && <YourAccount />}
       {changePassword && <ForgotPassword />}
-      {tweetPrivacy && <>tweetPrivacy</>}
+      {tweetPrivacy && <Accountinfo />}
       {account_info && <Accountinfo />}
       {forgotPass && <ForgotPass />}
       {pageNotFound && <PageNotFound />}

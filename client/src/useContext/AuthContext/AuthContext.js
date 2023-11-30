@@ -177,29 +177,26 @@ const AuthContextProvider = (props) => {
   if (show_deactivation_prompt_to_activate) {
     return <ShowDeactivationPromptToActivate />;
   }
+  const values = [
+    showLogin,
+    setShowLogin,
+    showRegister,
+    setShowRegister,
+    userData,
+    setUserData,
+    loading,
+    setLoading,
+    allTweets,
+    setAllTweets,
+    infoLoader,
+    setInfoLoader,
+    followingTweet,
+    setFollowingTweet,
+    getAllTweets,
+    getAllTweetsFromFollowingUsers,
+  ];
   return (
-    <AuthContext.Provider
-      value={[
-        showLogin,
-        setShowLogin,
-        showRegister,
-        setShowRegister,
-        userData,
-        setUserData,
-        loading,
-        setLoading,
-        allTweets,
-        setAllTweets,
-        infoLoader,
-        setInfoLoader,
-        followingTweet,
-        setFollowingTweet,
-        getAllTweets,
-        getAllTweetsFromFollowingUsers,
-      ]}
-    >
-      {props.children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={values}>{props.children}</AuthContext.Provider>
   );
 };
 

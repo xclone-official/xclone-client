@@ -4,9 +4,9 @@ export const NotificationContext = createContext();
 
 const NotificationContextProvider = ({ children }) => {
   const [allNotification, setAllNotification] = useState([]);
-
+  const allValues = [allNotification, setAllNotification];
   return (
-    <NotificationContext.Provider value={[allNotification, setAllNotification]}>
+    <NotificationContext.Provider value={allValues}>
       {children}
     </NotificationContext.Provider>
   );

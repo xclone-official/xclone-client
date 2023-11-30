@@ -68,11 +68,9 @@
 
 @media (max-width: 450px) {
   .sidebar_links {
-    margin: auto !important;
     display: flex !important;
-    gap: 4%;
-    margin-right: -25px !important;
     justify-content: space-between !important;
+    overflow: hidden;
   }
 
   .sidebar_logout .pfp_logout_img img {
@@ -110,6 +108,19 @@
   .tweetcard_userdetails {
     display: grid !important;
     gap: 3px;
+  }
+}
+
+@media (max-width: 700px) {
+  .sidebar_home svg {
+    width: 28px !important;
+    display: flex;
+    align-items: center;
+    justify-self: center;
+  }
+  .sidebar_home:hover {
+    width: 48px;
+    background-color: var(--theme-hover-color);
   }
 }
 

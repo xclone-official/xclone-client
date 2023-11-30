@@ -96,21 +96,18 @@ const TweetContextProvider = ({ children }) => {
         .catch((err) => {});
     } catch (error) {}
   };
+  const allValues = [
+    myTweets,
+    setMyTweets,
+    specificUserProfile,
+    setSpecificUserProfile,
+    specifictweet,
+    setSpecifictweet,
+    likeTweet,
+    unlikeTweet,
+  ];
   return (
-    <TweetContext.Provider
-      value={[
-        myTweets,
-        setMyTweets,
-        specificUserProfile,
-        setSpecificUserProfile,
-        specifictweet,
-        setSpecifictweet,
-        likeTweet,
-        unlikeTweet,
-      ]}
-    >
-      {children}
-    </TweetContext.Provider>
+    <TweetContext.Provider value={allValues}>{children}</TweetContext.Provider>
   );
 };
 export default TweetContextProvider;

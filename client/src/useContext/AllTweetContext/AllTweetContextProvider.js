@@ -23,8 +23,10 @@ const AllTweetContextProvider = ({ children }) => {
     }
     getAllTweet();
   }, [backendURL]);
+
+  const allValues = [allTweets, setAllTweets, getAllTweet];
   return (
-    <AllTweetContext.Provider value={[allTweets, setAllTweets, getAllTweet]}>
+    <AllTweetContext.Provider value={allValues}>
       {children}
     </AllTweetContext.Provider>
   );
