@@ -35,7 +35,7 @@ export default function LikedTweet({ profileData }) {
           next={fetchMoreData}
           hasMore={initialLikedArray?.length < profileData?.likedTweet?.length}
           loader={<InfoLoader />}
-          height="90vh"
+          height="86.7vh"
           endMessage={
             <div
               style={{

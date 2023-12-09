@@ -86,7 +86,7 @@ export default function ProfilePost({
                 allTweets?.filter((e) => e.authorId === profileId?._id).length
           }
           loader={<InfoLoader />}
-          height="90vh"
+          height="86.7vh"
           endMessage={
             <div
               style={{

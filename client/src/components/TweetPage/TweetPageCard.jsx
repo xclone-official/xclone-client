@@ -13,6 +13,7 @@ import { Likebtn, UnlikeBtn } from "../../all-constant/Button";
 import AllComments from "./AllComments";
 import { BookMark, BookMarked } from "../../all-constant/Bookmark";
 import { addBookMark, removeBookMark } from "./allFunctions";
+import MsgAlert from "../MsgAlertComp/MsgAlert";
 export default function TweetPageCard({ tweetdata, socket }) {
   const navigate = useNavigate();
   const [bookmarkSign, setBookmarkSign] = useState(<BookMark />);
@@ -27,7 +28,8 @@ export default function TweetPageCard({ tweetdata, socket }) {
   const [, , , , , , likeTweet, unlikeTweet] = useContext(TweetContext);
   const [showShare, setShowShare] = useState(false);
   const [specifictweetPage, setSpecifictweetPage] = useContext(SpecificTweets);
-
+  const [showMsg, setShowMsg] = useState(false);
+  const [msgType, setMsgType] = useState("");
   useEffect(() => {
     if (tweetdata) {
       setSpecifictweetPage(tweetdata);
@@ -121,6 +123,15 @@ export default function TweetPageCard({ tweetdata, socket }) {
         setBookmarkSign(<BookMarked />);
       }
     }
+  };
+  const handleCopy = () => {
+    const URL = window.location.href;
+    window.navigator.clipboard.writeText(URL);
+    setMsgType("COPY_URL");
+    setShowMsg(true);
+    // setTimeout(() => {
+    //   setShowMsg(false);
+    // }, 3000);
   };
   return (
     <>
@@ -284,20 +295,20 @@ export default function TweetPageCard({ tweetdata, socket }) {
 
               <div className="tweet_share svg_width">
                 <svg
+                  onClick={() => handleCopy()}
                   viewBox="0 0 24 24"
                   aria-hidden="true"
-                  onClick={() => setShowShare(!showShare)}
                 >
                   <g>
                     <path d="M12 2.59l5.7 5.7-1.41 1.42L13 6.41V16h-2V6.41l-3.3 3.3-1.41-1.42L12 2.59zM21 15l-.02 3.51c0 1.38-1.12 2.49-2.5 2.49H5.5C4.11 21 3 19.88 3 18.5V15h2v3.5c0 .28.22.5.5.5h12.98c.28 0 .5-.22.5-.5L19 15h2z"></path>
                   </g>
                 </svg>
-                {showShare && (
+                {/* {showShare && (
                   <div id="share_tweet">
                     <button>Delete</button>
                     <button>Copy link</button>
                   </div>
-                )}
+                )} */}
               </div>
             </div>
             <PostField
@@ -310,6 +321,7 @@ export default function TweetPageCard({ tweetdata, socket }) {
 
             {/* Comment Section */}
             <AllComments
+              userData={userData}
               specifictweetPage={specifictweetPage}
               backendURL={backendURL}
               Link={Link}
@@ -321,6 +333,7 @@ export default function TweetPageCard({ tweetdata, socket }) {
           <div className="margin_top_100"></div>
         </div>
       )}
+      {showMsg && <MsgAlert msgType={msgType} />}
     </>
   );
 }

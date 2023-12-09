@@ -24,4 +24,12 @@ Router.use("/gender", require("./updateGender/updateGender"));
 Router.use("/dob", require("./updateDOB/updateDOB"));
 Router.use("/flag", require("./updateFlag/updateFlag"));
 Router.use("/allNotification", require("./allNotification/allNotification"));
+
+Router.use(
+  "/profilepicture",
+  require("./updateProfilePicture/updateProfilePicture")
+);
+Router.use("/coverpic", require("./coverPic/coverPic"));
+Router.use("/urlanddesc", require("./updateURLandDesc/updateURLandDesc"));
+
 module.exports = Router;

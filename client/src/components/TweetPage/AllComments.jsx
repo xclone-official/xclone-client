@@ -7,6 +7,7 @@ export default function AllComments({
   customTimeFormat,
   tweetdata,
   RemoveUnnecessaryTag,
+  userData,
 }) {
   return (
     <div className="comment_section">
@@ -90,9 +91,11 @@ export default function AllComments({
                     </div>
                   </div>
                 </div>
-                <div className="comment_delete_btn">
-                  <button>Delete</button>
-                </div>
+                {comment._id === userData._id && (
+                  <div className="comment_delete_btn">
+                    <button>Delete</button>
+                  </div>
+                )}
               </div>
               <div className="comment_details">
                 <div className="comment_user_details">
@@ -192,7 +195,7 @@ export default function AllComments({
                     className="cmt_name_details"
                   >
                     <div className="cmt_name">
-                      <p>Niraj Chaurasiya</p>
+                      <p>{comment?.commentName}</p>
                     </div>
                     <div className="cmt_username">
                       <p>@{comment?.commentUsername}</p>
@@ -272,9 +275,11 @@ export default function AllComments({
                           </div> */}
                 </div>
               </div>
-              <div className="comment_delete_btn">
-                <button>Delete</button>
-              </div>
+              {comment._id === userData._id && (
+                <div className="comment_delete_btn">
+                  <button>Delete</button>
+                </div>
+              )}
             </div>
           )}
         </div>

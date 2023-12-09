@@ -372,3 +372,14 @@
   padding: 5px;
   margin-top: -5px;
 }
+.protected_tweets {
+  padding: 20px 30px;
+}
+.protected_tweets p {
+  font-size: 17px;
+  margin-bottom: 5px;
+}
+
+.protected_tweets h2 {
+  font-size: 20px;
+}

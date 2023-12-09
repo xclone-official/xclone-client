@@ -18,6 +18,9 @@ const MSG_TYPES = {
 
   PASSWORD_UPDATE_SUCCESS: "PASSWORD_UPDATE_SUCCESS",
   PASSWORD_UPDATE_ERROR: "PASSWORD_UPDATE_ERROR",
+  COPY_URL: "COPY_URL",
+  UPDATION_SUCCEED: "UPDATION_SUCCEED",
+  USER_NOT_FOUND: "USER_NOT_FOUND",
 };
 
 export function MsgType(msgType) {
@@ -26,7 +29,8 @@ export function MsgType(msgType) {
       return "Please try again";
     case MSG_TYPES.PASSWORD_UPDATE_SUCCESS:
       return "Password updated.";
-
+    case MSG_TYPES.COPY_URL:
+      return "URL copied!";
     case MSG_TYPES.REGISTERED_SUCCESS:
       return "Check your email for activation.";
     case MSG_TYPES.SERVER_ERROR:
@@ -35,7 +39,8 @@ export function MsgType(msgType) {
       return "Username is taken";
     case MSG_TYPES.EMAIL_EXIST:
       return "Email is taken";
-
+    case MSG_TYPES.UPDATION_SUCCEED:
+      return "Updated Successfully!";
     case MSG_TYPES.LOGIN_SUCCESS:
       return "Login success";
     case MSG_TYPES.INVALID_CREDENTIALS:
@@ -55,6 +60,9 @@ export function MsgType(msgType) {
       return "Can't upload now.";
     case MSG_TYPES.UPLOAD_SUCCESS:
       return "Upload success";
+    case MSG_TYPES.USER_NOT_FOUND:
+      return "User not found!";
+
     default:
       break;
   }

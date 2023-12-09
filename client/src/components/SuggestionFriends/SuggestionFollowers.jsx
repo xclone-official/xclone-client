@@ -44,8 +44,8 @@ export default function SuggestionFollowers() {
     <div className="friend_suggestion_container">
       <div className="friend_suggestion_mid_container">
         <p className="whotofollow">Your Followers</p>
-        {userData?.followers?.length > 0 ? (
-          userData?.followers?.map((e) => (
+        {allPeople?.length > 0 ? (
+          allPeople?.map((e) => (
             <div
               key={e?._id}
               className="friend_suggestion_card"
@@ -69,7 +69,7 @@ export default function SuggestionFollowers() {
             <div>Can't find user at the moment.</div>
           </div>
         )}
-        {userData?.followers?.length > 0 && (
+        {allPeople?.length > 0 && (
           <div className="show_more_friend">
             <p>Show more</p>
           </div>

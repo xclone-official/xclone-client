@@ -1,16 +1,50 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./editprofile.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
+import TopComponent from "../TopComponent/TopComponent";
+import axios from "axios";
+import MsgAlert from "../MsgAlertComp/MsgAlert";
 export default function Editprofile() {
-  const [, , , , userData, , , , , , , , , , ,] = useContext(AuthContext);
+  const [, , , , userData, setUserData, , , , , , , , , ,] =
+    useContext(AuthContext);
   const navigate = useNavigate();
   const { username } = useParams();
+  const backendURL = process.env.REACT_APP_BACKEND_URL;
+  const [profilePic, setProfilePic] = useState(userData?.profilepicture);
+  const [coverPic, setCoverPic] = useState(userData?.coverpic || "/cover.png");
+  const [websiteURL, setWebsiteURL] = useState(userData?.website);
+  const [desc, setDesc] = useState(userData?.bio);
+  const [msgType, setMsgType] = useState("");
+  const [showMsg, setShowMsg] = useState(false);
   useEffect(() => {
     document.title = `${userData.fullname} / Edit Profile - Xclone`;
   }, [userData.fullname]);
   const goBackToPreviousPage = () => {
     navigate(-1);
+  };
+  const statusHandlers = {
+    1: () => {
+      setMsgType("UPDATION_SUCCEED");
+      setShowMsg(true);
+      setTimeout(() => {
+        setShowMsg(false);
+      }, 2000);
+    },
+    2: () => {
+      setMsgType("USER_NOT_FOUND");
+      setShowMsg(true);
+      setTimeout(() => {
+        setShowMsg(false);
+      }, 2000);
+    },
+    3: () => {
+      setMsgType("SERVER_ERROR");
+      setShowMsg(true);
+      setTimeout(() => {
+        setShowMsg(false);
+      }, 2000);
+    },
   };
   useEffect(() => {
     if (username) {
@@ -19,96 +53,208 @@ export default function Editprofile() {
       }
     }
   }, [userData.username, username, navigate]);
+  const handleProfileUpdate = (e) => {
+    e.preventDefault();
+    try {
+      const fd = new FormData();
+      fd.append("profilepicture", profilePic);
+      axios
+        .put(`${backendURL}/update/profilepicture/${userData?._id}`, fd)
+        .then((data) => {
+          const res = data.data;
+          if (res.status === 1) {
+            setUserData(res.user);
+          }
+          const handler = statusHandlers[res.status];
+          handler();
+        })
+        .catch((err) => {
+          const handler = statusHandlers[3];
+          handler();
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleCoverUpdate = (e) => {
+    e.preventDefault();
+    try {
+      const fd = new FormData();
+      fd.append("cover", coverPic);
+      console.log(coverPic);
+      axios
+        .put(`${backendURL}/update/coverpic/${userData?._id}`, fd)
+        .then((data) => {
+          const res = data.data;
+          if (res.status === 1) {
+            setUserData(res.user);
+          }
+          const handler = statusHandlers[res.status];
+          handler();
+        })
+        .catch((err) => {
+          const handler = statusHandlers[3];
+          handler();
+        });
+    } catch (error) {
+      const handler = statusHandlers[3];
+      handler();
+    }
+  };
+  const handleURLbioUpdate = (e) => {
+    e.preventDefault();
+    try {
+      axios
+        .put(`${backendURL}/update/urlanddesc/${userData?._id}`, {
+          url: websiteURL,
+          desc: desc,
+        })
+        .then((data) => {
+          const res = data.data;
+          if (res.status === 1) {
+            setUserData(res.user);
+          }
+          const handler = statusHandlers[res.status];
+          handler();
+        })
+        .catch((err) => {
+          const handler = statusHandlers[3];
+          handler();
+        });
+    } catch (error) {
+      const handler = statusHandlers[3];
+      handler();
+    }
+  };
   return (
     <div className="edit_profile_container">
       <div className="edit_profile_mid_container">
         <div
           onClick={() => {
-            navigate(`/p/${userData.username}`);
+            goBackToPreviousPage();
           }}
           className="width_30_per"
         ></div>
         <div className="profile_edit_container">
           <div className="profile_top_edit_profile">
-            <div
-              className="profile_top"
-              style={{ display: "flex", alignItems: "center" }}
+            <TopComponent title="Edit Profile" />
+          </div>
+          <br />
+          <div style={{ width: "90%", margin: "auto" }}>
+            <form
+              className="form-input"
+              encType="multipart/form-data"
+              onSubmit={handleProfileUpdate}
             >
-              <svg
-                onClick={goBackToPreviousPage}
-                fill="var(--theme-color)"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <g>
-                  <path d="M7.414 13l5.043 5.04-1.414 1.42L3.586 12l7.457-7.46 1.414 1.42L7.414 11H21v2H7.414z"></path>
-                </g>
-              </svg>
-              <div className="top_tweetname">
-                <p>Edit Profile</p>
-              </div>
-            </div>
-          </div>
-          <div className="profile_edit_fields">
-            <div className="cover_edit">
-              <img src="/cover.png" alt="" />
-              <label htmlFor="new_cover_edit">
-                <div className="choose_svg">
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <g>
-                      <path d="M9.697 3H11v2h-.697l-3 2H5c-.276 0-.5.224-.5.5v11c0 .276.224.5.5.5h14c.276 0 .5-.224.5-.5V10h2v8.5c0 1.381-1.119 2.5-2.5 2.5H5c-1.381 0-2.5-1.119-2.5-2.5v-11C2.5 6.119 3.619 5 5 5h1.697l3-2zM12 10.5c-1.105 0-2 .895-2 2s.895 2 2 2 2-.895 2-2-.895-2-2-2zm-4 2c0-2.209 1.791-4 4-4s4 1.791 4 4-1.791 4-4 4-4-1.791-4-4zM17 2c0 1.657-1.343 3-3 3v1c1.657 0 3 1.343 3 3h1c0-1.657 1.343-3 3-3V5c-1.657 0-3-1.343-3-3h-1z"></path>
-                    </g>
-                  </svg>
-                </div>
-              </label>
               <input
-                hidden
                 type="file"
-                name="new_cover_edit"
-                id="new_cover_edit"
                 accept="image/*"
+                placeholder="profile picture"
+                id="profile_picture_input"
+                onChange={(e) => setProfilePic(e.target.files[0])}
               />
-              <div className="choose_svg_cross">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <g>
-                    <path d="M10.59 12L4.54 5.96l1.42-1.42L12 10.59l6.04-6.05 1.42 1.42L13.41 12l6.05 6.04-1.42 1.42L12 13.41l-6.04 6.05-1.42-1.42L10.59 12z"></path>
-                  </g>
-                </svg>
+              <label htmlFor="profile_picture_input">Update Profile</label>
+              <img
+                className="profile_picture_img"
+                src={
+                  profilePic === userData?.profilepicture
+                    ? backendURL + "/" + profilePic
+                    : URL.createObjectURL(profilePic)
+                }
+                alt="user_image"
+              />
+
+              <br />
+              <br />
+              <div className="save_btn">
+                <button type="submit">Update Profile</button>
               </div>
-            </div>
-            <div className="profile_edit">
-              <img src="/pfp.png" alt="" />
-              <div className="choose_svg">
-                <label style={{ cursor: "pointer" }} htmlFor="new_profile_edit">
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <g>
-                      <path d="M9.697 3H11v2h-.697l-3 2H5c-.276 0-.5.224-.5.5v11c0 .276.224.5.5.5h14c.276 0 .5-.224.5-.5V10h2v8.5c0 1.381-1.119 2.5-2.5 2.5H5c-1.381 0-2.5-1.119-2.5-2.5v-11C2.5 6.119 3.619 5 5 5h1.697l3-2zM12 10.5c-1.105 0-2 .895-2 2s.895 2 2 2 2-.895 2-2-.895-2-2-2zm-4 2c0-2.209 1.791-4 4-4s4 1.791 4 4-1.791 4-4 4-4-1.791-4-4zM17 2c0 1.657-1.343 3-3 3v1c1.657 0 3 1.343 3 3h1c0-1.657 1.343-3 3-3V5c-1.657 0-3-1.343-3-3h-1z"></path>
-                    </g>
-                  </svg>
-                </label>
+            </form>
+            <br />
+            <form
+              className="form-input"
+              onSubmit={handleCoverUpdate}
+              encType="multipart/form-data"
+            >
+              {userData?.coverpic ? (
                 <input
-                  hidden
                   type="file"
-                  name="new_profile_edit"
-                  id="new_profile_edit"
                   accept="image/*"
+                  placeholder="Cover picture"
+                  id="cover_picture_input"
+                  onChange={(e) => setCoverPic(e.target.files[0])}
                 />
+              ) : (
+                <input
+                  type="file"
+                  accept="image/*"
+                  placeholder="Confirm your password"
+                  id="cover_picture_input"
+                  onChange={(e) => setCoverPic(e.target.files[0])}
+                />
+              )}
+              <label htmlFor="cover_picture_input">Update Cover</label>
+
+              <img
+                className="cover_picture_img"
+                src={
+                  coverPic === userData?.coverpic
+                    ? backendURL + "/" + coverPic
+                    : coverPic === "/cover.png"
+                    ? coverPic
+                    : URL.createObjectURL(coverPic)
+                }
+                alt="user_image"
+              />
+              <br />
+              <br />
+              <div className="save_btn">
+                <button type="submit">Update Cover</button>
               </div>
-            </div>
-            <div className="save_btn">
-              <button>Save</button>
-            </div>
+            </form>
+            <br />
+            <form onSubmit={handleURLbioUpdate}>
+              <div className="form-input">
+                <input
+                  type="url"
+                  placeholder="Update URL"
+                  id="update_URL"
+                  value={websiteURL}
+                  onChange={(e) => setWebsiteURL(e.target.value)}
+                />
+                <label htmlFor="update_URL">Update URL</label>
+              </div>
+              <br />
+              <div className="form-input">
+                <input
+                  type="text"
+                  placeholder="Update Description"
+                  id="update_desc"
+                  value={desc}
+                  onChange={(e) => setDesc(e.target.value)}
+                />
+                <label htmlFor="update_desc">Update Bio</label>
+              </div>
+
+              <br />
+              <div className="save_btn">
+                <button type="submit">Update URL & Bio</button>
+              </div>
+            </form>
           </div>
-          {/* Users can edit: 1) Cover picture 2) Profile picture 3) Given Name 4)
-          Bio 5) Date of birth 6) Country 7) Website */}
+          <br />
+          <br />
+          <br />
+          <br />
         </div>
         <div
           className="width_30_per"
           onClick={() => {
-            navigate(`/p/${userData.username}`);
+            goBackToPreviousPage();
           }}
         ></div>
       </div>
+      {showMsg && <MsgAlert msgType={msgType} />}
     </div>
   );
 }

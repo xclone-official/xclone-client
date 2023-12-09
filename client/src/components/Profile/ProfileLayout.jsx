@@ -18,6 +18,7 @@ export default function ProfileLayout({
   socket,
   isUserExist,
   is_deactivated,
+  profileData,
 }) {
   const [, , , , userData, setUserData, , , , , , , , , ,] =
     useContext(AuthContext);
@@ -26,6 +27,7 @@ export default function ProfileLayout({
   const backendURL = process.env.REACT_APP_BACKEND_URL;
   const [showMedia, setShowMedia] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [private_tweets, setPrivate_tweets] = useState(false);
   // eslint-disable-next-line
   const [allTweets, setAllTweets] = useContext(AllTweetContext);
   const [followBtn, setFollowBtn] = useState("Loading...");
@@ -94,7 +96,14 @@ export default function ProfileLayout({
         : setFollowBtn("Follow");
     };
     getFollowedSign();
-  }, [userDataa, specificUserProfile?._id, userData?.following]);
+    setPrivate_tweets(profileData?.protected_posts);
+  }, [
+    userDataa,
+    specificUserProfile?._id,
+    userData?.following,
+    profileData,
+    profileData?.protected_posts,
+  ]);
 
   const toggleFunction = () => {
     const isFollowing = userData?.following?.some(
@@ -134,7 +143,10 @@ export default function ProfileLayout({
             {showMedia && (
               <>
                 <div className="view_profile">
-                  <img src="/cover.png" alt="" />
+                  <img
+                    src={backendURL + `/${specificUserProfile?.coverpic}`}
+                    alt=""
+                  />
                   <p onClick={showImage}>X</p>
                 </div>
               </>
@@ -186,7 +198,14 @@ export default function ProfileLayout({
             >
               <div className="profile_media">
                 <div onClick={showImage} className="user_cover">
-                  <img src="/cover.png" alt="cover" />
+                  {specificUserProfile?.coverpic ? (
+                    <img
+                      src={backendURL + `/${specificUserProfile?.coverpic}`}
+                      alt="cover"
+                    />
+                  ) : (
+                    <img src="/cover.png" alt="cover" />
+                  )}
                 </div>
                 <div className="user_profile_edit_btn">
                   <div className="user_profile">
@@ -331,7 +350,14 @@ export default function ProfileLayout({
                 </div>
               </div>
               {/* Children */}
-              {children}
+              {private_tweets && userData._id !== profileData._id ? (
+                <div className="protected_tweets">
+                  <p>Sorry, you can't view this account's posts,</p>
+                  <h2>Because these are private!</h2>
+                </div>
+              ) : (
+                children
+              )}
             </div>
           </div>
         )

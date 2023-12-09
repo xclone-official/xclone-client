@@ -130,7 +130,9 @@ export default function Layout({
                 setLoader(false);
               }
             });
-        } catch (error) {}
+        } catch (error) {
+          return setIs_deactivated(true);
+        }
       };
       getSpecificUser();
     }
@@ -212,12 +214,8 @@ export default function Layout({
           socket={socket}
         />
       )}
-      {(profile ||
-        edit_profile ||
-        with_replies ||
-        highlights ||
-        media ||
-        likes) && (
+      {edit_profile && <Editprofile socket={socket} />}
+      {(profile || with_replies || highlights || media || likes) && (
         <ProfileLayout
           is_deactivated={is_deactivated}
           socket={socket}
@@ -236,7 +234,6 @@ export default function Layout({
               socket={socket}
             />
           )}
-          {edit_profile && <Editprofile socket={socket} />}
           {with_replies && <p>With Replies</p>}
           {highlights && <p>With highlights</p>}
           {media && <p>media</p>}
