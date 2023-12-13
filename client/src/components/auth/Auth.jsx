@@ -112,7 +112,7 @@ export default function Auth() {
           <p>Brand Resources</p>
           <p>Advertising</p>
           <p>Marketing</p>
-          <p>X for Business </p>
+          <p>Xclone for Business </p>
           <p>Developers</p>
           <p>Directory</p>
           <p>Settings</p>

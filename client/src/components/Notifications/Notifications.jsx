@@ -30,7 +30,7 @@ export default function Lists() {
         ? +allNotification.filter((notification) => !notification.isSeen)
             ?.length + "🔴"
         : ""
-    } X / Notifications`;
+    } Xclone / Notifications`;
 
     // Create a copy of the notifications array with updated 'isSeen' property
     const updatedNotifications = allNotification.map((notification) => ({
@@ -41,7 +41,7 @@ export default function Lists() {
     // Update the state with the new array
     const timeOutId = setTimeout(async () => {
       setAllNotification(updatedNotifications);
-      document.title = "X / Notifications";
+      document.title = "Xclone / Notifications";
     }, 3000);
     return () => {
       clearTimeout(timeOutId);

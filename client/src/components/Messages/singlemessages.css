@@ -103,12 +103,7 @@
   position: sticky;
   bottom: 0px;
 }
-@media (max-width: 450px) {
-  .message_input_form {
-    position: sticky;
-    bottom: 52px;
-  }
-}
+
 #message_input {
   visibility: visible;
   background: rgba(0, 0, 0, 0.15);

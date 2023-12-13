@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 export default function Lists() {
   const navigate = useNavigate();
   React.useEffect(() => {
-    document.title = "X / Communities";
+    document.title = "Xclone / Communities";
   }, []);
   const goBackToPreviousPage = () => {
     navigate(-1);

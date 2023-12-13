@@ -49,6 +49,7 @@ export default function SingleMessagesBox({ socket }) {
               setProfileData(response.data);
               setFlaggedStatus(response.data.flag);
               setIsUserExists(true);
+              document.title = `@${response.data.username} / Messages`;
             } else {
               setIsUserExists(false);
             }
@@ -91,7 +92,6 @@ export default function SingleMessagesBox({ socket }) {
     setMessage("");
     setFile(""); // Clear the file input if needed
   }
-
   return (
     <div style={{ width: "100%" }}>
       <div className="profile_top">

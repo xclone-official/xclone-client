@@ -5,7 +5,7 @@ import MessageComponent from "./MessageComponent";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 export default function Messages() {
   React.useEffect(() => {
-    document.title = "X / Messages";
+    document.title = "Xclone / Messages";
   }, []);
   const [, , , , userData, , , , , , , , , , , ,] = useContext(AuthContext);
   return (

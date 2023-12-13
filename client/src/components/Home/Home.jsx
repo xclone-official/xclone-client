@@ -75,7 +75,7 @@ export default function Home({
       <div className="three_grid">
         <div className="sidebar">
           <div className="column">
-            <Sidebar socket={socket} />
+            <Sidebar showMessage={showMessage} socket={socket} />
           </div>
         </div>
         {messages ? (

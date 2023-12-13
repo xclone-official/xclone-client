@@ -6,7 +6,7 @@ import TrendingComponent from "../TrendingComponent/TrendingComponent";
 export default function Explore() {
   const [searchQuery, setSearchQuery] = useState();
   useEffect(() => {
-    document.title = "X / Explore";
+    document.title = "Xclone / Explore";
   }, []);
   return (
     <div className="explore_container">
