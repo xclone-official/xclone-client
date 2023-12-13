@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 import InfoLoader from "../Loader/InfoLoader";
-import TweetCard from "../../TweetCard/TweetCard";
+import TweetCard from "../../TweetCard/TweetCard.1";
 export default function LikedTweet({ profileData }) {
   const [initialData] = useState(15);
   const [initialLikedArray, setInitialLikedArray] = useState();

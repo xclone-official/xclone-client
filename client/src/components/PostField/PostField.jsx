@@ -159,7 +159,6 @@ export default function PostField({
   return (
     <>
       <div className="postfield_container">
-        {/* <Editor apiKey="47yj93bwgcv3ul774qtixc55apjjqqlzfcwbickua7xwhdpp" onChange={()} /> */}
         <div className="img_textarea">
           <div className="post_profile">
             <Link to={`/p/${userData?.username}`}>

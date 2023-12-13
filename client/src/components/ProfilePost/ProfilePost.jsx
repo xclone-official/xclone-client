@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import TweetCard from "../../TweetCard/TweetCard";
+import TweetCard from "../../TweetCard/TweetCard.1";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import InfoLoader from "../Loader/InfoLoader";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -26,7 +26,7 @@ export default function ProfilePost({
         }, 200);
       })
       .catch((error) => {
-        console.warn("Error fetching tweets:", error);
+        console.warn("Error fetching tweets:");
       });
     // eslint-disable-next-line
   }, []);

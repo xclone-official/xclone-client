@@ -56,7 +56,6 @@ export default function Layout({
   hashtag,
   showTweet,
   following,
-  composetweet,
   followers,
   with_replies,
   highlights,
@@ -154,7 +153,6 @@ export default function Layout({
   ]);
   return (
     <Home
-      composetweet={composetweet}
       messages={messages}
       showMessage={showMessage}
       settings={settings}

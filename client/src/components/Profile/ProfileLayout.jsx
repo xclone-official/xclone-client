@@ -25,8 +25,6 @@ export default function ProfileLayout({
   const [, , specificUserProfile, setSpecificUserProfile] =
     useContext(TweetContext);
   const backendURL = process.env.REACT_APP_BACKEND_URL;
-  const [showMedia, setShowMedia] = useState(false);
-  const [showProfile, setShowProfile] = useState(false);
   const [private_tweets, setPrivate_tweets] = useState(false);
   // eslint-disable-next-line
   const [allTweets, setAllTweets] = useContext(AllTweetContext);
@@ -34,12 +32,6 @@ export default function ProfileLayout({
   const navigate = useNavigate();
   const goBackToPreviousPage = () => {
     navigate(-1);
-  };
-  const showImage = () => {
-    setShowMedia(!showMedia);
-  };
-  const setShowProfilePic = () => {
-    setShowProfile(!showProfile);
   };
   const UnfollowTheUser = () => {
     try {
@@ -139,29 +131,6 @@ export default function ProfileLayout({
       ) : (
         isUserExist && (
           <div className={"profile_container"}>
-            {/* View Profile in fulll */}
-            {showMedia && (
-              <>
-                <div className="view_profile">
-                  <img
-                    src={backendURL + `/${specificUserProfile?.coverpic}`}
-                    alt=""
-                  />
-                  <p onClick={showImage}>X</p>
-                </div>
-              </>
-            )}
-            {showProfile && (
-              <>
-                <div className="view_cover">
-                  <img
-                    src={backendURL + "/" + specificUserProfile?.profilepicture}
-                    alt=""
-                  />
-                  <p onClick={setShowProfilePic}>X</p>
-                </div>
-              </>
-            )}
             {/* Profile Top */}
             <div className="profile_top">
               <svg
@@ -190,14 +159,9 @@ export default function ProfileLayout({
               </div>
             </div>
             {/* Profile content */}
-            <div
-              className={` ${
-                ((showMedia || showProfile) && "lock_ground") +
-                " profile_content"
-              } `}
-            >
+            <div className={` ${" profile_content"} `}>
               <div className="profile_media">
-                <div onClick={showImage} className="user_cover">
+                <div className="user_cover">
                   {specificUserProfile?.coverpic ? (
                     <img
                       src={backendURL + `/${specificUserProfile?.coverpic}`}
@@ -210,7 +174,6 @@ export default function ProfileLayout({
                 <div className="user_profile_edit_btn">
                   <div className="user_profile">
                     <img
-                      onClick={setShowProfilePic}
                       src={
                         backendURL + "/" + specificUserProfile?.profilepicture
                       }

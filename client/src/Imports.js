@@ -13,7 +13,7 @@ import { MessageContext } from "./useContext/MessageContext/MessageContext";
 import Cookies from "js-cookie";
 const routes = [
   { path: "/home", element: <Layout tweetFields={true} /> },
-  { path: "/home/compose/tweet", element: <Layout composetweet={true} /> },
+  { path: "/home/compose/tweet", element: <Layout /> },
   { path: "/p/:username", element: <Layout profile={true} /> },
   { path: "/p/:username/following", element: <Layout following={true} /> },
   {

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import CardSkeleton from "../TweetFields/Foryou/CardSkeleton";
 import InfiniteScroll from "react-infinite-scroll-component";
-import TweetCard from "../../TweetCard/TweetCard";
+import TweetCard from "../../TweetCard/TweetCard.1";
 import axios from "axios";
 import "./bookmarks.css";
 import InfoLoader from "../Loader/InfoLoader";
