@@ -78,23 +78,7 @@ const UserModel = mongoose.Schema(
     },
     following: [
       {
-        name: {
-          type: String,
-          required: true,
-        },
-        bio: {
-          type: String,
-          required: true,
-        },
-        profile: {
-          type: String,
-          default: "",
-        },
-        username: {
-          type: String,
-          required: true,
-        },
-        id: {
+        user_id: {
           type: String,
           required: true,
         },
@@ -102,23 +86,7 @@ const UserModel = mongoose.Schema(
     ],
     followers: [
       {
-        name: {
-          type: String,
-          required: true,
-        },
-        bio: {
-          type: String,
-          required: true,
-        },
-        profile: {
-          type: String,
-          default: "",
-        },
-        username: {
-          type: String,
-          required: true,
-        },
-        id: {
+        user_id: {
           type: String,
           required: true,
         },
@@ -126,19 +94,7 @@ const UserModel = mongoose.Schema(
     ],
     likedTweet: [
       {
-        authorName: {
-          type: String,
-          required: true,
-        },
         authorId: {
-          type: String,
-          required: true,
-        },
-        authorUsername: {
-          type: String,
-          required: true,
-        },
-        authorProfile: {
           type: String,
           required: true,
         },
@@ -146,7 +102,6 @@ const UserModel = mongoose.Schema(
           type: String,
           required: true,
         },
-        tweet: {},
       },
     ],
     allNotifications: [
@@ -188,25 +143,13 @@ const UserModel = mongoose.Schema(
     ],
     userHasChatted: [
       {
-        name: {
-          type: String,
-          required: true,
-        },
-        _id: {
-          type: String,
-          required: true,
-        },
-        username: {
+        user_id: {
           type: String,
           required: true,
         },
         createdAt: {
           type: Date,
           default: Date.now,
-        },
-        profile: {
-          type: String,
-          required: true,
         },
       },
     ],

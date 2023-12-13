@@ -36,13 +36,13 @@ Router.put("/:userId", async (req, res) => {
     // Remove the userToUnfollow from the following list of userUnfollowing
     // Me
     userUnfollowing.following = userUnfollowing.following.filter(
-      (user) => user.id !== userId
+      (user) => user.user_id !== userId
     );
     await userUnfollowing.save();
 
     // Other
     userToUnfollow.followers = userToUnfollow.followers.filter(
-      (user) => user.id !== id
+      (user) => user.user_id !== id
     );
     await userToUnfollow.save();
 

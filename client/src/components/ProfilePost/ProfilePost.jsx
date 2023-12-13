@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import TweetCard from "../../TweetCard/TweetCard.1";
+import TweetCard from "../../TweetCard/TweetCard";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import InfoLoader from "../Loader/InfoLoader";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -107,9 +107,16 @@ export default function ProfilePost({
             </div>
           )}
           <div>
-            {showInitialArrayOfData.map((tweet, index) => (
-              <TweetCard socket={socket} tweets={tweet} key={index} />
-            ))}
+            {showInitialArrayOfData.map((tweet, index) => {
+              return (
+                <TweetCard
+                  socket={socket}
+                  tweet_id={tweet._id}
+                  author_id={tweet?.authorId}
+                  key={index}
+                />
+              );
+            })}
           </div>
         </InfiniteScroll>
       ) : (

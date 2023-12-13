@@ -56,20 +56,12 @@ Router.put("/:tweetId/:userId", async (req, res) => {
 
     // User required fields
     const likeJSON = {
-      name: isUserExist.fullname,
-      bio: isUserExist.bio,
-      profile: isUserExist.profilepicture,
-      username: isUserExist.username,
       id: isUserExist._id,
     };
     // Like Tweet
 
     const tweetDetails = {
-      authorName: isUserExist.fullname,
       authorId: isUserExist._id,
-      authorUsername: isUserExist.username,
-      authorProfile: isUserExist.profilepicture,
-      tweet: isTweetExist,
       tweetId: tweetId,
     };
 

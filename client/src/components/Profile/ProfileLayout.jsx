@@ -83,7 +83,9 @@ export default function ProfileLayout({
 
   useEffect(() => {
     const getFollowedSign = () => {
-      userData?.following?.some((user) => user.id === specificUserProfile?._id)
+      userData?.following?.some(
+        (user) => user.user_id === specificUserProfile?._id
+      )
         ? setFollowBtn("Unfollow")
         : setFollowBtn("Follow");
     };
@@ -99,7 +101,7 @@ export default function ProfileLayout({
 
   const toggleFunction = () => {
     const isFollowing = userData?.following?.some(
-      (user) => user.id === specificUserProfile?._id
+      (user) => user.user_id === specificUserProfile?._id
     );
     if (!isFollowing) {
       followTheUser("follow");

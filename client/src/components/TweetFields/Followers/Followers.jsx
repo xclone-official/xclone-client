@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import TweetCard from "../../../TweetCard/TweetCard.1";
+import TweetCard from "../../../TweetCard/TweetCard";
 import InfoLoader from "../../Loader/InfoLoader";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FollowersTweetContext } from "../../../useContext/FollowersTweetContext/FollowersTweetContext";

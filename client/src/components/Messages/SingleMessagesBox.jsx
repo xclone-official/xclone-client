@@ -20,7 +20,7 @@ export default function SingleMessagesBox({ socket }) {
   const [flaggedStatus, setFlaggedStatus] = useState(false);
   const { userId } = useParams();
   const [file, setFile] = useState("");
-  const [isUserExists, setIsUserExists] = useState(false);
+  const [isUserExists, setIsUserExists] = useState(true);
   const [profileData, setProfileData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const backendURL = process.env.REACT_APP_BACKEND_URL;
@@ -125,7 +125,9 @@ export default function SingleMessagesBox({ socket }) {
               {/* Messages */}
 
               <div className="users_conversation" ref={chatContainerRef}>
-                {isUserExists && flaggedStatus === false ? (
+                {isUserExists &&
+                flaggedStatus === false &&
+                isLoading === false ? (
                   <div className="user_credentials_messages">
                     <div className="message_user_profile">
                       <img

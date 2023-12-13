@@ -21,11 +21,7 @@ Router.put("/:userId", async (req, res) => {
       });
     }
     const otherUserNecessaryData = {
-      name: otherUserData.fullname,
-      bio: otherUserData.bio,
-      profile: otherUserData.profilepicture,
-      username: otherUserData.username,
-      id: otherUserData._id,
+      user_id: otherUserData._id,
     };
     // console.log(otherUserData);
     const myProfile = await UserModel.findById(id);
@@ -38,35 +34,18 @@ Router.put("/:userId", async (req, res) => {
     }
 
     const myProfileNecessaryData = {
-      name: myProfile.fullname,
-      bio: myProfile.bio,
-      profile: myProfile.profilepicture,
-      username: myProfile.username,
-      id: myProfile._id,
+      user_id: myProfile._id,
     };
     // To follow
     const alreadyFollowingUsers = otherUserData.followers.filter(
       (e) => e.id === id
     );
     if (alreadyFollowingUsers.length === 0) {
-      // User is not already following
-      // Add the user to the following list
-
       otherUserData.followers.push(myProfileNecessaryData);
       await otherUserData.save();
 
       myProfile.following.push(otherUserNecessaryData);
       await myProfile.save();
-
-      // Emit a follow event to notify the user being followed
-      // const io = require("socket.io")(/* your server instance here */); // Import socket.io and provide your server instance
-      // const socket = io.sockets.sockets.get(users.get(userId)); // Get the socket of the user being followed
-      // // Get the socket of the user being followed
-      // if (socket) {
-      //   console.log("socket_inner", socket);
-      //   socket.emit("new_follow", "You have a new follower.");
-      // }
-      // console.log("socket_outer", socket);
       res.status(200).send({
         status: 1,
         msg: "Account followed successfully.",

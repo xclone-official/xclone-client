@@ -1,5 +1,6 @@
 const TweetModel = require("../../Models/TweetModel/TweetModel");
 const mongoose = require("mongoose");
+const UserModel = require("../../Models/UserModel/UserModel");
 const Router = require("express").Router();
 
 Router.get("/", (req, res) => {
@@ -16,27 +17,34 @@ Router.get("/:tweetId", async (req, res) => {
       const isValidObjectId = mongoose.Types.ObjectId.isValid(tweetId);
       if (isValidObjectId) {
         const getTweetById = await TweetModel.findById(tweetId);
-        const allLikes = getTweetById.likes;
+        const allLikesid = getTweetById.likes;
+        const allLikesPromises = allLikesid.map(async (e) => {
+          const id = e.id;
+          const user = await UserModel.findById(id);
+          return user;
+        });
+
+        const allLikes = await Promise.all(allLikesPromises);
         if (getTweetById) {
-          res.status(200).send({
+          return res.status(200).send({
             status: 1,
             msg: "Tweet found successfully.",
             like: allLikes,
           });
         } else {
-          res.status(200).send({
+          return res.status(200).send({
             status: 2,
             msg: "We couldn't find the specific tweet. Maybe the id is incorrect or the tweet is deleted.",
           });
         }
       } else {
-        res.status(400).send({
+        return res.status(400).send({
           status: 3,
           msg: "Invalid tweet ID format.",
         });
       }
     } else {
-      res.status(400).send({
+      return res.status(400).send({
         status: 3,
         msg: "Tweet ID can't be empty.",
       });

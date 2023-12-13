@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./foryou.css";
-import TweetCard from "../../../TweetCard/TweetCard.1";
+import TweetCard from "../../../TweetCard/TweetCard";
 import { AuthContext } from "../../../useContext/AuthContext/AuthContext";
 import InfoLoader from "../../Loader/InfoLoader";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -107,9 +107,11 @@ export default function Foryou({
             </div>
           )}
           <div>
-            {showInitialArrayOfData.map((tweet, index) => (
-              <TweetCard socket={socket} tweets={tweet} key={index} />
-            ))}
+            {showInitialArrayOfData.map((tweet, index) => {
+              return (
+                <TweetCard socket={socket} tweet_id={tweet._id} key={index} />
+              );
+            })}
           </div>
         </InfiniteScroll>
       ) : (

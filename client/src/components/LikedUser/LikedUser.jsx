@@ -20,7 +20,6 @@ export default function LikedUser() {
             if (data.data.status === 1) {
               const allLikes = data.data.like;
               setLikedUser(allLikes);
-              console.log(allLikes);
               setIsLoading(false);
             }
           })
@@ -53,9 +52,9 @@ export default function LikedUser() {
             <div key={e?._id} className="friend_suggestion_card">
               <Link to={`/p/${e?.username}`}>
                 <div className="friend_suggestion_image">
-                  <img src={backendURL + `/${e?.profile}`} alt="" />
+                  <img src={backendURL + `/${e?.profilepicture}`} alt="" />
                   <div className="friend_suggestion_credentials">
-                    <p>{e?.name}</p>
+                    <p>{e?.fullname}</p>
                     <p className="friend_suggestion_username">@{e?.username}</p>
                   </div>
                 </div>

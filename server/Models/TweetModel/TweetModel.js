@@ -25,22 +25,6 @@ const TweetModel = mongoose.Schema(
     bookmark: [],
     likes: [
       {
-        name: {
-          type: String,
-          required: true,
-        },
-        bio: {
-          type: String,
-          required: true,
-        },
-        profile: {
-          type: String,
-          default: "",
-        },
-        username: {
-          type: String,
-          required: true,
-        },
         id: {
           type: String,
           required: true,

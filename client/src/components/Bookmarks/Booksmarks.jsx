@@ -2,8 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import CardSkeleton from "../TweetFields/Foryou/CardSkeleton";
 import InfiniteScroll from "react-infinite-scroll-component";
-import TweetCard from "../../TweetCard/TweetCard.1";
-import axios from "axios";
+import TweetCard from "../../TweetCard/TweetCard";
 import "./bookmarks.css";
 import InfoLoader from "../Loader/InfoLoader";
 import TopComponent from "../TopComponent/TopComponent";
@@ -13,28 +12,20 @@ export default function Bookmarks({ socket }) {
   const [loader, setLoader] = useState(true);
   const [getAllBookMark, setGetAllBookMark] = useState([]);
   const [showInitialArrayOfData, setShowInitialArrayOfData] = useState([]);
-  const backendURL = process.env.REACT_APP_BACKEND_URL;
   useEffect(() => {
-    async function getAllBookMarkByID() {
+    async function getAllBookMark() {
       try {
-        const allBookmark = await axios.get(
-          `${backendURL}/getPeople/getAllBookmarkById/${userData._id}`
-        );
-        const res = allBookmark.data;
-        console.log(res.allBookmark.slice(0, initialPageCount));
-        if (res.status === 1) {
-          setGetAllBookMark(res.allBookmark);
-          setShowInitialArrayOfData(res.allBookmark.slice(0, initialPageCount));
-          setTimeout(() => {
-            setLoader(false); // Disable the loader after updating data
-          }, 200);
-        }
+        setGetAllBookMark(userData.bookmark);
+        setShowInitialArrayOfData(userData.bookmark.slice(0, initialPageCount));
+        setTimeout(() => {
+          setLoader(false); // Disable the loader after updating data
+        }, 200);
       } catch (error) {
         console.log(error);
       }
     }
-    getAllBookMarkByID();
-  }, [backendURL, userData?._id]);
+    getAllBookMark();
+  }, [userData?._id]);
 
   const fetchMoreData = () => {
     setLoader(true);
@@ -80,9 +71,15 @@ export default function Bookmarks({ socket }) {
           }
         >
           <div className="">
-            {showInitialArrayOfData.map((tweet, index) => (
-              <TweetCard socket={socket} tweets={tweet} key={index} />
-            ))}
+            {showInitialArrayOfData.map((tweet, index) => {
+              return (
+                <TweetCard
+                  socket={socket}
+                  tweet_id={tweet.tweetId}
+                  key={index}
+                />
+              );
+            })}
           </div>
         </InfiniteScroll>
       ) : (

@@ -42,34 +42,33 @@ export const UnlikeBtn = () => {
     </svg>
   );
 };
-export default function TweetCard({ tweets, socket }) {
+export default function TweetCard({ tweet_id, author_id, socket }) {
   const [, , , , userData, , , , , , , , , ,] = useContext(AuthContext);
   const [, , , , , , likeTweet, unlikeTweet] = useContext(TweetContext);
   const [likeBtn, setLikeBtn] = useState(<UnlikeBtn />);
   const [tweet_data, setTweet_data] = useState({});
   const navigate = useNavigate();
   const backendURL = process.env.REACT_APP_BACKEND_URL;
-
+  const getFollowedSign = (tweetLikesId, userdata_id) => {
+    const IsAlreadyLiked = tweetLikesId === userdata_id;
+    if (IsAlreadyLiked) {
+      setLikeBtn(<Likebtn />);
+    } else {
+      setLikeBtn(<UnlikeBtn />);
+    }
+  };
   useEffect(() => {
-    const getFollowedSign = () => {
-      const IsAlreadyLiked = tweets?.likes?.some((e) => e.id === userData?._id);
-      if (IsAlreadyLiked) {
-        setLikeBtn(<Likebtn />);
-      } else {
-        setLikeBtn(<UnlikeBtn />);
-      }
-    };
-
-    getFollowedSign();
-  }, [tweets?.likes, userData?._id]);
-  useEffect(() => {
-    function getTweetWithID(tweetId) {
+    function getTweetWithID(tweet_id) {
       try {
         axios
-          .get(`${backendURL}/tweetaction/gettweetwithid/${tweetId}`)
+          .get(`${backendURL}/tweetaction/gettweetwithid/${tweet_id}`)
           .then((data) => {
             if (data.data.status === 1) {
               setTweet_data(data.data.tweet);
+              const tweet_like_id = data.data.tweet.likes.find(
+                (e) => e.id === userData?._id
+              ).id;
+              tweet_like_id && getFollowedSign(tweet_like_id, userData?._id);
             }
           })
           .catch((err) => {
@@ -79,26 +78,26 @@ export default function TweetCard({ tweets, socket }) {
         console.log(error);
       }
     }
-    getTweetWithID(tweets?._id);
-  }, [tweets?._id]);
+    getTweetWithID(tweet_id);
+  }, [tweet_id]);
 
   const toggleFunction = () => {
-    const checkIsAlreadyLiked = tweets?.likes?.some(
+    const checkIsAlreadyLiked = tweet_data?.likes?.some(
       (e) => e.id === userData?._id
     );
     if (!checkIsAlreadyLiked) {
-      likeTweet(tweets?._id, userData?._id);
+      likeTweet(tweet_id, userData?._id);
       setLikeBtn(<Likebtn />);
-      tweets.authorId !== userData?._id &&
+      tweet_id.authorId !== userData?._id &&
         socket?.emit("sendLikeNotification", {
           senderUsername: userData?.username,
-          receiverUsername: tweets?.authorUsername,
+          receiverUsername: tweet_id?.authorUsername,
           type: "liketweet",
-          tweet: tweets,
-          tweetId: tweets?._id,
+          tweet: tweet_id,
+          tweetId: tweet_id,
         });
     } else {
-      unlikeTweet(tweets?._id, userData?._id);
+      unlikeTweet(tweet_id, userData?._id);
       setLikeBtn(<UnlikeBtn />);
     }
   };

@@ -24,19 +24,14 @@ Router.post("/:myId/:otherUserId", async (req, res) => {
       if (!otherUser) {
         return res.status(404).json({ message: "Other user not found" });
       }
+      // Add otherUser's information to my profile's userHasChatted
 
-      // Add otherUser's information to userHasChatted
       user.userHasChatted.push({
-        name: otherUser.fullname,
-        _id: otherUser._id,
-        username: otherUser.username,
-        profile: otherUser.profilepicture,
+        user_id: otherUser._id,
       });
+      // Add otherUser's information to other profile's userHasChatted
       otherUser.userHasChatted.push({
-        name: user.fullname,
-        _id: user._id,
-        username: user.username,
-        profile: user.profilepicture,
+        user_id: user._id,
       });
       // Save the user document with the updated userHasChatted
       await user.save();
