@@ -18,9 +18,9 @@ export default function Messages() {
           <p>All Messages</p>
         </div>
       </div>
-      <div className="msg_search_input">
+      {/* <div className="msg_search_input">
         <SearchInput message={true} />
-      </div>
+      </div> */}
       <div className="messages_container">
         <div className="messages_mid_container">
           {userData?.userHasChatted?.length > 0 ? (

@@ -118,13 +118,13 @@ export default function Login() {
         <div className="login_head">
           <ImCross id="cross" onClick={() => setShowLogin(!showLogin)} />
           <div className="x_logo">
-            <img src="/x-logo.png" alt="logo" />
+            <img src="/xlogo-removebg-preview.png" alt="logo" />
           </div>
         </div>
         {step1 || !emailUsername ? (
           <div className="login_content">
             <div className="auth_head">
-              <h1>Sign in to X</h1>
+              <h1>Sign in to Xclone</h1>
             </div>
             <div className="auth_btn">
               {/* <div className="social_media_btn">

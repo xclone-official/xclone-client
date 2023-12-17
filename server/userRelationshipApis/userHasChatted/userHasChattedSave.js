@@ -13,10 +13,10 @@ Router.post("/:myId/:otherUserId", async (req, res) => {
 
     // Check if otherUserId is already in userHasChatted
     const alreadyChatted = otherUser.userHasChatted.some(
-      (chattedUser) => chattedUser._id.toString() === myId
+      (chattedUser) => chattedUser.user_id.toString() === myId
     );
     const alreadyChattedOther = user.userHasChatted.some(
-      (chattedUser) => chattedUser._id.toString() === otherUserId
+      (chattedUser) => chattedUser.user_id.toString() === otherUserId
     );
     if (!alreadyChatted || !alreadyChattedOther) {
       // If otherUserId is not already in userHasChatted, add it

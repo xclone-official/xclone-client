@@ -1,32 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useSearchParams } from "react-router-dom";
+import { NavLink, useSearchParams } from "react-router-dom";
 import "./tweets.css";
 import Foryou from "./Foryou/Foryou";
 import Following from "./Following/Following";
 import Followers from "./Followers/Followers";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
-const menu = [
-  {
-    title: "Profile",
-    svg: (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <g>
-          <path d="M5.651 19h12.698c-.337-1.8-1.023-3.21-1.945-4.19C15.318 13.65 13.838 13 12 13s-3.317.65-4.404 1.81c-.922.98-1.608 2.39-1.945 4.19zm.486-5.56C7.627 11.85 9.648 11 12 11s4.373.85 5.863 2.44c1.477 1.58 2.366 3.8 2.632 6.46l.11 1.1H3.395l.11-1.1c.266-2.66 1.155-4.88 2.632-6.46zM12 4c-1.105 0-2 .9-2 2s.895 2 2 2 2-.9 2-2-.895-2-2-2zM8 6c0-2.21 1.791-4 4-4s4 1.79 4 4-1.791 4-4 4-4-1.79-4-4z"></path>
-        </g>
-      </svg>
-    ),
-  },
-  {
-    title: "Bookmark",
-    svg: (
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <g>
-          <path d="M4 4.5C4 3.12 5.119 2 6.5 2h11C18.881 2 20 3.12 20 4.5v18.44l-8-5.71-8 5.71V4.5zM6.5 4c-.276 0-.5.22-.5.5v14.56l6-4.29 6 4.29V4.5c0-.28-.224-.5-.5-.5h-11z"></path>
-        </g>
-      </svg>
-    ),
-  },
-];
+import Cookies from "js-cookie";
+
 const DeactiveDownArrow = () => {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" fill="white">
@@ -54,6 +34,30 @@ export default function TweetFields({ socket }) {
   const [docsShow, setDocsShow] = useState(false);
   let activeTab = searchParams.get("type");
   const [, , , , userData, , , , , , , , , , ,] = useContext(AuthContext);
+  const menu = [
+    {
+      title: "Profile",
+      link: `/p/${userData?.username}`,
+      svg: (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <g>
+            <path d="M5.651 19h12.698c-.337-1.8-1.023-3.21-1.945-4.19C15.318 13.65 13.838 13 12 13s-3.317.65-4.404 1.81c-.922.98-1.608 2.39-1.945 4.19zm.486-5.56C7.627 11.85 9.648 11 12 11s4.373.85 5.863 2.44c1.477 1.58 2.366 3.8 2.632 6.46l.11 1.1H3.395l.11-1.1c.266-2.66 1.155-4.88 2.632-6.46zM12 4c-1.105 0-2 .9-2 2s.895 2 2 2 2-.9 2-2-.895-2-2-2zM8 6c0-2.21 1.791-4 4-4s4 1.79 4 4-1.791 4-4 4-4-1.79-4-4z"></path>
+          </g>
+        </svg>
+      ),
+    },
+    {
+      title: "Bookmark",
+      link: `/bookmarks`,
+      svg: (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <g>
+            <path d="M4 4.5C4 3.12 5.119 2 6.5 2h11C18.881 2 20 3.12 20 4.5v18.44l-8-5.71-8 5.71V4.5zM6.5 4c-.276 0-.5.22-.5.5v14.56l6-4.29 6 4.29V4.5c0-.28-.224-.5-.5-.5h-11z"></path>
+          </g>
+        </svg>
+      ),
+    },
+  ];
   // Default to "for-you" if activeTab is not set
   if (!activeTab) {
     activeTab = "for-you";
@@ -128,47 +132,51 @@ export default function TweetFields({ socket }) {
           <div className="profile_menu_top_container">
             <div className="mobile_menu_profile_three_line">
               <div className="mobile_menu_profile">
-                <img src="/pfp.png" alt="" />
+                <img src={`${backendURL}/${userData?.profilepicture}`} alt="" />
               </div>
-              <div className="mobile_menu_three_line">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <g>
-                    <path d="M3 12c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2zm9 2c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm7 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"></path>
-                  </g>
+              <div
+                onClick={() => {
+                  setShowMenu(!showMenu);
+                }}
+                style={{ marginTop: "-10px" }}
+                className="mobile_menu_three_line"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 490 490">
+                  <polygon points="456.851,0 245,212.564 33.149,0 0.708,32.337 212.669,245.004 0.708,457.678 33.149,490 245,277.443 456.851,490   489.292,457.678 277.331,245.004 489.292,32.337 " />
                 </svg>
               </div>
             </div>
             <div className="mobile_menu_name_username">
-              <p>Niraj Chaurasiya</p>
-              <span>@loveforrobotics</span>
+              <p>{userData?.fullname}</p>
+              <span>@{userData?.username}</span>
             </div>
             <div className="follower_following">
               <div className="following_link">
                 <p>
-                  2 <span>Following</span>
+                  {userData?.following?.length} <span>Following</span>
                 </p>
               </div>
               <div className="follower_link">
                 <p>
-                  1 <span>Followers</span>
+                  {userData?.followers?.length} <span>Followers</span>
                 </p>
               </div>
             </div>
           </div>
           <div className="mobile_menu_options">
             {menu.map((e, index) => (
-              <div key={index} className="mobile_menu_option">
+              <NavLink to={e.link} key={index} className="mobile_menu_option">
                 <div className="mobile_menu_option_svg">{e.svg}</div>
                 <div className="mobile_menu_option_title">
                   <p>{e.title}</p>
                 </div>
-              </div>
+              </NavLink>
             ))}
           </div>
           <div className="mobile_menu_options_border"></div>
           <div className="mobile_menu_other_settings">
             {/*  */}
-            <div
+            {/* <div
               className="mobile_menu_other_setting"
               onClick={() => {
                 setCreatorAcc(!creatorAcc);
@@ -178,8 +186,8 @@ export default function TweetFields({ socket }) {
               <span>
                 {!creatorAcc ? <DeactiveDownArrow /> : <ActiveDownArrow />}
               </span>
-            </div>
-            {creatorAcc && (
+            </div> */}
+            {/* {creatorAcc && (
               <div className="mobile_menu_other_setting_inner">
                 <span>
                   <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -190,7 +198,7 @@ export default function TweetFields({ socket }) {
                 </span>
                 <p>Analytics</p>
               </div>
-            )}
+            )} */}
             {/*  */}
             <div
               className="mobile_menu_other_setting"
@@ -204,7 +212,10 @@ export default function TweetFields({ socket }) {
               </span>
             </div>
             {settingsShow && (
-              <div className="mobile_menu_other_setting_inner">
+              <NavLink
+                to="/settings"
+                className="mobile_menu_other_setting_inner"
+              >
                 <span>
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <g>
@@ -213,7 +224,7 @@ export default function TweetFields({ socket }) {
                   </svg>
                 </span>
                 <p>Settings</p>
-              </div>
+              </NavLink>
             )}
             {/*  */}
             <div
@@ -228,7 +239,12 @@ export default function TweetFields({ socket }) {
               </span>
             </div>
             {supportsShow && (
-              <div className="mobile_menu_other_setting_inner">
+              <div
+                onClick={() => {
+                  window.open("https://docs.xclone.xyz/", "_blank");
+                }}
+                className="mobile_menu_other_setting_inner"
+              >
                 <span>
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <g>
@@ -253,7 +269,12 @@ export default function TweetFields({ socket }) {
               </span>
             </div>
             {docsShow && (
-              <div className="mobile_menu_other_setting_inner">
+              <div
+                onClick={() => {
+                  window.open("https://docs.xclone.xyz/", "_blank");
+                }}
+                className="mobile_menu_other_setting_inner"
+              >
                 <span>
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <g>
@@ -266,7 +287,13 @@ export default function TweetFields({ socket }) {
             )}
             {/*  */}
             <div className="mobile_menu_options_border"></div>
-            <div className="mobile_menu_other_setting">
+            <div
+              onClick={() => {
+                Cookies.remove("xid");
+                window.location.href = "/";
+              }}
+              className="mobile_menu_other_setting"
+            >
               <p>Logout</p>
               <span>
                 <svg viewBox="0 0 24 24" aria-hidden="true" fill="white">

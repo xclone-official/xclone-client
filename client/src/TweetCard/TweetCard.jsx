@@ -42,7 +42,7 @@ export const UnlikeBtn = () => {
     </svg>
   );
 };
-export default function TweetCard({ tweet_id, author_id, socket }) {
+export default function TweetCard({ tweet_id, socket }) {
   const [, , , , userData, , , , , , , , , ,] = useContext(AuthContext);
   const [, , , , , , likeTweet, unlikeTweet] = useContext(TweetContext);
   const [likeBtn, setLikeBtn] = useState(<UnlikeBtn />);
