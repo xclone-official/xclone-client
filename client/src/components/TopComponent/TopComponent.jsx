@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function TopComponent({ title }) {
+export default function TopComponent({ title, notLoggedIn }) {
   const navigate = useNavigate();
   const goBackToPreviousPage = () => {
     navigate(-1);
@@ -9,7 +9,9 @@ export default function TopComponent({ title }) {
   return (
     <div className="profile_top">
       <svg
-        onClick={goBackToPreviousPage}
+        onClick={() =>
+          notLoggedIn ? (window.location.href = "/") : goBackToPreviousPage()
+        }
         fill="var(--theme-color)"
         viewBox="0 0 24 24"
         aria-hidden="true"

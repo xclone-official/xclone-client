@@ -15,12 +15,12 @@ export default function FollowersFollowingCard({ data }) {
         to={`/p/${data?.username}`}
         className="follower_following_card_image"
       >
-        <img src={backendURL + `/${data?.profile}`} alt="profile" />
+        <img src={backendURL + `/${data?.profilepicture}`} alt="profile" />
       </NavLink>
       <div className="following_follower_card_details">
         <div className="following_follower_btns_name">
           <div className="following_follower_name">
-            <p>{data?.name}</p>
+            <p>{data?.fullname}</p>
             <p>
               @{data?.username}
               {/* <span>Follows you</span> */}

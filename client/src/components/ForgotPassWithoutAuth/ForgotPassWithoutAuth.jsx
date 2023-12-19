@@ -77,7 +77,7 @@ export default function ForgotPassWithoutAuth() {
     <div className="forgot_password_container">
       <div className="forgot_password_midcontainer">
         <div className="top_element_forgot_password_generator">
-          <TopComponent title="Forgot Password?" />
+          <TopComponent title="Forgot Password?" notLoggedIn />
         </div>
         <div className="forgot_password_content">
           <div className="forgot_password_input_field">

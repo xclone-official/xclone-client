@@ -103,6 +103,7 @@ export default function Register({ name, email }) {
     } catch (error) {
       console.log("Error:", error);
     }
+    // window.location.href = "/";
   };
 
   useEffect(() => {
@@ -328,6 +329,13 @@ export default function Register({ name, email }) {
                         disabled={!formData.profilepic}
                       >
                         Sign up
+                      </button>
+                      <button
+                        onClick={() => {
+                          window.location.href = "/";
+                        }}
+                      >
+                        Goto Home
                       </button>
                     </div>
                   </div>

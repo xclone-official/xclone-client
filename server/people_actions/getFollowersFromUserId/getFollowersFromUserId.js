@@ -16,8 +16,12 @@ Router.get("/:username", async (req, res) => {
         status: 2,
       });
     }
-    let allFollowers = [];
-    await isUserExist.followers.forEach((e) => allFollowers.push(e));
+    let allFollowers = await Promise.all(
+      isUserExist.followers.map(async (e) => {
+        const follower = await UserModel.findById(e?.user_id);
+        return follower;
+      })
+    );
     return res.status(200).send({
       msg: "Followers retrieved success",
       status: 1,
