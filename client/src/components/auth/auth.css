@@ -165,13 +165,13 @@
   gap: 5px;
   flex-wrap: wrap;
   font-size: 12px;
-  justify-content: space-between;
+  justify-content: space-around;
   margin-top: 15vh;
   padding: 4px;
 }
 
 .links p {
-  color: rgb(103, 103, 103);
+  color: rgb(173, 246, 172);
   cursor: pointer;
   text-decoration: none;
 }

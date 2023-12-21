@@ -11,7 +11,11 @@ Router.post("/:tweetId/:userId", async (req, res) => {
       });
     }
     const isUserExist = await UserModel.findById(userId);
+    // const isTweetExist = await TweetModel.findById(tweetId);
+
     const isTweetExist = await TweetModel.findById(tweetId);
+    // const user = await UserModel.findById(getTweetById?.authorId);
+
     if (!isTweetExist || !isUserExist) {
       return res.status(200).send({
         status: "2",
@@ -32,11 +36,18 @@ Router.post("/:tweetId/:userId", async (req, res) => {
       await isTweetExist.bookmark.push({ userId: userId });
       await isUserExist.save();
       await isTweetExist.save();
+
+      const requiredUserData = {
+        authorName: isUserExist.fullname,
+        authorUsername: isUserExist.username,
+        authorProfile: isUserExist.profilepicture,
+        ...isTweetExist.toObject(),
+      };
       return res.status(200).send({
         status: 1,
         msg: "Tweet saved successfully.",
         user: isUserExist,
-        tweet: isTweetExist,
+        tweet: requiredUserData,
       });
     } else {
       isUserExist.bookmark = isUserExist.bookmark.filter(
@@ -47,14 +58,22 @@ Router.post("/:tweetId/:userId", async (req, res) => {
       );
       await isUserExist.save();
       await isTweetExist.save();
+
+      const requiredUserData = {
+        authorName: isUserExist.fullname,
+        authorUsername: isUserExist.username,
+        authorProfile: isUserExist.profilepicture,
+        ...isTweetExist.toObject(),
+      };
       return res.status(200).send({
         status: 1,
         msg: "Tweet removed successfully.",
         user: isUserExist,
-        tweet: isTweetExist,
+        tweet: requiredUserData,
       });
     }
   } catch (error) {
+    console.log(error);
     res.status(500).send({
       status: 3,
       msg: "Internal server error.",

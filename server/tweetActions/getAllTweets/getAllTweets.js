@@ -1,9 +1,41 @@
 const TweetModel = require("../../Models/TweetModel/TweetModel");
 const Router = require("express").Router();
+const UserModel = require("../../Models/UserModel/UserModel");
 
 Router.get("/", async (req, res) => {
   try {
-    const getAllTweet = await TweetModel.find();
+    const getAllTweetWithID = await TweetModel.find();
+
+    let getAllTweet = await Promise.all(
+      getAllTweetWithID.map(async (e) => {
+        const user = await UserModel.findById(e?.authorId);
+
+        // Include user details outside comments
+        const tweetData = {
+          authorName: user.fullname,
+          authorUsername: user.username,
+          authorProfile: user.profilepicture,
+          ...e.toObject(),
+        };
+
+        // Include user details inside comments
+        const commentsWithUserData = e.comments.map((comment) => ({
+          ...comment.toObject(),
+          authorName: user.fullname,
+          authorUsername: user.username,
+          authorProfile: user.profilepicture,
+        }));
+
+        // Combine the tweet data with comments data
+        const requiredUserData = {
+          ...tweetData,
+          comments: commentsWithUserData,
+        };
+
+        return requiredUserData;
+      })
+    );
+    console.log(getAllTweet[0].comments);
     if (getAllTweet) {
       return res.status(200).send({
         status: 1,

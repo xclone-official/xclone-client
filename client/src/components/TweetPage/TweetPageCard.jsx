@@ -26,7 +26,6 @@ export default function TweetPageCard({ tweetdata, socket }) {
     useContext(AuthContext);
 
   const [, , , , , , likeTweet, unlikeTweet] = useContext(TweetContext);
-  const [showShare, setShowShare] = useState(false);
   const [specifictweetPage, setSpecifictweetPage] = useContext(SpecificTweets);
   const [showMsg, setShowMsg] = useState(false);
   const [msgType, setMsgType] = useState("");

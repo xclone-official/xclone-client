@@ -88,10 +88,10 @@ export default function PostField({
       // tweetaction;
       const fd = new FormData();
       fd.append("tweetContent", textContent);
-      fd.append("authorName", userData.fullname);
+      // fd.append("authorName", userData.fullname);
       fd.append("authorId", userData._id);
-      fd.append("authorUsername", userData.username);
-      fd.append("authorProfile", userData.profilepicture);
+      // fd.append("authorUsername", userData.username);
+      // fd.append("authorProfile", userData.profilepicture);
       for (let i = 0; i < files.length; i++) {
         fd.append("tweetmedia", files[i]);
       }

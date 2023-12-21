@@ -45,23 +45,42 @@ Router.post("/:tweetId", async (req, res) => {
 
     // Save the tweet
     const tweetData = {
-      commentUsername: commentUsername,
+      // commentUsername: commentUsername,
       commentText: commentText,
       commentUserId: commentUserId,
-      commentUserProfile: commentUserProfile,
-      commentName: isUserExist.fullname,
+      // commentUserProfile: commentUserProfile,
+      // commentName: isUserExist.fullname,
       commenttime: Date.now(),
     };
 
     // const tweetCommentID = isTweetExist.comments.push(tweetData);
     isTweetExist.comments.push(tweetData);
     await isTweetExist.save();
-    const allTweets = await TweetModel.find();
+    const getAllTweetWithID = await TweetModel.find();
+    const getAllTweet = await Promise.all(
+      getAllTweetWithID.map(async (e) => {
+        const user = await UserModel.findById(e?.authorId);
+        const requiredUserData = {
+          authorName: user.fullname,
+          authorUsername: user.username,
+          authorProfile: user.profilepicture,
+          ...e.toObject(),
+        };
+        return requiredUserData;
+      })
+    );
+    const tweetAfterUpdate = await TweetModel.findById(tweetId);
+    const requiredUserData = {
+      authorName: isUserExist.fullname,
+      authorUsername: isUserExist.username,
+      authorProfile: isUserExist.profilepicture,
+      ...tweetAfterUpdate.toObject(),
+    };
     res.status(200).send({
       status: 1,
       msg: "Comment saved success",
-      isTweetExist: isTweetExist,
-      allTweets: allTweets,
+      isTweetExist: requiredUserData,
+      allTweets: getAllTweet,
     });
   } catch (error) {
     console.log(error);

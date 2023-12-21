@@ -72,11 +72,33 @@ Router.put("/:tweetId/:userId", async (req, res) => {
 
       isUserExist?.likedTweet.push(tweetDetails);
       await isUserExist.save();
+
+      const tweetData = {
+        authorName: isUserExist.fullname,
+        authorUsername: isUserExist.username,
+        authorProfile: isUserExist.profilepicture,
+        ...isTweetExist.toObject(),
+      };
+
+      // Include user details inside comments
+      const commentsWithUserData = isTweetExist.comments.map((comment) => ({
+        ...comment.toObject(),
+        authorName: isUserExist.fullname,
+        authorUsername: isUserExist.username,
+        authorProfile: isUserExist.profilepicture,
+      }));
+
+      // Combine the tweet data with comments data
+      const requiredUserData = {
+        ...tweetData,
+        comments: commentsWithUserData,
+      };
+
       return res.status(200).send({
         status: 1,
         msg: "Tweet Liked Success",
-        data: likeJSON,
-        tweet: isTweetExist,
+        // data: likeJSON,
+        tweet: requiredUserData,
       });
     } else {
       return res.status(200).send({

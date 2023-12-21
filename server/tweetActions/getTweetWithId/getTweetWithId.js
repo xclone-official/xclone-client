@@ -1,5 +1,6 @@
 const TweetModel = require("../../Models/TweetModel/TweetModel");
 const mongoose = require("mongoose");
+const UserModel = require("../../Models/UserModel/UserModel");
 const Router = require("express").Router();
 
 Router.get("/", (req, res) => {
@@ -15,11 +16,33 @@ Router.get("/:tweetId", async (req, res) => {
       const isValidObjectId = mongoose.Types.ObjectId.isValid(tweetId);
       if (isValidObjectId) {
         const getTweetById = await TweetModel.findById(tweetId);
+        const user = await UserModel.findById(getTweetById?.authorId);
+        const tweetData = {
+          authorName: user.fullname,
+          authorUsername: user.username,
+          authorProfile: user.profilepicture,
+          ...getTweetById.toObject(),
+        };
+
+        // Include user details inside comments
+        const commentsWithUserData = getTweetById.comments.map((comment) => ({
+          ...comment.toObject(),
+          authorName: user.fullname,
+          authorUsername: user.username,
+          authorProfile: user.profilepicture,
+        }));
+
+        // Combine the tweet data with comments data
+        const requiredUserData = {
+          ...tweetData,
+          comments: commentsWithUserData,
+        };
+
         if (getTweetById) {
           return res.status(200).send({
             status: 1,
             msg: "Tweet found successfully.",
-            tweet: getTweetById,
+            tweet: requiredUserData,
           });
         } else {
           return res.status(200).send({

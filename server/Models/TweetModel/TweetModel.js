@@ -6,28 +6,28 @@ const TweetModel = mongoose.Schema(
       type: String,
       default: "",
     },
-    authorName: {
-      type: String,
-      required: true,
-    },
+    // authorName: {
+    //   type: String,
+    //   required: true,
+    // },
     authorId: {
-      type: String,
-      required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "userdata",
     },
-    authorUsername: {
-      type: String,
-      required: true,
-    },
-    authorProfile: {
-      type: String,
-      required: true,
-    },
+    // authorUsername: {
+    //   type: String,
+    //   required: true,
+    // },
+    // authorProfile: {
+    //   type: String,
+    //   required: true,
+    // },
     bookmark: [],
     likes: [
       {
         id: {
-          type: String,
-          required: true,
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "userdata",
         },
       },
     ],
@@ -37,30 +37,30 @@ const TweetModel = mongoose.Schema(
           type: String,
           default: uuid.v4,
         },
-        commentUsername: {
-          type: String,
-          required: true,
-        },
+        // commentUsername: {
+        //   type: String,
+        //   required: true,
+        // },
         commentText: {
           type: String,
           required: true,
         },
         commentUserId: {
-          type: String,
-          required: true,
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "userdata",
         },
-        commentName: {
-          type: String,
-          required: true,
-        },
+        // commentName: {
+        //   type: String,
+        //   required: true,
+        // },
         commenttime: {
           type: Date,
           default: Date.now(),
         },
-        commentUserProfile: {
-          type: String,
-          default: "",
-        },
+        // commentUserProfile: {
+        //   type: String,
+        //   default: "",
+        // },
         commentLike: [
           {
             name: {

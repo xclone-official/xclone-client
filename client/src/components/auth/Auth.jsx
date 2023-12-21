@@ -99,23 +99,35 @@ export default function Auth() {
           </div>
         </div>
         <div className="links">
-          <p>About </p>
-          <p>Help Center</p>
-          <p>Terms of service</p>
-          <p>Privacy Policy</p>
-          <p>Cookie Policy</p>
-          <p>Accessibility</p>
-          <p>Ads info</p>
-          <p>Blog</p>
-          <p>Status</p>
-          <p>Careers</p>
-          <p>Brand Resources</p>
-          <p>Advertising</p>
-          <p>Marketing</p>
-          <p>Xclone for Business </p>
-          <p>Developers</p>
-          <p>Directory</p>
-          <p>Settings</p>
+          <p
+            onClick={() => {
+              window.open("https://docs.xclone.xyz", "_active");
+            }}
+          >
+            Documentation
+          </p>
+          <p
+            onClick={() => {
+              window.open("https://x.com/xclone_official", "_active");
+            }}
+          >
+            Help Center
+          </p>
+          {/* <p>Terms of service</p> */}
+          {/* <p>Privacy Policy</p> */}
+          {/* <p>Cookie Policy</p> */}
+          {/* <p>Accessibility</p> */}
+          {/* <p>Ads info</p> */}
+          {/* <p>Blog</p> */}
+          {/* <p>Status</p> */}
+          {/* <p>Careers</p> */}
+          {/* <p>Brand Resources</p> */}
+          {/* <p>Advertising</p> */}
+          {/* <p>Marketing</p> */}
+          {/* <p>Xclone for Business </p> */}
+          {/* <p>Developers</p> */}
+          {/* <p>Directory</p> */}
+          {/* <p>Settings</p> */}
           <p>&copy; 2023 Xclone Corp.</p>
         </div>
       </div>

@@ -12,8 +12,8 @@ Router.get("/", (req, res) => {
 
 Router.post("/", upload.array("tweetmedia", 2), async (req, res) => {
   try {
-    const { authorId, authorUsername, authorName } = req.body;
-    if (!authorId || !authorName || !authorUsername) {
+    const { authorId } = req.body;
+    if (!authorId) {
       res.status(302).send({
         status: 3,
         msg: "Fields can't be empty.",
@@ -24,10 +24,10 @@ Router.post("/", upload.array("tweetmedia", 2), async (req, res) => {
       if (isUserExist) {
         if (parseInt(isAuthorIdMatched) === parseInt(authorId)) {
           const tweetContent = req.body.tweetContent || "";
-          const authorName = req.body.authorName || "";
+          // const authorName = req.body.authorName || "";
           const authorId = req.body.authorId || "";
-          const authorUsername = req.body.authorUsername || "";
-          const authorProfile = req.body.authorProfile || "";
+          // const authorUsername = req.body.authorUsername || "";
+          // const authorProfile = req.body.authorProfile || "";
           const likes = req.body.likes || [];
           const comments = req.body.comments || [];
           const quotedTweet = req.body.quotedTweet || "";
@@ -49,25 +49,17 @@ Router.post("/", upload.array("tweetmedia", 2), async (req, res) => {
 
           const newTweet = new TweetModel({
             tweetContent,
-            authorName,
+            // authorName,
             authorId,
-            authorUsername,
-            authorProfile,
+            // authorUsername,
+            // authorProfile,
             likes,
             comments,
             quotedTweet,
             photos: images,
             video: video,
           });
-          // newTweet.tweetSeen.some(authorId) && newTweet.tweetSeen = authorId;
           await newTweet.save();
-
-          // if (!newTweet.tweetSeen.includes(authorId)) {
-          //   newTweet.tweetSeen.push(authorId); // Add the authorId to the tweetSeen array
-          //   await newTweet.save(); // Save the updated tweet
-          // }
-
-          // const findAllTweet = await TweetModel.find();
           res.status(200).send({
             status: 1,
             msg: "Success",

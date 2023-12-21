@@ -13,7 +13,6 @@ Router.get("/", async (req, res) => {
 Router.put("/:tweetId/:userId", async (req, res) => {
   try {
     const { tweetId, userId } = req.params;
-
     if (!tweetId || !userId) {
       return res.status(200).send({
         status: 2,
@@ -51,23 +50,44 @@ Router.put("/:tweetId/:userId", async (req, res) => {
 
     // Like Tweet
 
-    const isLikeExist = isTweetExist.likes.filter((e) => e.id === userId);
-    if (isLikeExist.length === 1) {
-      const toUnlike = isTweetExist.likes.filter((e) => e.id !== userId);
+    const isLikeExist = isTweetExist.likes.find((e) => e.id.equals(userId));
+    if (isLikeExist) {
+      const toUnlike = isTweetExist.likes.filter(
+        (e) => e.id.toString() !== userId.toString()
+      );
       isTweetExist.likes = toUnlike;
       await isTweetExist.save();
 
       const toRemoveLikedTweet = isUserExist.likedTweet.filter(
         (e) => e.tweetId !== tweetId
       );
-      console.log("userId", userId);
       isUserExist.likedTweet = toRemoveLikedTweet;
       await isUserExist.save();
 
+      const tweetData = {
+        authorName: isUserExist.fullname,
+        authorUsername: isUserExist.username,
+        authorProfile: isUserExist.profilepicture,
+        ...isTweetExist.toObject(),
+      };
+
+      // Include user details inside comments
+      const commentsWithUserData = isTweetExist.comments.map((comment) => ({
+        ...comment.toObject(),
+        authorName: isUserExist.fullname,
+        authorUsername: isUserExist.username,
+        authorProfile: isUserExist.profilepicture,
+      }));
+
+      // Combine the tweet data with comments data
+      const requiredUserData = {
+        ...tweetData,
+        comments: commentsWithUserData,
+      };
       return res.status(200).send({
         status: 1,
         msg: "Tweet Unliked Success",
-        tweet: isTweetExist,
+        tweet: requiredUserData,
       });
     } else {
       return res.status(200).send({

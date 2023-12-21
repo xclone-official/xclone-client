@@ -11,7 +11,7 @@ export default function Editprofile() {
   const navigate = useNavigate();
   const { username } = useParams();
   const backendURL = process.env.REACT_APP_BACKEND_URL;
-  // const [profilePic, setProfilePic] = useState(userData?.profilepicture);
+  const [profilePic, setProfilePic] = useState(userData?.profilepicture);
   const [coverPic, setCoverPic] = useState(userData?.coverpic || "/cover.png");
   const [websiteURL, setWebsiteURL] = useState(userData?.website);
   const [desc, setDesc] = useState(userData?.bio);
@@ -53,29 +53,29 @@ export default function Editprofile() {
       }
     }
   }, [userData.username, username, navigate]);
-  // const handleProfileUpdate = (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const fd = new FormData();
-  //     fd.append("profilepicture", profilePic);
-  //     axios
-  //       .put(`${backendURL}/update/profilepicture/${userData?._id}`, fd)
-  //       .then((data) => {
-  //         const res = data.data;
-  //         if (res.status === 1) {
-  //           setUserData(res.user);
-  //         }
-  //         const handler = statusHandlers[res.status];
-  //         handler();
-  //       })
-  //       .catch((err) => {
-  //         const handler = statusHandlers[3];
-  //         handler();
-  //       });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const handleProfileUpdate = (e) => {
+    e.preventDefault();
+    try {
+      const fd = new FormData();
+      fd.append("profilepicture", profilePic);
+      axios
+        .put(`${backendURL}/update/profilepicture/${userData?._id}`, fd)
+        .then((data) => {
+          const res = data.data;
+          if (res.status === 1) {
+            setUserData(res.user);
+          }
+          const handler = statusHandlers[res.status];
+          handler();
+        })
+        .catch((err) => {
+          const handler = statusHandlers[3];
+          handler();
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const handleCoverUpdate = (e) => {
     e.preventDefault();
     try {
@@ -141,7 +141,7 @@ export default function Editprofile() {
           </div>
           <br />
           <div style={{ width: "90%", margin: "auto" }}>
-            {/* <form
+            <form
               className="form-input"
               encType="multipart/form-data"
               onSubmit={handleProfileUpdate}
@@ -170,7 +170,7 @@ export default function Editprofile() {
                 <button type="submit">Update Profile</button>
               </div>
             </form>
-            <br /> */}
+            <br />
             <form
               className="form-input"
               onSubmit={handleCoverUpdate}
