@@ -5,33 +5,28 @@ const RemoveUnnecessaryTag = ({ htmlContent }) => {
 
   useEffect(() => {
     try {
-      // Create a temporary DOM element to manipulate the HTML
-      const tempDiv = document.createElement("div");
-      tempDiv.innerHTML = htmlContent;
+      const coloredHtmlContent = htmlContent.replace(
+        /(https?:\/\/[^\s]+)/g,
+        (match) =>
+          `<a href="${decodeURIComponent(match).replace(
+            "</p>",
+            ""
+          )}" target="_blank" style="color: orange; cursor: pointer;">${match.replace(
+            /^(https?:\/\/)/,
+            ""
+          )}</a>`
+      );
 
-      // Find the last <p> tag with &nbsp; elements
-      const lastPTag = tempDiv.querySelector("p:last-child");
-      if (lastPTag && lastPTag.innerHTML === "&nbsp;") {
-        // Remove the last <p> tag with &nbsp; elements
-        lastPTag.remove();
-      }
+      // Remove trailing </p> tags
+      const cleanedHtmlContent = coloredHtmlContent.replace(/<\/p>$/, "");
 
-      // Get the modified HTML content without the unnecessary &nbsp; elements
-      const modifiedHtmlContent = tempDiv.innerHTML;
-
-      // Set the modified HTML content in the component's state
-      setModifiedHtml(modifiedHtmlContent);
+      setModifiedHtml(cleanedHtmlContent);
     } catch (error) {
       console.log("RemoveUnnecessary Tag", error);
     }
   }, [htmlContent]);
 
-  return (
-    <span
-      className="tweet_text"
-      dangerouslySetInnerHTML={{ __html: modifiedHtml }}
-    ></span>
-  );
+  return <span dangerouslySetInnerHTML={{ __html: modifiedHtml }} />;
 };
 
 export default RemoveUnnecessaryTag;

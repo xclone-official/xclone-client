@@ -5,12 +5,11 @@ export const AllTweetContext = createContext();
 
 const AllTweetContextProvider = ({ children }) => {
   const backendURL = process.env.REACT_APP_BACKEND_URL;
-  const [allTweetsFROMALLPEOPLE, setAllTweetsFROMALLPEOPLE] = useState([]);
-
+  const [allTweets, setAllTweets] = useState([]);
   async function getAllTweet() {
     const fetchData = await axios.get(`${backendURL}/tweetaction/getalltweets`);
     if (fetchData.data.status === 1) {
-      setAllTweetsFROMALLPEOPLE(fetchData.data.tweet);
+      setAllTweets(fetchData.data.tweet);
     } else alert("Error: Fetching tweets");
   }
   useEffect(() => {
@@ -19,17 +18,13 @@ const AllTweetContextProvider = ({ children }) => {
         `${backendURL}/tweetaction/getalltweets`
       );
       if (fetchData.data.status === 1) {
-        return setAllTweetsFROMALLPEOPLE(fetchData.data.tweet);
-      } else alert("Error: Fetching tweets");
+        return setAllTweets(fetchData.data.tweet);
+      } else return alert("Error: Fetching tweets");
     }
     getAllTweet();
   }, [backendURL]);
 
-  const allValues = [
-    allTweetsFROMALLPEOPLE,
-    setAllTweetsFROMALLPEOPLE,
-    getAllTweet,
-  ];
+  const allValues = [allTweets, setAllTweets, getAllTweet];
   return (
     <AllTweetContext.Provider value={allValues}>
       {children}

@@ -53,11 +53,11 @@ export default function TweetCard({ tweet_id, socket }) {
   const navigate = useNavigate();
   const [isUserExist, setIsUserExist] = useState(true);
   const backendURL = process.env.REACT_APP_BACKEND_URL;
+  const FrontendURL = process.env.REACT_APP_FRONTEND_URL;
   const [showMsg, setShowMsg] = useState(false);
   const [msgType, setMsgType] = useState("");
-  const handleCopy = () => {
-    const URL = window.location.href;
-    window.navigator.clipboard.writeText(URL);
+  const handleCopy = (URL) => {
+    window.navigator.clipboard.writeText(FrontendURL + `/` + URL);
     setMsgType("COPY_URL");
     setShowMsg(true);
     setTimeout(() => {
@@ -244,11 +244,18 @@ export default function TweetCard({ tweet_id, socket }) {
                         <path d="M8.75 21V3h2v18h-2zM18 21V8.5h2V21h-2zM4 21l.004-10h2L6 21H4zm9.248 0v-7h2v7h-2z"></path>
                       </g>
                     </svg>
+                    {tweet_data?.tweetSeen?.length > 0 && (
+                      <p>{tweet_data?.tweetSeen?.length}</p>
+                    )}
                   </div>
 
                   <div className="tweet_share svg_width">
                     <svg
-                      onClick={() => handleCopy()}
+                      onClick={() =>
+                        handleCopy(
+                          `${tweet_data?.authorUsername}/tweet/${tweet_data?._id}`
+                        )
+                      }
                       viewBox="0 0 24 24"
                       aria-hidden="true"
                     >

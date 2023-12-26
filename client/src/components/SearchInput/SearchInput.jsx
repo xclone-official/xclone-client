@@ -3,21 +3,18 @@ import { useNavigate } from "react-router-dom";
 export default function SearchInput({ message }) {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+  const handleClick = () => {
+    !message ? navigate(`/explore`) : navigate("/messages");
+  };
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        navigate(`/hashtag/${searchQuery}`);
-        // setSearchQuery("");
-      }}
-      className="right_searchbar"
-    >
+    <diiv onClick={handleClick} className="right_searchbar">
       <input
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         type="text"
-        placeholder={!message ? "Search X" : "Search Message"}
+        disabled
+        placeholder={!message ? "Search Xclone" : "Search Message"}
       />
-    </form>
+    </diiv>
   );
 }

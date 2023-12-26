@@ -99,7 +99,6 @@ export default function PostField({
         .post(`${backendURL}/tweetaction/createtweet`, fd)
         .then((data) => {
           if (data.data.status === 1) {
-            setAllTweets((prevTweets) => [data.data.data, ...prevTweets]);
             const msgText = statusHandlers[3];
             msgText();
           }

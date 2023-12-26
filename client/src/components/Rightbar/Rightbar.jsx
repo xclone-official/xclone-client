@@ -9,11 +9,13 @@ export default function Rightbar() {
   return (
     <div className="rightbar_container">
       <div className="rightbar_content">
-        <SearchInput />
+        {/* <SearchInput /> */}
         <PremiumBox />
         <TrendingComponent />
         <SuggestionFollowers />
         <SuggestionsFriendFollowing />
+        <PremiumBox feedback />
+        <PremiumBox social />
       </div>
     </div>
   );

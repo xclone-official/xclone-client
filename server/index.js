@@ -302,6 +302,10 @@ app.use("/update", require("./updateUserInfo/updateUserInfo"));
 
 app.use("/send-email", require("./sendEmail/sendEmail"));
 
+// People actions
+
+app.use("/peopleaction", require("./people_actions/people_actions"));
+
 // Login with Github
 
 app.use("/login/oauth/access_token", async (req, res) => {

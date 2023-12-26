@@ -67,7 +67,7 @@ export default function SearchComponent({ searchQuery }) {
           ))
         ) : (
           <div>
-            <h3 style={{ textAlign: "center" }}>Search a user</h3>
+            <h3 style={{ padding: "0 20px" }}>Search a user</h3>
           </div>
         )}
       </div>

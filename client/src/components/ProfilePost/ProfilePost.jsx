@@ -15,15 +15,15 @@ export default function ProfilePost({
   const [, , , , , , , , , , , , , , getAllTweets] = useContext(AuthContext);
   const [initialPageCount, setInitialPageCount] = useState(15);
   // eslint-disable-next-line
-  const [allTweets, setAllTweets] = useContext(AllTweetContext);
+  const [allTweets, setAllTweets, getAllTweet] = useContext(AllTweetContext);
   const [showInitialArrayOfData, setShowInitialArrayOfData] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // Loading state
   useEffect(() => {
-    getAllTweets()
+    getAllTweet()
       .then(() => {
         setTimeout(() => {
           setIsLoading(false); // Set loading to false after data is fetched
-        }, 200);
+        }, 300);
       })
       .catch((error) => {
         console.warn("Error fetching tweets:");

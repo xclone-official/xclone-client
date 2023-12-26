@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import "./tweetpage.css";
 import axios from "axios";
 import PostField from "../PostField/PostField";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { convertDate } from "../CovertDateTime/ConvertDateTime";
 import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import { TweetContext } from "../../useContext/TweetContext/TweetContext";
@@ -15,13 +15,11 @@ import AllComments from "./AllComments";
 import { BookMark, BookMarked } from "../../all-constant/Bookmark";
 import { addBookMark, removeBookMark } from "./allFunctions";
 import MsgAlert from "../MsgAlertComp/MsgAlert";
+import TopComponent from "../TopComponent/TopComponent";
 export default function TweetPageCard({ tweetdata, socket }) {
-  const navigate = useNavigate();
   const [bookmarkSign, setBookmarkSign] = useState(<BookMark />);
   const [likeBtn, setLikeBtn] = useState(<UnlikeBtn />);
-  const goBackToPreviousPage = () => {
-    navigate(-1);
-  };
+
   const backendURL = process.env.REACT_APP_BACKEND_URL;
   const [, , , , userData, setUserData, , , , , , , , , , ,] =
     useContext(AuthContext);
@@ -165,24 +163,7 @@ export default function TweetPageCard({ tweetdata, socket }) {
         </>
       ) : (
         <div className="tweet_container">
-          <div
-            className="profile_top"
-            style={{ display: "flex", alignItems: "center" }}
-          >
-            <svg
-              onClick={goBackToPreviousPage}
-              fill="var(--theme-color)"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <g>
-                <path d="M7.414 13l5.043 5.04-1.414 1.42L3.586 12l7.457-7.46 1.414 1.42L7.414 11H21v2H7.414z"></path>
-              </g>
-            </svg>
-            <div className="top_tweetname">
-              <p>Post</p>
-            </div>
-          </div>
+          <TopComponent title="Post" />
           <div className="overflow_scrolll">
             <div className="tweet_posted_user padding_wrap">
               <div className="tweet_user_profile_name">
@@ -199,7 +180,7 @@ export default function TweetPageCard({ tweetdata, socket }) {
                   <span>@{specifictweetPage.authorUsername}</span>
                 </div>
               </div>
-              <div className="tweet_user_more_btn">
+              {/* <div className="tweet_user_more_btn">
                 <svg viewBox="0 0 24 24" aria-hidden="true">
                   <g>
                     <path
@@ -208,7 +189,7 @@ export default function TweetPageCard({ tweetdata, socket }) {
                     ></path>
                   </g>
                 </svg>
-              </div>
+              </div> */}
             </div>
             <div className="tweet_content_text padding_wrap">
               <p>
@@ -251,8 +232,8 @@ export default function TweetPageCard({ tweetdata, socket }) {
 
             <div className="time_views padding_wrap">
               <p>
-                {convertDate(specifictweetPage?.createdAt)} · <span>0</span>{" "}
-                views
+                {convertDate(specifictweetPage?.createdAt)} ·{" "}
+                <span>{specifictweetPage?.tweetSeen?.length}</span> views
               </p>
             </div>
             {specifictweetPage?.likes?.length > 0 && (
@@ -270,14 +251,14 @@ export default function TweetPageCard({ tweetdata, socket }) {
               </div>
             )}
 
-            <div className="view_engagement">
+            {/* <div className="view_engagement">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <g>
                   <path d="M8.75 21V3h2v18h-2zM18 21V8.5h2V21h-2zM4 21l.004-10h2L6 21H4zm9.248 0v-7h2v7h-2z"></path>
                 </g>
               </svg>
               <p>View engagement</p>
-            </div>
+            </div> */}
             <div className="tweet_interactions_options break">
               <div className="tweet_comments svg_width">
                 <svg viewBox="0 0 24 24" aria-hidden="true">

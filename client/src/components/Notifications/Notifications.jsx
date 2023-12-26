@@ -182,7 +182,9 @@ export default function Lists() {
                       <p className="reply_username_notification_">
                         Replying to{" "}
                         <span>
-                          <Link to={`/p/${notification?.authorUsername}`}>
+                          <Link
+                            to={`/p/${notification?.tweet?.authorUsername}`}
+                          >
                             @{notification?.tweet?.authorUsername}
                           </Link>
                         </span>

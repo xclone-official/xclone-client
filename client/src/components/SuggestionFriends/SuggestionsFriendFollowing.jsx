@@ -18,28 +18,21 @@ export default function SuggestionsFriendFollowing() {
       try {
         await axios
           .get(
-            `${backendURL}/relevantpeople/${
-              username ? username : userData?._id
-            }`
+            `${backendURL}/peopleaction/getFollowingFromUserId/${userData?._id}`
           )
           .then((data) => {
             if (data.data.status === 1) {
-              return setAllPeople(data.data.tweets);
+              return setAllPeople(data.data.following);
             }
-            return;
           })
           .then(() => {
             setLoader(false);
           })
-          .catch((err) => {
-            console.log("first", err);
-          });
-      } catch (error) {
-        alert("Some error occured");
-      }
+          .catch((err) => {});
+      } catch (error) {}
     }
     getRelevantPeople();
-  }, [username, backendURL, userData?._id]);
+  }, [username, backendURL, userData?._id, userData?.following?.length]);
   return (
     <div className="friend_suggestion_container">
       <div className="friend_suggestion_mid_container">
@@ -52,9 +45,9 @@ export default function SuggestionsFriendFollowing() {
               onClick={() => navigate(`/p/${e?.username}`)}
             >
               <div className="friend_suggestion_image">
-                <img src={backendURL + `/${e?.profile}`} alt="" />
+                <img src={backendURL + `/${e?.profilepicture}`} alt="" />
                 <div className="friend_suggestion_credentials">
-                  <p>{e?.name}</p>
+                  <p>{e?.fullname}</p>
                   <p className="friend_suggestion_username">@{e?.username}</p>
                 </div>
               </div>

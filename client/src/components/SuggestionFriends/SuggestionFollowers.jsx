@@ -18,28 +18,21 @@ export default function SuggestionFollowers() {
       try {
         await axios
           .get(
-            `${backendURL}/relevantpeople/${
-              username ? username : userData?._id
-            }`
+            `${backendURL}/peopleaction/getFollowingFromUserId/${userData?._id}`
           )
           .then((data) => {
             if (data.data.status === 1) {
-              return setAllPeople(data.data.tweets);
+              return setAllPeople(data.data.followers);
             }
-            return;
           })
           .then(() => {
             setLoader(false);
           })
-          .catch((err) => {
-            console.log("first", err);
-          });
-      } catch (error) {
-        alert("Some error occured");
-      }
+          .catch((err) => {});
+      } catch (error) {}
     }
     getRelevantPeople();
-  }, [username, backendURL, userData?._id]);
+  }, [username, backendURL, userData?._id, userData?.followers.length]);
   return (
     <div className="friend_suggestion_container">
       <div className="friend_suggestion_mid_container">

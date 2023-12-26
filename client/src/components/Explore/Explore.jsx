@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./explore.css";
 import TopComponent from "../TopComponent/TopComponent";
 import SearchComponent from "../SearchComponent/SearchComponent";
-import TrendingComponent from "../TrendingComponent/TrendingComponent";
 export default function Explore() {
   const [searchQuery, setSearchQuery] = useState();
   useEffect(() => {
