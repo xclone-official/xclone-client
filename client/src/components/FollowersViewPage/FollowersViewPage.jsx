@@ -14,14 +14,14 @@ export default function FollowersViewPage() {
     async function fetchAllFollowers() {
       try {
         const allFollowers = await axios.get(
-          `${backendURL}/getPeople/getFollowersFromUserId/${username}`
+          `${backendURL}/getPeople/getallfollowers/${username}`
         );
         if (allFollowers.data.status === 1) {
           setallFollowers(allFollowers.data.followers);
           setLoading(false);
         }
       } catch (error) {
-        setLoading(true);
+        setLoading(false);
       }
     }
     fetchAllFollowers();

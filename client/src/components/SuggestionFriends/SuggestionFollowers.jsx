@@ -18,7 +18,7 @@ export default function SuggestionFollowers() {
       try {
         await axios
           .get(
-            `${backendURL}/peopleaction/getFollowingFromUserId/${userData?._id}`
+            `${backendURL}/peopleaction/getFollowersFromUserId/${userData?._id}`
           )
           .then((data) => {
             if (data.data.status === 1) {
@@ -38,16 +38,16 @@ export default function SuggestionFollowers() {
       <div className="friend_suggestion_mid_container">
         <p className="whotofollow">Your Followers</p>
         {allPeople?.length > 0 ? (
-          allPeople?.map((e) => (
+          allPeople?.slice(0, 5)?.map((e) => (
             <div
               key={e?._id}
               className="friend_suggestion_card"
               onClick={() => navigate(`/p/${e?.username}`)}
             >
               <div className="friend_suggestion_image">
-                <img src={backendURL + `/${e?.profile}`} alt="" />
+                <img src={backendURL + `/${e?.profilepicture}`} alt="" />
                 <div className="friend_suggestion_credentials">
-                  <p>{e?.name}</p>
+                  <p>{e?.fullname}</p>
                   <p className="friend_suggestion_username">@{e?.username}</p>
                 </div>
               </div>
@@ -63,7 +63,12 @@ export default function SuggestionFollowers() {
           </div>
         )}
         {allPeople?.length > 0 && (
-          <div className="show_more_friend">
+          <div
+            onClick={() => {
+              navigate(`/p/${userData?.username}/followers`);
+            }}
+            className="show_more_friend"
+          >
             <p>Show more</p>
           </div>
         )}

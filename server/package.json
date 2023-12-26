@@ -6,7 +6,7 @@
   "author": "Niraj Kumar Chaurasiya",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon app.js"
   },
   "dependencies": {
     "axios": "^1.6.2",

@@ -12,4 +12,9 @@ Router.use(
 Router.use("/getAllBookmarkById", require("./getAllBookmark/getAllBookmark"));
 
 Router.use("/all", require("./all/all"));
+
+Router.use("/getallfollowers", require("./getFollowers/getFollowers"));
+
+Router.use("/getallfollowings", require("./getFollowing/getfollowings"));
+
 module.exports = Router;

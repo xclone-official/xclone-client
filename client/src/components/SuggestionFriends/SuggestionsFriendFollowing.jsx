@@ -21,6 +21,7 @@ export default function SuggestionsFriendFollowing() {
             `${backendURL}/peopleaction/getFollowingFromUserId/${userData?._id}`
           )
           .then((data) => {
+            console.log(data.data);
             if (data.data.status === 1) {
               return setAllPeople(data.data.following);
             }
@@ -38,7 +39,7 @@ export default function SuggestionsFriendFollowing() {
       <div className="friend_suggestion_mid_container">
         <p className="whotofollow">Following People</p>
         {allPeople?.length > 0 ? (
-          allPeople?.map((e) => (
+          allPeople.slice(0, 5)?.map((e) => (
             <div
               key={e?._id}
               className="friend_suggestion_card"
@@ -63,7 +64,12 @@ export default function SuggestionsFriendFollowing() {
           </div>
         )}
         {allPeople?.length > 0 && (
-          <div className="show_more_friend">
+          <div
+            onClick={() => {
+              navigate(`/p/${userData?.username}/following`);
+            }}
+            className="show_more_friend"
+          >
             <p>Show more</p>
           </div>
         )}

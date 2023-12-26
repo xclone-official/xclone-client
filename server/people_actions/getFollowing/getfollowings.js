@@ -1,32 +1,31 @@
-const UserModel = require("../../Models/UserModel/UserModel");
-
 const Router = require("express").Router();
-Router.get("/:userId", async (req, res) => {
+const UserModel = require("../../Models/UserModel/UserModel");
+Router.get("/:username", async (req, res) => {
   try {
-    const { userId } = req.params;
-    if (!userId) {
+    const { username } = req.params;
+    if (!username) {
       return res.status(200).send({
-        msg: "userId is empty!",
+        msg: "username is empty!",
         status: 2,
       });
     }
-    const isUserExist = await UserModel.findById(userId);
+    const isUserExist = await UserModel.findOne({ username: username });
     if (!isUserExist) {
       return res.status(200).send({
         msg: "User is empty!",
         status: 2,
       });
     }
-    let allFollowers = await Promise.all(
+    let allFollowing = await Promise.all(
       isUserExist.following.map(async (e) => {
-        const following = await UserModel.findById(e?.user_id);
-        return following;
+        const follower = await UserModel.findById(e?.user_id);
+        return follower;
       })
     );
     return res.status(200).send({
-      msg: "Following retrieved success",
+      msg: "Followers retrieved success",
       status: 1,
-      following: allFollowers,
+      following: allFollowing,
     });
   } catch (error) {
     return res.status(500).send({

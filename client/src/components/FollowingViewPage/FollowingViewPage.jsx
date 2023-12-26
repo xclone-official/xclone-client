@@ -10,8 +10,9 @@ export default function FollowingViewPage() {
   useEffect(() => {
     async function fetchAllFollowings() {
       const allFollowing = await axios.get(
-        `${backendURL}/getPeople/getFollowingFromUserId/${username}`
+        `${backendURL}/getPeople/getallfollowings/${username}`
       );
+      console.log(allFollowing.data);
       if (allFollowing.data.status === 1) {
         setAllFollowing(allFollowing.data.following);
       }

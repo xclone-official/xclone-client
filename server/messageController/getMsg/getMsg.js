@@ -1,6 +1,6 @@
 const Router = require("express").Router();
 const MessageModel = require("../../Models/MessageModel/MessageModel");
-const { io } = require("../../index");
+const { io } = require("../../app");
 Router.get("/:senderId/:receiverId", async (req, res) => {
   try {
     const { senderId, receiverId } = req.params;

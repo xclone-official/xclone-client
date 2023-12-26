@@ -361,7 +361,7 @@ app.use("/github/getUser/:access_token", async (req, res) => {
 // Check password, email
 app.use("/check", require("./check/check"));
 
-// get peopel
+// get people
 
 app.use("/getPeople", require("./people_actions/people_actions"));
 
