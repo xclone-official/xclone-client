@@ -6,10 +6,12 @@ import axios from "axios";
 export default function Tweetpage({ socket }) {
   const [loader, setLoader] = useState(true);
   const [filterdata, setFilterdata] = useState([]);
+  const [IsTweetExist, setIsTweetExist] = useState(true);
   const { tweetId } = useParams();
   const backendURL = process.env.REACT_APP_BACKEND_URL;
 
   useEffect(() => {
+    setIsTweetExist(true);
     const getTweet = async () => {
       try {
         const getTweetWithId = await axios.get(
@@ -19,8 +21,13 @@ export default function Tweetpage({ socket }) {
           setFilterdata(getTweetWithId?.data?.tweet);
           setLoader(false);
         } else {
+          setLoader(false);
+          setIsTweetExist(false);
         }
-      } catch (error) {}
+      } catch (error) {
+        setLoader(false);
+        setIsTweetExist(false);
+      }
     };
     getTweet();
   }, [tweetId, backendURL]);
@@ -29,9 +36,20 @@ export default function Tweetpage({ socket }) {
       {loader ? (
         <>
           <br />
+          <br />
           <InfoLoader />
         </>
       ) : (
+        !IsTweetExist && (
+          <div style={{ width: "80%", padding: "30% 0 0 5%" }}>
+            <p>
+              Tweet couldn't be find, maybe the tweet has been removed by the
+              author or the tweetId is incorrect!
+            </p>
+          </div>
+        )
+      )}
+      {IsTweetExist && !loader && (
         <TweetPageCard socket={socket} tweetdata={filterdata} />
       )}
     </div>

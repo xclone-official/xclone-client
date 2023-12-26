@@ -16,7 +16,7 @@ const AuthContextProvider = (props) => {
   const [followingTweet, setFollowingTweet] = useState([]);
   const [show_deactivation_prompt_to_activate, ,] = useState(false);
   const backendURL = process.env.REACT_APP_BACKEND_URL;
-  const [, setAllNotification] = useContext(NotificationContext);
+  const [_, setAllNotification] = useContext(NotificationContext);
 
   const getAllTweets = async () => {
     try {
@@ -102,7 +102,7 @@ const AuthContextProvider = (props) => {
           }, 2000);
         }
       };
-      getAllTweets();
+      userData?._id && getAllTweets();
     }
   }, [allTweets?.length, userData?._id, backendURL]);
   useEffect(() => {

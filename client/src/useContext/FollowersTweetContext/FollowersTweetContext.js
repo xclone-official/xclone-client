@@ -13,6 +13,7 @@ const FollowersTweetContextProvider = ({ children }) => {
         .get(`${backendURL}/tweetaction/getTweetFromFollowers/${userData?._id}`)
         .then((data) => {
           const tweets = data.data.tweets;
+          console.log("getAllTweetsFromFollowers", tweets);
           setFollowersTweet(
             tweets.sort(function (a, b) {
               return new Date(b.createdAt) - new Date(a.createdAt);

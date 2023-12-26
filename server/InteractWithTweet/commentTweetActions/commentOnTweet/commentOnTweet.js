@@ -69,12 +69,31 @@ Router.post("/:tweetId", async (req, res) => {
         return requiredUserData;
       })
     );
-    const tweetAfterUpdate = await TweetModel.findById(tweetId);
+
+    // Include user details inside comments
+    const tweetAuthor = await UserModel.findById(isTweetExist?.authorId);
+    const tweetAuthorData = {
+      authorName: tweetAuthor.fullname,
+      authorUsername: tweetAuthor.username,
+      authorProfile: tweetAuthor.profilepicture,
+      ...isTweetExist.toObject(),
+    };
+
+    const commentsWithUserData = await Promise.all(
+      isTweetExist.comments.map(async (comment) => {
+        const commentUser = await UserModel.findById(comment?.commentUserId);
+        return {
+          ...comment.toObject(),
+          authorName: commentUser.fullname,
+          authorUsername: commentUser.username,
+          authorProfile: commentUser.profilepicture,
+        };
+      })
+    );
+    // Combine the tweet data with comments data
     const requiredUserData = {
-      authorName: isUserExist.fullname,
-      authorUsername: isUserExist.username,
-      authorProfile: isUserExist.profilepicture,
-      ...tweetAfterUpdate.toObject(),
+      ...tweetAuthorData,
+      comments: commentsWithUserData,
     };
     res.status(200).send({
       status: 1,

@@ -35,7 +35,6 @@ Router.get("/", async (req, res) => {
         return requiredUserData;
       })
     );
-    console.log(getAllTweet[0].comments);
     if (getAllTweet) {
       return res.status(200).send({
         status: 1,

@@ -64,20 +64,26 @@ Router.put("/:tweetId/:userId", async (req, res) => {
       isUserExist.likedTweet = toRemoveLikedTweet;
       await isUserExist.save();
 
+      const tweetAuthor = await UserModel.findById(isTweetExist?.authorId);
       const tweetData = {
-        authorName: isUserExist.fullname,
-        authorUsername: isUserExist.username,
-        authorProfile: isUserExist.profilepicture,
+        authorName: tweetAuthor.fullname,
+        authorUsername: tweetAuthor.username,
+        authorProfile: tweetAuthor.profilepicture,
         ...isTweetExist.toObject(),
       };
 
       // Include user details inside comments
-      const commentsWithUserData = isTweetExist.comments.map((comment) => ({
-        ...comment.toObject(),
-        authorName: isUserExist.fullname,
-        authorUsername: isUserExist.username,
-        authorProfile: isUserExist.profilepicture,
-      }));
+      const commentsWithUserData = await Promise.all(
+        isTweetExist.comments.map(async (comment) => {
+          const commentUser = await UserModel.findById(comment?.commentUserId);
+          return {
+            ...comment.toObject(),
+            authorName: commentUser.fullname,
+            authorUsername: commentUser.username,
+            authorProfile: commentUser.profilepicture,
+          };
+        })
+      );
 
       // Combine the tweet data with comments data
       const requiredUserData = {

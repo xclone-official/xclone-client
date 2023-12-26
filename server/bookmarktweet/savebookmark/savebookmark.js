@@ -32,24 +32,44 @@ Router.post("/:tweetId/:userId", async (req, res) => {
 
     const toSaveTweet = { tweetId: tweetId };
     if (!isTweetBookMarkAlreadyExist && !isOnTweeBookmarkUserIdExist) {
+      // to bookmark
       await isUserExist.bookmark.push(toSaveTweet);
       await isTweetExist.bookmark.push({ userId: userId });
       await isUserExist.save();
       await isTweetExist.save();
 
-      const requiredUserData = {
-        authorName: isUserExist.fullname,
-        authorUsername: isUserExist.username,
-        authorProfile: isUserExist.profilepicture,
+      const tweetAuthor = await UserModel.findById(isTweetExist?.authorId);
+      const tweetData = {
+        authorName: tweetAuthor.fullname,
+        authorUsername: tweetAuthor.username,
+        authorProfile: tweetAuthor.profilepicture,
         ...isTweetExist.toObject(),
+      };
+
+      const commentsWithUserData = await Promise.all(
+        isTweetExist.comments.map(async (comment) => {
+          const commentUser = await UserModel.findById(comment?.commentUserId);
+          return {
+            ...comment.toObject(),
+            authorName: commentUser.fullname,
+            authorUsername: commentUser.username,
+            authorProfile: commentUser.profilepicture,
+          };
+        })
+      );
+
+      const requiredTweetData = {
+        ...tweetData,
+        comments: commentsWithUserData,
       };
       return res.status(200).send({
         status: 1,
         msg: "Tweet saved successfully.",
         user: isUserExist,
-        tweet: requiredUserData,
+        tweet: requiredTweetData,
       });
     } else {
+      console.log("to remove bookmark");
       isUserExist.bookmark = isUserExist.bookmark.filter(
         (e) => e.tweetId !== tweetId
       );
@@ -59,17 +79,35 @@ Router.post("/:tweetId/:userId", async (req, res) => {
       await isUserExist.save();
       await isTweetExist.save();
 
-      const requiredUserData = {
-        authorName: isUserExist.fullname,
-        authorUsername: isUserExist.username,
-        authorProfile: isUserExist.profilepicture,
+      const tweetAuthor = await UserModel.findById(isTweetExist?.authorId);
+      const tweetData = {
+        authorName: tweetAuthor.fullname,
+        authorUsername: tweetAuthor.username,
+        authorProfile: tweetAuthor.profilepicture,
         ...isTweetExist.toObject(),
+      };
+
+      const commentsWithUserData = await Promise.all(
+        isTweetExist.comments.map(async (comment) => {
+          const commentUser = await UserModel.findById(comment?.commentUserId);
+          return {
+            ...comment.toObject(),
+            authorName: commentUser.fullname,
+            authorUsername: commentUser.username,
+            authorProfile: commentUser.profilepicture,
+          };
+        })
+      );
+
+      const requiredTweetData = {
+        ...tweetData,
+        comments: commentsWithUserData,
       };
       return res.status(200).send({
         status: 1,
         msg: "Tweet removed successfully.",
         user: isUserExist,
-        tweet: requiredUserData,
+        tweet: requiredTweetData,
       });
     }
   } catch (error) {

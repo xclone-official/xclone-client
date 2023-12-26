@@ -5,6 +5,7 @@ const Router = require("express").Router();
 
 Router.get("/:userId", async (req, res) => {
   const { userId } = req.params;
+  console.log(userId);
   try {
     const user = await UserModel.findById(userId);
 

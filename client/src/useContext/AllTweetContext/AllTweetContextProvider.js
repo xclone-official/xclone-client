@@ -9,8 +9,9 @@ const AllTweetContextProvider = ({ children }) => {
   async function getAllTweet() {
     const fetchData = await axios.get(`${backendURL}/tweetaction/getalltweets`);
     if (fetchData.data.status === 1) {
-      return setAllTweets(fetchData.data.tweet);
-    } else return alert("Error: Fetching tweets");
+      console.log("getAllTweet", fetchData.data.tweet);
+      setAllTweets(fetchData.data.tweet);
+    } else alert("Error: Fetching tweets");
   }
   useEffect(() => {
     async function getAllTweet() {

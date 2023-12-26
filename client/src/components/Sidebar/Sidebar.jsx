@@ -94,10 +94,14 @@ export default function Sidebar({ showMessage }) {
   };
   const backendURL = process.env.REACT_APP_BACKEND_URL;
   useEffect(() => {
+    setWidthOfScreen(window.innerWidth);
+    console.log(window.innerWidth);
     window.addEventListener("resize", () => {
-      setWidthOfScreen(window.screen.width);
+      console.log(window.innerWidth);
+
+      setWidthOfScreen(window.innerWidth);
     });
-  }, [window.screen.width]);
+  }, [window.innerWidth]);
   return showMessage ? (
     showMessage && widthOfScreen >= 450 && (
       <div className="sidebar_content">

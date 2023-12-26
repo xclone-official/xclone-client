@@ -19,6 +19,7 @@ export default function ProfileLayout({
   isUserExist,
   is_deactivated,
   profileData,
+  error,
 }) {
   const [, , , , userData, setUserData, , , , , , , , , ,] =
     useContext(AuthContext);
@@ -125,6 +126,9 @@ export default function ProfileLayout({
   };
   if (is_deactivated) {
     return <DeactivateProfileAcc />;
+  }
+  if (error) {
+    return <DeactivateProfileAcc notfound={true} />;
   }
   return (
     <>

@@ -14,31 +14,39 @@ Router.get("/:tweetId", async (req, res) => {
     const { tweetId } = req.params;
     if (tweetId) {
       const isValidObjectId = mongoose.Types.ObjectId.isValid(tweetId);
+      console.log("isValidObjectId", isValidObjectId);
       if (isValidObjectId) {
         const getTweetById = await TweetModel.findById(tweetId);
-        const user = await UserModel.findById(getTweetById?.authorId);
-        const tweetData = {
-          authorName: user.fullname,
-          authorUsername: user.username,
-          authorProfile: user.profilepicture,
-          ...getTweetById.toObject(),
-        };
-
-        // Include user details inside comments
-        const commentsWithUserData = getTweetById.comments.map((comment) => ({
-          ...comment.toObject(),
-          authorName: user.fullname,
-          authorUsername: user.username,
-          authorProfile: user.profilepicture,
-        }));
-
-        // Combine the tweet data with comments data
-        const requiredUserData = {
-          ...tweetData,
-          comments: commentsWithUserData,
-        };
 
         if (getTweetById) {
+          const user = await UserModel.findById(getTweetById?.authorId);
+          const tweetData = {
+            authorName: user.fullname,
+            authorUsername: user.username,
+            authorProfile: user.profilepicture,
+            ...getTweetById.toObject(),
+          };
+
+          // Include user details inside comments
+          const commentsWithUserData = await Promise.all(
+            getTweetById.comments.map(async (comment) => {
+              const commentUser = await UserModel.findById(
+                comment?.commentUserId
+              );
+              return {
+                ...comment.toObject(),
+                authorName: commentUser.fullname,
+                authorUsername: commentUser.username,
+                authorProfile: commentUser.profilepicture,
+              };
+            })
+          );
+
+          // Combine the tweet data with comments data
+          const requiredUserData = {
+            ...tweetData,
+            comments: commentsWithUserData,
+          };
           return res.status(200).send({
             status: 1,
             msg: "Tweet found successfully.",
@@ -51,7 +59,7 @@ Router.get("/:tweetId", async (req, res) => {
           });
         }
       } else {
-        return res.status(400).send({
+        return res.status(200).send({
           status: 3,
           msg: "Invalid tweet ID format.",
         });

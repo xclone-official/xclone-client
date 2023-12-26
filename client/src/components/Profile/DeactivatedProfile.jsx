@@ -1,7 +1,11 @@
 import React from "react";
 import "./profile.css";
 import ProfileSkeleton from "./ProfileSkeleton";
-export default function DeactivateProfileAcc({ children, isloading }) {
+export default function DeactivateProfileAcc({
+  children,
+  isloading,
+  notfound,
+}) {
   return (
     <>
       {isloading ? (
@@ -44,9 +48,11 @@ export default function DeactivateProfileAcc({ children, isloading }) {
                 <span>@usernotfound</span>
               </div>
             </div>
-            <div className="bio" style={{ padding: "0px 20px" }}>
-              <p>This user has deactivated their profile.</p>
-            </div>
+            {!notfound && (
+              <div className="bio" style={{ padding: "0px 20px" }}>
+                <p>This user has deactivated their profile.</p>
+              </div>
+            )}
             <br />
             <div className="border"></div>
             {children}

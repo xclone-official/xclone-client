@@ -241,7 +241,11 @@ export default function Layout({
 
       {replies && <Replies socket={socket} />}
       {tweetLike && <LikedUser />}
-      {!isUserExist && <ErrorPage />}
+      {!isUserExist && (
+        <ProfileLayout error={true}>
+          <ErrorPage />
+        </ProfileLayout>
+      )}
       {settings && <YourAccount />}
       {changePassword && <ForgotPassword />}
       {tweetPrivacy && <Accountinfo />}
