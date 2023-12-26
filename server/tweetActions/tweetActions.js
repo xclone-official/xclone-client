@@ -27,4 +27,6 @@ Router.use("/getalltweets", require("./getAllTweets/getAllTweets"));
 
 Router.use("/userlikedtweet", require("./userLikedTweet/userLikedTweet"));
 
+Router.use("/tweetSeen", require("./tweetSeen/tweetSeen"));
+
 module.exports = Router;

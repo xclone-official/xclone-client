@@ -20,7 +20,7 @@ const AuthContextProvider = (props) => {
 
   const getAllTweets = async () => {
     try {
-      axios
+      await axios
         .get(`${backendURL}/tweetaction/getalltweet/${userData?._id}`)
         .then((data) => {
           const tweets = data.data.tweets;
@@ -75,7 +75,7 @@ const AuthContextProvider = (props) => {
     }
   };
   useEffect(() => {
-    if (userData?._id) {
+    if (userData && userData?._id) {
       const getAllTweets = async () => {
         try {
           axios
@@ -105,6 +105,7 @@ const AuthContextProvider = (props) => {
       userData?._id && getAllTweets();
     }
   }, [allTweets?.length, userData?._id, backendURL]);
+
   useEffect(() => {
     if (Cookies.get("xid")) {
       const id = Cookies.get("xid");

@@ -65,8 +65,10 @@ Router.put("/:tweetId/:userId", async (req, res) => {
       tweetId: tweetId,
     };
 
-    const isLikeExist = isTweetExist.likes.filter((e) => e.id === userId);
-    if (isLikeExist.length === 0) {
+    const isLikeExist = isTweetExist.likes.some(
+      (like) => like.id.toString() === userId.toString()
+    );
+    if (!isLikeExist) {
       isTweetExist.likes.push(likeJSON);
       await isTweetExist.save();
 

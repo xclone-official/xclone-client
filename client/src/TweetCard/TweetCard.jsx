@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./TweetCard.css";
+import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../useContext/AuthContext/AuthContext";
 import { TweetContext } from "../useContext/TweetContext/TweetContext";
 import { customTimeFormat } from "../components/customTime/customTime";
 import RemoveUnnecessaryTag from "./RemoveUnnecessaryTag";
-import axios from "axios";
+import { AllTweetContext } from "../useContext/AllTweetContext/AllTweetContextProvider";
+import MsgAlert from "../components/MsgAlertComp/MsgAlert";
 export const VerifiedAcccount = () => {
   return (
     <svg
@@ -43,52 +45,60 @@ export const UnlikeBtn = () => {
   );
 };
 export default function TweetCard({ tweet_id, socket }) {
-  const [, , , , userData, , , , , , , , , ,] = useContext(AuthContext);
+  const [, , , , userData, , , , , , , , , , _] = useContext(AuthContext);
   const [, , , , , , likeTweet, unlikeTweet] = useContext(TweetContext);
+  const [allTweetsFROMALLPEOPLE, ,] = useContext(AllTweetContext);
   const [likeBtn, setLikeBtn] = useState(<UnlikeBtn />);
   const [tweet_data, setTweet_data] = useState({});
   const navigate = useNavigate();
   const [isUserExist, setIsUserExist] = useState(true);
   const backendURL = process.env.REACT_APP_BACKEND_URL;
-  const getFollowedSign = (tweetLikesId, userdata_id) => {
-    const IsAlreadyLiked = tweetLikesId === userdata_id;
-    if (IsAlreadyLiked) {
+  const [showMsg, setShowMsg] = useState(false);
+  const [msgType, setMsgType] = useState("");
+  const handleCopy = () => {
+    const URL = window.location.href;
+    window.navigator.clipboard.writeText(URL);
+    setMsgType("COPY_URL");
+    setShowMsg(true);
+    setTimeout(() => {
+      setShowMsg(false);
+    }, 3000);
+  };
+  const getFollowedSign = (likes, userdata_id) => {
+    const isAlreadyLiked = likes.some((like) => like.id === userdata_id);
+
+    if (isAlreadyLiked) {
       setLikeBtn(<Likebtn />);
     } else {
       setLikeBtn(<UnlikeBtn />);
     }
   };
+
   useEffect(() => {
-    function getTweetWithID(tweet_id) {
-      try {
-        axios
-          .get(`${backendURL}/tweetaction/gettweetwithid/${tweet_id}`)
-          .then((data) => {
-            if (data.data.status === 1) {
-              console.log(data.data.tweet);
-              setTweet_data(data.data.tweet);
-              const tweet_like_id = data.data.tweet.likes.find(
-                (e) => e.id === userData?._id
-              ).id;
-              tweet_like_id && getFollowedSign(tweet_like_id, userData?._id);
-            } else setIsUserExist(false);
-          })
-          .catch((err) => {
-            console.log("err", err);
-          });
-      } catch (error) {
-        console.log("error");
-      }
-    }
-    getTweetWithID(tweet_id);
+    const tweet = allTweetsFROMALLPEOPLE?.find(
+      (tweet) => tweet._id === tweet_id
+    );
+    if (tweet) {
+      getFollowedSign(tweet?.likes, userData._id);
+      return setTweet_data(tweet);
+    } else return setIsUserExist(false);
   }, [tweet_id]);
 
-  const toggleFunction = () => {
+  useEffect(() => {
+    async function updateTweetSeen(tweet_id, userID) {
+      await axios.patch(
+        `${backendURL}/tweetaction/tweetSeen/${tweet_id}/${userID}`
+      );
+    }
+    updateTweetSeen(tweet_id, userData?._id);
+  }, [tweet_id, userData?._id]);
+
+  const toggleFunction = async () => {
     const checkIsAlreadyLiked = tweet_data?.likes?.some(
       (e) => e.id === userData?._id
     );
     if (!checkIsAlreadyLiked) {
-      likeTweet(tweet_id, userData?._id);
+      await likeTweet(tweet_id, userData?._id);
       setLikeBtn(<Likebtn />);
       tweet_id.authorId !== userData?._id &&
         socket?.emit("sendLikeNotification", {
@@ -99,7 +109,7 @@ export default function TweetCard({ tweet_id, socket }) {
           tweetId: tweet_id,
         });
     } else {
-      unlikeTweet(tweet_id, userData?._id);
+      await unlikeTweet(tweet_id, userData?._id);
       setLikeBtn(<UnlikeBtn />);
     }
   };
@@ -218,7 +228,7 @@ export default function TweetCard({ tweet_id, socket }) {
                     </svg>
                   </div>
 
-                  <div
+                  {/* <div
                     className="like_tweet svg_width"
                     onClick={toggleFunction}
                   >
@@ -226,12 +236,24 @@ export default function TweetCard({ tweet_id, socket }) {
                     {tweet_data?.likes?.length > 0 && (
                       <p>{tweet_data?.likes?.length}</p>
                     )}
-                  </div>
+                  </div> */}
 
                   <div className="tweet_share svg_width">
                     <svg viewBox="0 0 24 24" aria-hidden="true">
                       <g>
                         <path d="M8.75 21V3h2v18h-2zM18 21V8.5h2V21h-2zM4 21l.004-10h2L6 21H4zm9.248 0v-7h2v7h-2z"></path>
+                      </g>
+                    </svg>
+                  </div>
+
+                  <div className="tweet_share svg_width">
+                    <svg
+                      onClick={() => handleCopy()}
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <g>
+                        <path d="M12 2.59l5.7 5.7-1.41 1.42L13 6.41V16h-2V6.41l-3.3 3.3-1.41-1.42L12 2.59zM21 15l-.02 3.51c0 1.38-1.12 2.49-2.5 2.49H5.5C4.11 21 3 19.88 3 18.5V15h2v3.5c0 .28.22.5.5.5h12.98c.28 0 .5-.22.5-.5L19 15h2z"></path>
                       </g>
                     </svg>
                   </div>
@@ -241,6 +263,7 @@ export default function TweetCard({ tweet_id, socket }) {
           </div>
         </div>
       )}
+      {showMsg && <MsgAlert msgType={msgType} />}
     </>
   );
 }

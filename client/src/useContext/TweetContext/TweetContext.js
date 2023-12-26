@@ -13,25 +13,26 @@ const TweetContextProvider = ({ children }) => {
   const [specifictweet, setSpecifictweet] = useState([]);
 
   const [
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
-    ,
+    showLogin,
+    setShowLogin,
+    showRegister,
+    setShowRegister,
+    userData,
+    setUserData,
+    loading,
     setLoading,
-    ,
-    ,
-    ,
+    allTweets,
+    setAllTweets,
+    infoLoader,
     setInfoLoader,
+    followingTweet,
+    setFollowingTweet,
     ,
-    ,
-    getAllTweets,
     getAllTweetsFromFollowingUsers,
   ] = useContext(AuthContext);
   const [, , getAllTweetsFromFollowers] = useContext(FollowersTweetContext);
-  const [allTweets, , getAllTweet] = useContext(AllTweetContext);
+  const [allTweetsFROMALLPEOPLE, setAllTweetsFROMALLPEOPLE] =
+    useContext(AllTweetContext);
   const [, setSpecifictweetPage] = useContext(SpecificTweets);
   const backendURL = process.env.REACT_APP_BACKEND_URL;
 
@@ -56,7 +57,43 @@ const TweetContextProvider = ({ children }) => {
     } else {
       setLoading(false);
     }
-  }, [allTweets, allTweets.length, setLoading, backendURL, setInfoLoader]);
+  }, [setLoading, backendURL, setInfoLoader]);
+
+  async function getAllTweet() {
+    const fetchData = await axios.get(`${backendURL}/tweetaction/getalltweets`);
+    if (fetchData.data.status === 1) {
+      console.log("fetchData.data.tweet ", fetchData.data.tweet);
+      return setAllTweetsFROMALLPEOPLE(fetchData.data.tweet);
+    } else alert("Error: Fetching tweets");
+  }
+
+  const getAllTweets = async () => {
+    try {
+      await axios
+        .get(`${backendURL}/tweetaction/getalltweet/${userData?._id}`)
+        .then((data) => {
+          const tweets = data.data.tweets;
+          console.log("tweet", tweets);
+          setAllTweets(
+            tweets.sort(function (a, b) {
+              return new Date(b.createdAt) - new Date(a.createdAt);
+            })
+          );
+          setTimeout(() => {
+            setInfoLoader(false);
+          }, 2000);
+        })
+        .catch((err) => {
+          setTimeout(() => {
+            setInfoLoader(false);
+          }, 2000);
+        });
+    } catch (error) {
+      setTimeout(() => {
+        setInfoLoader(false);
+      }, 2000);
+    }
+  };
 
   const likeTweet = (specifictweet_id, userData_id) => {
     try {
@@ -66,10 +103,8 @@ const TweetContextProvider = ({ children }) => {
         .then(async (data) => {
           if (data.data.status === 1) {
             setSpecifictweetPage(data.data.tweet);
-            await getAllTweetsFromFollowers();
-            await getAllTweets();
             await getAllTweet();
-            await getAllTweetsFromFollowingUsers();
+            await getAllTweets();
           }
         })
         .catch((err) => {})
@@ -79,18 +114,14 @@ const TweetContextProvider = ({ children }) => {
 
   const unlikeTweet = (specifictweet_id, userData_id) => {
     try {
-      // Tweetid and userId
-      // api =>
       const api = `${backendURL}/tweetinteractions/unliketweet/${specifictweet_id}/${userData_id}`;
       axios
         .put(api)
-        .then((data) => {
+        .then(async (data) => {
           if (data.data.status === 1) {
             setSpecifictweetPage(data.data.tweet);
-            getAllTweetsFromFollowers();
-            getAllTweets();
-            getAllTweet();
-            getAllTweetsFromFollowingUsers();
+            await getAllTweet();
+            await getAllTweets();
           }
         })
         .catch((err) => {});

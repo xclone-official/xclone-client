@@ -25,11 +25,9 @@ export default function Foryou({
           setIsLoading(false); // Set loading to false after data is fetched
         }, 200);
       })
-      .catch((error) => {
-        console.warn("Error fetching tweets:", error);
-      });
+      .catch((error) => {});
     // eslint-disable-next-line
-  }, []);
+  }, [allTweets?.length]);
 
   useEffect(() => {
     // Update showInitialArrayOfData when allTweets changes

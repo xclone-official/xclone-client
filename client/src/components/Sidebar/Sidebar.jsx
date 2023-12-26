@@ -95,10 +95,7 @@ export default function Sidebar({ showMessage }) {
   const backendURL = process.env.REACT_APP_BACKEND_URL;
   useEffect(() => {
     setWidthOfScreen(window.innerWidth);
-    console.log(window.innerWidth);
     window.addEventListener("resize", () => {
-      console.log(window.innerWidth);
-
       setWidthOfScreen(window.innerWidth);
     });
   }, [window.innerWidth]);
