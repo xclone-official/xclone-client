@@ -51,7 +51,7 @@ export default function Auth() {
             </div>
             <div className="auth_btn">
               <div className="social_media_btn">
-                <GoogleOAuthProvider clientId={REACT_APP_GOOGLE_CLIENT_ID}>
+                {/* <GoogleOAuthProvider clientId={REACT_APP_GOOGLE_CLIENT_ID}>
                   <GoogleLogin
                     onSuccess={(credentialResponse) => {
                       googleAuthSuccess(credentialResponse);
@@ -62,7 +62,7 @@ export default function Auth() {
                     width="282px"
                     text="Signup with Google"
                   />
-                </GoogleOAuthProvider>
+                </GoogleOAuthProvider> */}
                 <button
                   style={{ display: "flex", gap: "10px", alignItems: "center" }}
                   onClick={handleGithubLogin}
