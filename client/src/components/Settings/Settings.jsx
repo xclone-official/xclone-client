@@ -92,7 +92,7 @@ export default function Settings() {
                 stroke="var(--bg-color)"
                 fill="var(--bg-color)"
                 viewBox="0 0 1024 1024"
-                class="logout_icon"
+                className="logout_icon"
                 height="1em"
                 width="1em"
                 xmlns="http://www.w3.org/2000/svg"

@@ -62,7 +62,6 @@ const TweetContextProvider = ({ children }) => {
   async function getAllTweet() {
     const fetchData = await axios.get(`${backendURL}/tweetaction/getalltweets`);
     if (fetchData.data.status === 1) {
-      console.log("fetchData.data.tweet ", fetchData.data.tweet);
       return setAllTweetsFROMALLPEOPLE(fetchData.data.tweet);
     } else alert("Error: Fetching tweets");
   }
@@ -73,7 +72,6 @@ const TweetContextProvider = ({ children }) => {
         .get(`${backendURL}/tweetaction/getalltweet/${userData?._id}`)
         .then((data) => {
           const tweets = data.data.tweets;
-          console.log("tweet", tweets);
           setAllTweets(
             tweets.sort(function (a, b) {
               return new Date(b.createdAt) - new Date(a.createdAt);

@@ -21,9 +21,7 @@ const RemoveUnnecessaryTag = ({ htmlContent }) => {
       const cleanedHtmlContent = coloredHtmlContent.replace(/<\/p>$/, "");
 
       setModifiedHtml(cleanedHtmlContent);
-    } catch (error) {
-      console.log("RemoveUnnecessary Tag", error);
-    }
+    } catch (error) {}
   }, [htmlContent]);
 
   return <span dangerouslySetInnerHTML={{ __html: modifiedHtml }} />;

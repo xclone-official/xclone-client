@@ -10,7 +10,7 @@ export default function ForgotPass() {
     useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [otp, setOtp] = useState("");
-  const [password, setPassword] = useState(" ");
+  const [password, setPassword] = useState("");
   const [c_password, setC_password] = useState("");
   const backendURL = process.env.REACT_APP_BACKEND_URL;
   async function handleSubmit(e) {

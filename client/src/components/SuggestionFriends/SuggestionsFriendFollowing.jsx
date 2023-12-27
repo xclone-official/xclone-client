@@ -21,7 +21,6 @@ export default function SuggestionsFriendFollowing() {
             `${backendURL}/peopleaction/getFollowingFromUserId/${userData?._id}`
           )
           .then((data) => {
-            console.log(data.data);
             if (data.data.status === 1) {
               return setAllPeople(data.data.following);
             }

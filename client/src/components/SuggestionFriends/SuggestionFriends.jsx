@@ -30,9 +30,7 @@ export default function SuggestionFriends() {
           .then(() => {
             setLoader(false);
           })
-          .catch((err) => {
-            console.log("first", err);
-          });
+          .catch((err) => {});
       } catch (error) {
         alert("Some error occured");
       }
