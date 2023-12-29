@@ -3,26 +3,32 @@ import "./followingviewpage.css";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import FollowersFollowingCard from "../FollowersFollowingCard/FollowersFollowingCard";
+import PeopleSkeleton from "../PeopleSkeleton/PeopleSkeleton";
 export default function FollowingViewPage() {
   const [allFollowing, setAllFollowing] = useState([]);
   const { username } = useParams();
   const backendURL = process.env.REACT_APP_BACKEND_URL;
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function fetchAllFollowings() {
       const allFollowing = await axios.get(
         `${backendURL}/getPeople/getallfollowings/${username}`
       );
-      console.log(allFollowing.data);
       if (allFollowing.data.status === 1) {
         setAllFollowing(allFollowing.data.following);
+        setLoading(false);
       }
       try {
-      } catch (error) {}
+      } catch (error) {
+        setLoading(false);
+      }
     }
     fetchAllFollowings();
     // eslint-disable-next-line
   }, [username]);
-  return (
+  return loading ? (
+    <PeopleSkeleton />
+  ) : (
     <div className="follower_following_card_container">
       <div className="follower_following_card_midContainer">
         {allFollowing?.length > 0 ? (

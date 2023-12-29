@@ -64,9 +64,11 @@ export default function Following({ socket }) {
           }
         >
           <div className="">
-            {showInitialArrayOfData.map((tweet, index) => (
-              <TweetCard socket={socket} tweets={tweet} key={index} />
-            ))}
+            {showInitialArrayOfData.map((tweet, index) => {
+              return (
+                <TweetCard socket={socket} tweet_id={tweet._id} key={index} />
+              );
+            })}
           </div>
         </InfiniteScroll>
       ) : (

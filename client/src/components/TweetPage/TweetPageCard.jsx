@@ -245,9 +245,26 @@ export default function TweetPageCard({ tweetdata, socket }) {
                   >
                     <p>{specifictweetPage?.likes?.length}</p>
 
-                    <span>Likes</span>
+                    <span>
+                      {specifictweetPage?.likes?.length > 1 ? "Likes" : "Like"}
+                    </span>
                   </Link>
                 }
+                .
+                {specifictweetPage?.bookmark?.length > 0 && (
+                  <div
+                    to={`/${specifictweetPage?.authorUsername}/tweet/${specifictweetPage?._id}/likes`}
+                    style={{ display: "flex", gap: "5px" }}
+                  >
+                    <p>{specifictweetPage?.bookmark?.length}</p>
+
+                    <span>
+                      {specifictweetPage?.bookmark?.length > 1
+                        ? "Bookmarks"
+                        : "Bookmark"}
+                    </span>
+                  </div>
+                )}
               </div>
             )}
 

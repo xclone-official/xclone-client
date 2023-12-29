@@ -63,9 +63,12 @@ export default function Followers({ socket }) {
           }
         >
           <div className="">
-            {showInitialArrayOfData.map((tweet, index) => (
-              <TweetCard socket={socket} tweets={tweet} key={index} />
-            ))}
+            {showInitialArrayOfData.map((tweet, index) => {
+              console.log(tweet._id);
+              return (
+                <TweetCard socket={socket} tweet_id={tweet._id} key={index} />
+              );
+            })}
           </div>
         </InfiniteScroll>
       ) : (
