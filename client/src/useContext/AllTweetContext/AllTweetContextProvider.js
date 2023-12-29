@@ -10,7 +10,7 @@ const AllTweetContextProvider = ({ children }) => {
     const fetchData = await axios.get(`${backendURL}/tweetaction/getalltweets`);
     if (fetchData.data.status === 1) {
       setAllTweets(fetchData.data.tweet);
-    } else alert("Error: Fetching tweets");
+    } else return;
   }
   useEffect(() => {
     async function getAllTweet() {
@@ -19,7 +19,7 @@ const AllTweetContextProvider = ({ children }) => {
       );
       if (fetchData.data.status === 1) {
         return setAllTweets(fetchData.data.tweet);
-      } else return alert("Error: Fetching tweets");
+      } else return;
     }
     getAllTweet();
   }, [backendURL]);
