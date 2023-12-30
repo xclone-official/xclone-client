@@ -123,8 +123,13 @@ export default function SingleMessagesBox({ socket }) {
             {/* Messages */}
 
             <div className="users_conversation" ref={chatContainerRef}>
-              {!isLoading && isUserExists && flaggedStatus === false ? (
-                <div className="user_credentials_messages">
+              {isLoading ? (
+                <Loader />
+              ) : isUserExists && flaggedStatus === false ? (
+                <div
+                  className="user_credentials_messages"
+                  onClick={() => navigate(`/p/${profileData?.username}`)}
+                >
                   <div className="message_user_profile">
                     <img
                       src={backendURL + "/" + profileData?.profilepicture}
@@ -146,6 +151,7 @@ export default function SingleMessagesBox({ socket }) {
                 </div>
               ) : (
                 <div className="user_credentials_messages">
+                  ;
                   <div className="message_user_profile">
                     <img src={`/xlogo.png`} alt="" />
                   </div>
