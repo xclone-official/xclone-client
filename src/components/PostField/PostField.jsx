@@ -6,6 +6,7 @@ import { AuthContext } from "../../useContext/AuthContext/AuthContext";
 import { Link } from "react-router-dom";
 import { SpecificTweets } from "../../useContext/SpecificTweet/SpecificTweet";
 import { Editor } from "@tinymce/tinymce-react";
+import LoadingBar from "react-top-loading-bar";
 export default function PostField({
   tweetId,
   comment,
@@ -21,6 +22,7 @@ export default function PostField({
   const [msgType, setMsgType] = useState("");
   const [showMsg, setShowMsg] = useState(false);
   const [textContent, setTextContent] = useState("");
+  const [progress, setProgress] = useState(0);
   const backendURL = process.env.REACT_APP_BACKEND_URL;
   const statusHandlers = {
     1: () => {
@@ -44,40 +46,54 @@ export default function PostField({
         setShowMsg(false);
       }, 2000);
     },
+    4: () => {
+      setMsgType("FILE_EXCEEDED_THAN_SEVEN_MB");
+      setShowMsg(true);
+      setTimeout(() => {
+        setShowMsg(false);
+      }, 2000);
+    },
   };
   const MSE_APIKEY = process.env.REACT_APP_MCE_KEY;
   const [, setSpecifictweetPage] = useContext(SpecificTweets);
   const [count, setCount] = useState(0);
+
   const handleFileChange = (e) => {
     const selectedFiles = Array.from(e.target.files);
 
     // Check if at least one file is selected
     if (selectedFiles.length > 0) {
       const file = selectedFiles[0];
-
       // Check if the selected file is a video
       if (file.type.includes("video/")) {
         // If it's a video, allow only one video file
-        if (selectedFiles.length === 1) {
+        if (selectedFiles.length === 1 && file.size <= 7 * 1024 * 1024) {
           setFiles(selectedFiles);
+
           setIsVideo(true);
         } else {
-          // Display an error message or take other actions as needed
+          // Display an error message for video file size exceeding limit
+          statusHandlers[4]();
         }
       } else {
         // If it's not a video, allow two image files
-        if (selectedFiles.length <= 2) {
+        const totalImageSize = selectedFiles.reduce(
+          (acc, img) => acc + img.size,
+          0
+        );
+        if (selectedFiles.length <= 2 && totalImageSize <= 7 * 1024 * 1024) {
           setFiles(selectedFiles);
           setIsVideo(false);
         } else {
-          // Display an error message or take other actions as needed
-          const msgText = statusHandlers[1];
-          msgText();
+          // Display an error message for total image size exceeding limit
+          selectedFiles.length <= 2 && statusHandlers[4]();
+          totalImageSize <= 7 * 1024 * 1024 && statusHandlers[1]();
         }
       }
     }
     setCount(count + 1);
   };
+
   const removeFile = (index) => {
     const updatedFiles = [...files];
     updatedFiles.splice(index, 1);
@@ -96,7 +112,16 @@ export default function PostField({
         fd.append("tweetmedia", files[i]);
       }
       await axios
-        .post(`${backendURL}/tweetaction/createtweet`, fd)
+        .post(`${backendURL}/tweetaction/createtweet`, fd, {
+          onUploadProgress: (progressEvent) => {
+            // Handle upload progress if needed
+            // For example, you can calculate and display the percentage
+            const progressPercentage = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+            setProgress(progressPercentage);
+          },
+        })
         .then((data) => {
           if (data.data.status === 1) {
             const msgText = statusHandlers[3];
@@ -158,6 +183,12 @@ export default function PostField({
   return (
     <>
       <div className="postfield_container">
+        <LoadingBar
+          color="var(--theme-color)"
+          progress={progress}
+          onLoaderFinished={() => setProgress(0)}
+        />
+
         <div className="img_textarea">
           <div className="post_profile">
             <Link to={`/p/${userData?.username}`}>
@@ -179,18 +210,8 @@ export default function PostField({
                 body_class: "text_red",
                 content_style:
                   "body {color: white; line-height: .3; } .mce-content-body[data-mce-placeholder]:not(.mce-visualblocks)::before { color: white ;opacity: 1 }",
-                // Other TinyMCE configuration options go here
               }}
             />
-
-            {/* <textarea
-              value={textContent}
-              onChange={(e) => setTextContent(e.target.value)}
-              placeholder={!comment ? "What is happening?!" : "Write a comment"}
-              name="post"
-              id="post-tweet"
-              rows="3"
-            ></textarea> */}
           </div>
         </div>
         <div
@@ -223,7 +244,6 @@ export default function PostField({
             files?.map((file, index) => (
               <>
                 <img
-                  key={index}
                   className="choosen_img_1"
                   src={URL.createObjectURL(file)}
                   alt=""
@@ -236,7 +256,7 @@ export default function PostField({
           ) : (
             files?.map((file, index) => (
               <>
-                <img key={index} src={URL.createObjectURL(file)} alt="" />
+                <img src={URL.createObjectURL(file)} alt="" />
                 <p onClick={() => removeFile(index)} className="delete_photo">
                   X
                 </p>
@@ -278,7 +298,6 @@ export default function PostField({
                   hidden
                 />
               </div>
-
               <div className="post_icon">
                 <label
                   htmlFor="video"

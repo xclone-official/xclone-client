@@ -21,6 +21,7 @@ const MSG_TYPES = {
   COPY_URL: "COPY_URL",
   UPDATION_SUCCEED: "UPDATION_SUCCEED",
   USER_NOT_FOUND: "USER_NOT_FOUND",
+  FILE_EXCEEDED_THAN_SEVEN_MB: "FILE_EXCEEDED_THAN_SEVEN_MB",
 };
 
 export function MsgType(msgType) {
@@ -33,6 +34,8 @@ export function MsgType(msgType) {
       return "URL copied!";
     case MSG_TYPES.REGISTERED_SUCCESS:
       return "Check your email for activation.";
+    case MSG_TYPES.FILE_EXCEEDED_THAN_SEVEN_MB:
+      return "Selected file is greater than 7 MB";
     case MSG_TYPES.SERVER_ERROR:
       return "Internal server error";
     case MSG_TYPES.USERNAME_EXIST:

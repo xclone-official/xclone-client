@@ -38,7 +38,7 @@ export default function PremiumBox({ feedback, social }) {
       )}
       {social && (
         <div className="verify_msg">
-          <h1>We are on Github.</h1>
+          <h1>Please give us a star on Github.</h1>
           <button
             onClick={() => {
               window.open("https://github.com/xclone-official");
