@@ -107,7 +107,7 @@ export default function TweetCard({ tweets }) {
         <div className="tweetcard_content">
           <div className="tweetcard_user_profile">
             <Link to={`/p/${tweets?.authorUsername}`}>
-              <img src={backendURL + "/" + tweets?.authorProfile} alt="" />
+              <img src={tweets?.authorProfile} alt="" />
             </Link>
           </div>
           <div className="tweetcard_other_content">
@@ -166,7 +166,7 @@ export default function TweetCard({ tweets }) {
                   <video
                     className="imglast-child video"
                     controls
-                    src={`${backendURL}/${tweets?.video[0]}`}
+                    src={`${tweets?.video[0]}`}
                     alt="video"
                   />
                 ) : tweets?.photos?.length > 0 ? (
@@ -175,14 +175,14 @@ export default function TweetCard({ tweets }) {
                       <img
                         key={e}
                         className="imgfirst-child"
-                        src={`${backendURL}/${e}`}
+                        src={`${e}`}
                         alt="photo"
                       />
                     ))
                   ) : (
                     <img
                       className="imglast-child"
-                      src={`${backendURL}/${tweets?.photos[0]}`}
+                      src={`${tweets?.photos[0]}`}
                       alt="photo"
                     />
                   )
