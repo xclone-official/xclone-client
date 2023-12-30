@@ -52,7 +52,7 @@ export default function SearchComponent({ searchQuery }) {
             <div key={e?._id} className="friend_suggestion_card">
               <Link to={`/p/${e?.username}`}>
                 <div className="friend_suggestion_image">
-                  <img src={backendURL + `/${e?.profilepicture}`} alt="" />
+                  <img src={`${e?.profilepicture}`} alt="" />
                   <div className="friend_suggestion_credentials">
                     <p>{e?.fullname}</p>
                     <p className="friend_suggestion_username">@{e?.username}</p>
