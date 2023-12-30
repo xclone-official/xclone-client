@@ -99,6 +99,7 @@
 
   .hide_in_phone {
     display: none !important;
+    width: 0 !important;
   }
 
   .col_in_phone {

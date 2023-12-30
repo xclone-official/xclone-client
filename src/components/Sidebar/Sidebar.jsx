@@ -69,6 +69,7 @@ export default function Sidebar({ showMessage }) {
       href: "/messages",
     },
     {
+      className: "hide_in_phone",
       name: "Bookmarks",
       logo: <AiOutlineBook />,
       activeLogo: <AiFillBook />,
