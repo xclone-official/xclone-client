@@ -15,7 +15,7 @@ export default function FollowersFollowingCard({ data }) {
         to={`/p/${data?.username}`}
         className="follower_following_card_image"
       >
-        <img src={backendURL + `/${data?.profilepicture}`} alt="profile" />
+        <img src={`${data?.profilepicture}`} alt="profile" />
       </NavLink>
       <div className="following_follower_card_details">
         <div className="following_follower_btns_name">
