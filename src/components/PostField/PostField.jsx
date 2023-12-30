@@ -192,7 +192,7 @@ export default function PostField({
         <div className="img_textarea">
           <div className="post_profile">
             <Link to={`/p/${userData?.username}`}>
-              <img src={backendURL + "/" + userData?.profilepicture} alt="" />
+              <img src={userData?.profilepicture} alt="" />
             </Link>
           </div>
           <div className="textarea_">

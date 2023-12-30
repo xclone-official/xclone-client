@@ -95,10 +95,7 @@ export default function Lists() {
                   </div>
                   <div className="notification_profile_name">
                     <div className="notification_profile">
-                      <img
-                        src={`${backendURL}/${notification?.authorProfile}`}
-                        alt=""
-                      />
+                      <img src={`${notification?.authorProfile}`} alt="" />
                     </div>
                     <div className="notification_name_details">
                       <Link to={`/p/${notification?.authorUsername}`}>
@@ -127,10 +124,7 @@ export default function Lists() {
                   </div>
                   <div className="notification_profile_name">
                     <div className="notification_profile">
-                      <img
-                        src={`${backendURL}/${notification?.authorProfile}`}
-                        alt=""
-                      />
+                      <img src={`${notification?.authorProfile}`} alt="" />
                     </div>
                     <div className="notification_name_details">
                       <Link to={`/p/${notification?.authorUsername}`}>
@@ -161,7 +155,7 @@ export default function Lists() {
                   <div className="notification_profile">
                     <img
                       className="reply_notification"
-                      src={`${backendURL}/${notification?.authorProfile}`}
+                      src={`${notification?.authorProfile}`}
                       alt=""
                     />
                   </div>

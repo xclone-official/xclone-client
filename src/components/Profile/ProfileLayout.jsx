@@ -169,10 +169,7 @@ export default function ProfileLayout({
               <div className="profile_media">
                 <div className="user_cover">
                   {specificUserProfile?.coverpic ? (
-                    <img
-                      src={backendURL + `/${specificUserProfile?.coverpic}`}
-                      alt="cover"
-                    />
+                    <img src={`${specificUserProfile?.coverpic}`} alt="cover" />
                   ) : (
                     <img src="/cover.png" alt="cover" />
                   )}
@@ -180,9 +177,7 @@ export default function ProfileLayout({
                 <div className="user_profile_edit_btn">
                   <div className="user_profile">
                     <img
-                      src={
-                        backendURL + "/" + specificUserProfile?.profilepicture
-                      }
+                      src={specificUserProfile?.profilepicture}
                       alt="profile"
                     />
                   </div>

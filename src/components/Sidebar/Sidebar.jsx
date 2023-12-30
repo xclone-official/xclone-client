@@ -93,7 +93,6 @@ export default function Sidebar({ showMessage }) {
   const getInputAndFocus = () => {
     navigate("/home/compose/tweet");
   };
-  const backendURL = process.env.REACT_APP_BACKEND_URL;
   useEffect(() => {
     setWidthOfScreen(window.innerWidth);
     window.addEventListener("resize", () => {
@@ -159,7 +158,7 @@ export default function Sidebar({ showMessage }) {
           >
             <div style={{ display: "flex", gap: "10px" }}>
               <div className="pfp_logout_img">
-                <img src={`${backendURL}/${userData?.profilepicture}`} alt="" />
+                <img src={`${userData?.profilepicture}`} alt="" />
               </div>
               <div className="username_name hide_name_1000px">
                 <p>{userData?.fullname}</p>
@@ -252,7 +251,7 @@ export default function Sidebar({ showMessage }) {
         >
           <div style={{ display: "flex", gap: "10px" }}>
             <div className="pfp_logout_img">
-              <img src={`${backendURL}/${userData?.profilepicture}`} alt="" />
+              <img src={`${userData?.profilepicture}`} alt="" />
             </div>
             <div className="username_name hide_name_1000px">
               <p>{userData?.fullname}</p>

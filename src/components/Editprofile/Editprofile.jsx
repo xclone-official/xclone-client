@@ -158,7 +158,7 @@ export default function Editprofile() {
                 className="profile_picture_img"
                 src={
                   profilePic === userData?.profilepicture
-                    ? backendURL + "/" + profilePic
+                    ? profilePic
                     : URL.createObjectURL(profilePic)
                 }
                 alt="user_image"
@@ -199,7 +199,7 @@ export default function Editprofile() {
                 className="cover_picture_img"
                 src={
                   coverPic === userData?.coverpic
-                    ? backendURL + "/" + coverPic
+                    ? coverPic
                     : coverPic === "/cover.png"
                     ? coverPic
                     : URL.createObjectURL(coverPic)

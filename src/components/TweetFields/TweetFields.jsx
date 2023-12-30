@@ -28,7 +28,6 @@ const ActiveDownArrow = () => {
 export default function TweetFields({ socket }) {
   const [showMenu, setShowMenu] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [creatorAcc, setCreatorAcc] = useState(false);
   const [settingsShow, setSettingsShow] = useState(false);
   const [supportsShow, setSupportsShow] = useState(false);
   const [docsShow, setDocsShow] = useState(false);
@@ -88,7 +87,7 @@ export default function TweetFields({ socket }) {
           <h3 className="home_btn">Home</h3>
           <div className="profile_image">
             <img
-              src={backendURL + "/" + userData.profilepicture}
+              src={userData.profilepicture}
               alt=""
               onClick={() => {
                 setShowMenu(!showMenu);
@@ -132,7 +131,7 @@ export default function TweetFields({ socket }) {
           <div className="profile_menu_top_container">
             <div className="mobile_menu_profile_three_line">
               <div className="mobile_menu_profile">
-                <img src={`${backendURL}/${userData?.profilepicture}`} alt="" />
+                <img src={`${userData?.profilepicture}`} alt="" />
               </div>
               <div
                 onClick={() => {

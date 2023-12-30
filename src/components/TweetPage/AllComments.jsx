@@ -17,7 +17,7 @@ export default function AllComments({
           <div key={i} className="comment_details">
             <div className="comment_user_details" style={{ width: "100%" }}>
               <div className="comment_user_profile">
-                <img src={`${backendURL}/${comment?.authorProfile}`} alt="" />
+                <img src={`${comment?.authorProfile}`} alt="" />
               </div>
               <div
                 className="comment_name_username_time"

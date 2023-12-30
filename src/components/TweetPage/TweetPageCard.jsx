@@ -168,10 +168,7 @@ export default function TweetPageCard({ tweetdata, socket }) {
             <div className="tweet_posted_user padding_wrap">
               <div className="tweet_user_profile_name">
                 <div className="tweet_user_pf">
-                  <img
-                    src={backendURL + "/" + specifictweetPage.authorProfile}
-                    alt=""
-                  />
+                  <img src={specifictweetPage.authorProfile} alt="" />
                 </div>
                 <div className="profile_user_name margin_top_1">
                   <Link to={`/p/${specifictweetPage?.authorUsername}`}>
@@ -205,7 +202,7 @@ export default function TweetPageCard({ tweetdata, socket }) {
                 <video
                   className="border"
                   controls
-                  src={`${backendURL}/${specifictweetPage.video[0]}`}
+                  src={`${specifictweetPage.video[0]}`}
                   alt=""
                 />
               ) : specifictweetPage.photos?.length > 0 ? (
@@ -214,14 +211,14 @@ export default function TweetPageCard({ tweetdata, socket }) {
                     <img
                       key={i}
                       className="imgfirst-child"
-                      src={`${backendURL}/${e}`}
+                      src={`${e}`}
                       alt=""
                     />
                   ))
                 ) : (
                   <img
                     className="imglast-child"
-                    src={`${backendURL}/${specifictweetPage.photos[0]}`}
+                    src={`${specifictweetPage.photos[0]}`}
                     alt=""
                   />
                 )
