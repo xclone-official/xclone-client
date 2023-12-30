@@ -124,7 +124,6 @@ export default function ProfileLayout({
         .catch((err) => {});
     } catch (error) {}
   };
-  console.log(is_deactivated);
   if (is_deactivated) {
     return <DeactivateProfileAcc />;
   }
