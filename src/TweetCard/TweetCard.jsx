@@ -156,7 +156,7 @@ export default function TweetCard({ tweet_id, socket }) {
                     </div>
                   </div>
                 </div>
-                <div className="option_icon">
+                {/* <div className="option_icon">
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <g>
                       <path
@@ -165,7 +165,7 @@ export default function TweetCard({ tweet_id, socket }) {
                       ></path>
                     </g>
                   </svg>
-                </div>
+                </div> */}
               </div>
               <div className="tweet_content">
                 <div
