@@ -264,7 +264,6 @@ export default function Register({ name, email }) {
                         onClick={nextStep}
                         disabled={
                           !formData.location ||
-                          !formData.website ||
                           !formData.gender ||
                           !formData.dob
                         }

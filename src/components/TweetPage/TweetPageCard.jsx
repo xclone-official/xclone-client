@@ -140,7 +140,7 @@ export default function TweetPageCard({ tweetdata, socket }) {
           .delete(`${backendURL}/tweetaction/deletetweet/${tweetId}`)
           .then((data) => {
             if (data?.data?.status === 1) {
-              console.log("tweet deleted success");
+              window.location.reload();
             }
           })
           .catch((err) => {
