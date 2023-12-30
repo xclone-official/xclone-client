@@ -136,7 +136,13 @@ export default function Register({ name, email }) {
     <>
       <div className="login_page">
         <div className="login_head">
-          <ImCross id="cross" onClick={() => setShowRegister(!showRegister)} />
+          <ImCross
+            id="cross"
+            onClick={() => {
+              setShowRegister(!showRegister);
+              window.location.href = "/";
+            }}
+          />
           <div className="x_logo">
             <img src="/xlogo-removebg-preview.png" alt="logo" />
           </div>
