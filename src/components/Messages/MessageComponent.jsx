@@ -35,7 +35,7 @@ export default function MessageComponent({ userId }) {
       onClick={() => navigate(`/messages/${user._id}`)}
     >
       <div className="message_profile">
-        <img src={`${backendURL}/${user?.profilepicture}`} alt="" />
+        <img src={`${user?.profilepicture}`} alt="" />
       </div>
       <div className="msg_user_credentials">
         <div className="user_info_msg">
