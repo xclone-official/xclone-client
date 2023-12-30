@@ -90,19 +90,14 @@ export default function Register({ name, email }) {
       for (const key in formData) {
         fd.append(key, formData[key]);
       }
-      fd.forEach((e) => {
-        console.log(e);
-      });
+
       const response = await axios.post(`${backendURL}/user/auth/register`, fd);
       const status = response.data.status;
       const handler = statusHandlers[status];
-      console.log(status);
       if (handler) {
         handler();
       }
-    } catch (error) {
-      console.log("Error:", error);
-    }
+    } catch (error) {}
     // window.location.href = "/";
   };
 
@@ -128,9 +123,7 @@ export default function Register({ name, email }) {
           getUserDetails();
         } else {
         }
-      } catch (error) {
-        console.log("error", error);
-      }
+      } catch (error) {}
     }
     fetchToken();
   }, [setFormData, formData]);
