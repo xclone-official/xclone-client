@@ -45,7 +45,7 @@ export default function SuggestionFollowers() {
               onClick={() => navigate(`/p/${e?.username}`)}
             >
               <div className="friend_suggestion_image">
-                <img src={backendURL + `/${e?.profilepicture}`} alt="" />
+                <img src={`${e?.profilepicture}`} alt="" />
                 <div className="friend_suggestion_credentials">
                   <p>{e?.fullname}</p>
                   <p className="friend_suggestion_username">@{e?.username}</p>
