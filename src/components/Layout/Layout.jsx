@@ -122,8 +122,8 @@ export default function Layout({
                 }, 1000);
                 document.title = `${user?.fullname} (@${user?.username}) / X`;
                 if (user.flag) {
-                  return setIs_deactivated(true);
-                } else return setIs_deactivated(false);
+                  setIs_deactivated(true);
+                } else setIs_deactivated(false);
               } else {
                 setIsUserExist(false);
                 setLoader(false);
