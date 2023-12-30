@@ -89,7 +89,7 @@ export default function Layout({
   const [profileData, setprofileData] = useState();
   const [isloading, setLoader] = useState(false);
   const [isUserExist, setIsUserExist] = useState(true);
-  const [is_deactivated, setIs_deactivated] = useState(true);
+  const [is_deactivated, setIs_deactivated] = useState(false);
   const { username } = useParams();
   const backendURL = process.env.REACT_APP_BACKEND_URL;
 
