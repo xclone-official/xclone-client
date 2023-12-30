@@ -3,11 +3,13 @@ import { convertDate } from "../CovertDateTime/ConvertDateTime";
 import { customTimeFormat } from "../customTime/customTime";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import PeopleSkeleton from "../PeopleSkeleton/PeopleSkeleton";
 
 export default function MessageComponent({ userId }) {
   const backendURL = process.env.REACT_APP_BACKEND_URL;
   const navigate = useNavigate();
   const [user, setUser] = useState({});
+  const [loader, setLoader] = useState(true);
   useEffect(() => {
     async function fetchUserWithId(userId) {
       try {
@@ -15,16 +17,19 @@ export default function MessageComponent({ userId }) {
           const res = data.data;
           if (res.status === 1) {
             setUser(res.data);
+            setLoader(false);
           }
         });
       } catch (error) {
-        console.log(error);
+        setLoader(false);
       }
     }
     fetchUserWithId(userId);
   }, [userId]);
 
-  return (
+  return loader ? (
+    <PeopleSkeleton />
+  ) : (
     <div
       className="single_message"
       onClick={() => navigate(`/messages/${user._id}`)}

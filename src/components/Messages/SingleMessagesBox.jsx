@@ -63,7 +63,6 @@ export default function SingleMessagesBox({ socket }) {
     fetchUser(userId);
   }, [userId, backendURL, setAllMessages, socket, userData?._id]);
   useEffect(() => {
-    setIsLoading(true);
     setAllMessages([]);
     socket?.emit("saveAllMessages", {
       senderusername: userData?.username,
@@ -92,7 +91,9 @@ export default function SingleMessagesBox({ socket }) {
     setMessage("");
     setFile(""); // Clear the file input if needed
   }
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <div style={{ width: "100%" }}>
       <div className="profile_top">
         <svg
@@ -116,103 +117,93 @@ export default function SingleMessagesBox({ socket }) {
           </p>
         </div>
       </div>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <>
-          <div className="messages_container_">
-            <div className="messages_mid_container">
-              {/* Messages */}
+      <>
+        <div className="messages_container_">
+          <div className="messages_mid_container">
+            {/* Messages */}
 
-              <div className="users_conversation" ref={chatContainerRef}>
-                {isUserExists &&
-                flaggedStatus === false &&
-                isLoading === false ? (
-                  <div className="user_credentials_messages">
-                    <div className="message_user_profile">
-                      <img
-                        src={backendURL + "/" + profileData?.profilepicture}
-                        alt=""
-                      />
-                    </div>
-                    <div className="messsage_username_name">
-                      <p>{profileData?.fullname}</p>
-                      <span>@{profileData?.username}</span>
-                    </div>
-                    <div className="message_user_bio">
-                      <p>{profileData?.bio}</p>
-                    </div>
-                    <div className="joined_and_followers_num">
-                      <p>{convertDate(profileData?.createdAt)}</p>
-                      {"  •  "}
-                      <p>{profileData?.followers?.length} followers</p>
-                    </div>
+            <div className="users_conversation" ref={chatContainerRef}>
+              {!isLoading && isUserExists && flaggedStatus === false ? (
+                <div className="user_credentials_messages">
+                  <div className="message_user_profile">
+                    <img
+                      src={backendURL + "/" + profileData?.profilepicture}
+                      alt=""
+                    />
                   </div>
-                ) : (
-                  <div className="user_credentials_messages">
-                    <div className="message_user_profile">
-                      <img src={`/xlogo.png`} alt="" />
-                    </div>
-                    <div className="messsage_username_name">
-                      <p>This account has been deactivated!</p>
-                    </div>
+                  <div className="messsage_username_name">
+                    <p>{profileData?.fullname}</p>
+                    <span>@{profileData?.username}</span>
                   </div>
-                )}
-                {allMessages.length > 0
-                  ? allMessages?.map((e, i) => (
-                      <div key={i} className="user_conversation_container">
-                        {e.senderId === userData._id ? (
-                          <div className="my_msg_container">
-                            <div className="my_messages">
-                              <p>{e?.message}</p>
-                            </div>
-                            <span>{convertDate(e?.createdAt)}</span>
+                  <div className="message_user_bio">
+                    <p>{profileData?.bio}</p>
+                  </div>
+                  <div className="joined_and_followers_num">
+                    <p>{convertDate(profileData?.createdAt)}</p>
+                    {"  •  "}
+                    <p>{profileData?.followers?.length} followers</p>
+                  </div>
+                </div>
+              ) : (
+                <div className="user_credentials_messages">
+                  <div className="message_user_profile">
+                    <img src={`/xlogo.png`} alt="" />
+                  </div>
+                  <div className="messsage_username_name">
+                    <p>This account has been deactivated!</p>
+                  </div>
+                </div>
+              )}
+              {!isLoading && allMessages.length > 0
+                ? allMessages?.map((e, i) => (
+                    <div key={i} className="user_conversation_container">
+                      {e.senderId === userData._id ? (
+                        <div className="my_msg_container">
+                          <div className="my_messages">
+                            <p>{e?.message}</p>
                           </div>
-                        ) : (
-                          <div className="user_msg_container">
-                            <div className="other_user_messages">
-                              <p>{e?.message}</p>
-                            </div>
-                            <span>{convertDate(e?.createdAt)}</span>
-                            {/* <img src={backendURL + `/${e?.file}`} alt="file" /> */}
+                          <span>{convertDate(e?.createdAt)}</span>
+                        </div>
+                      ) : (
+                        <div className="user_msg_container">
+                          <div className="other_user_messages">
+                            <p>{e?.message}</p>
                           </div>
-                        )}
-                      </div>
-                    ))
-                  : ""}
-              </div>
+                          <span>{convertDate(e?.createdAt)}</span>
+                          {/* <img src={backendURL + `/${e?.file}`} alt="file" /> */}
+                        </div>
+                      )}
+                    </div>
+                  ))
+                : ""}
             </div>
           </div>
-          <div className="message_input_form">
-            <form onSubmit={handleMessage} id="message_input" action="">
-              <input
-                value={message}
-                onChange={(e) => {
-                  setMessage(e.target.value);
-                }}
-                id="msg_input"
-                placeholder={
-                  isUserExists && flaggedStatus === false
-                    ? "Enter Message"
-                    : "This account has been deactivated."
-                }
-                autoComplete="off"
-                disabled={
-                  isUserExists && flaggedStatus === false ? false : true
-                }
-              />
-              <button
-                className="message_input_btn"
-                disabled={
-                  isUserExists && flaggedStatus === false ? false : true
-                }
-              >
-                Send
-              </button>
-            </form>
-          </div>
-        </>
-      )}
+        </div>
+        <div className="message_input_form">
+          <form onSubmit={handleMessage} id="message_input" action="">
+            <input
+              value={message}
+              onChange={(e) => {
+                setMessage(e.target.value);
+              }}
+              id="msg_input"
+              placeholder={
+                isUserExists && flaggedStatus === false
+                  ? "Enter Message"
+                  : "This account has been deactivated."
+              }
+              autoComplete="off"
+              disabled={isUserExists && flaggedStatus === false ? false : true}
+            />
+            <button
+              className="message_input_btn"
+              disabled={isUserExists && flaggedStatus === false ? false : true}
+            >
+              Send
+            </button>
+          </form>
+        </div>
+      </>
     </div>
   );
 }
