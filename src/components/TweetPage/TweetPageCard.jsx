@@ -435,6 +435,7 @@ export default function TweetPageCard({ tweetdata, socket }) {
               alt=""
             />
           </div>
+          <br />
         </div>
       )}
     </>
