@@ -11,7 +11,6 @@ export default function ShowDeactivationPromptToActivate() {
   async function handleDeactivateFunc() {
     try {
       const xid = localStorage.getItem("xid");
-      console.log(xid);
       if (xid) {
         axios
           .put(`${backendURL}/update/flag/${xid}`)

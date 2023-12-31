@@ -27,7 +27,9 @@ export default function TweetPageCard({ tweetdata, socket }) {
   const [, , , , , , likeTweet, unlikeTweet] = useContext(TweetContext);
   const [specifictweetPage, setSpecifictweetPage] = useContext(SpecificTweets);
   const [showMsg, setShowMsg] = useState(false);
+  const [showFullSizeMedia, setShowFullSizeMedia] = useState(false);
   const [msgType, setMsgType] = useState("");
+  const [imgURL, setImgURL] = useState("");
   useEffect(() => {
     if (tweetdata) {
       setSpecifictweetPage(tweetdata);
@@ -124,6 +126,7 @@ export default function TweetPageCard({ tweetdata, socket }) {
   };
   const handleCopy = () => {
     const URL = window.location.href;
+    console.log(URL);
     window.navigator.clipboard.writeText(URL);
     setMsgType("COPY_URL");
     setShowMsg(true);
@@ -210,13 +213,25 @@ export default function TweetPageCard({ tweetdata, socket }) {
                   specifictweetPage.photos?.map((e, i) => (
                     <img
                       key={i}
+                      onClick={() => {
+                        setShowFullSizeMedia(!showFullSizeMedia);
+                        setImgURL(e);
+                      }}
                       className="imgfirst-child"
                       src={`${e}`}
                       alt=""
                     />
                   ))
                 ) : (
+                  // <Link
+                  //   to={`${location.pathname}/media/${specifictweetPage.photos?.length}`}
+                  // >
+                  // </Link>
                   <img
+                    onClick={() => {
+                      setShowFullSizeMedia(!showFullSizeMedia);
+                      setImgURL(specifictweetPage.photos[0]);
+                    }}
                     className="imglast-child"
                     src={`${specifictweetPage.photos[0]}`}
                     alt=""
@@ -380,6 +395,48 @@ export default function TweetPageCard({ tweetdata, socket }) {
         </div>
       )}
       {showMsg && <MsgAlert msgType={msgType} />}
+      {showFullSizeMedia && (
+        <div className="show-full-size-media-container">
+          <div className="show-full-size-media">
+            {specifictweetPage.photos?.length > 0 ? (
+              specifictweetPage.photos?.length > 1 ? (
+                specifictweetPage.photos?.map((e, i) => (
+                  <img
+                    key={i}
+                    onClick={() => {
+                      setImgURL(e);
+                    }}
+                    className=""
+                    src={`${e}`}
+                    alt=""
+                  />
+                ))
+              ) : (
+                <img
+                  className=""
+                  onClick={() => {
+                    setImgURL(specifictweetPage.photos[0]);
+                  }}
+                  src={`${specifictweetPage.photos[0]}`}
+                  alt=""
+                />
+              )
+            ) : (
+              ""
+            )}
+          </div>
+          <br />
+          <div className="show-image-container">
+            <img
+              onClick={() => {
+                setShowFullSizeMedia(!showFullSizeMedia);
+              }}
+              src={imgURL}
+              alt=""
+            />
+          </div>
+        </div>
+      )}
     </>
   );
 }
