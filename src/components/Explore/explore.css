@@ -2,6 +2,7 @@
   width: 100%;
   background-color: transparent;
   overflow-y: scroll;
+  height: 100vh;
 }
 .trending_component {
   padding: 10px;
