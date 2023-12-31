@@ -1,4 +1,3 @@
 .friend_suggestion_container {
-  overflow-y: scroll;
-  padding-bottom: 200px;
+  padding: 0 0 200px 0;
 }
