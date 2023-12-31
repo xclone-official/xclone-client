@@ -48,23 +48,30 @@ export default function SearchComponent({ searchQuery }) {
         }}
       >
         {searchedUser.length > 0 ? (
-          searchedUser?.map((e) => (
-            <div key={e?._id} className="friend_suggestion_card">
-              <Link to={`/p/${e?.username}`}>
-                <div className="friend_suggestion_image">
-                  <img src={`${e?.profilepicture}`} alt="" />
-                  <div className="friend_suggestion_credentials">
-                    <p>{e?.fullname}</p>
-                    <p className="friend_suggestion_username">@{e?.username}</p>
+          searchedUser?.map((e) => {
+            if (!e.isActivated) return null;
+            return (
+              <div key={e?._id} className="friend_suggestion_card">
+                <Link to={`/p/${e?.username}`}>
+                  <div className="friend_suggestion_image">
+                    <img src={`${e?.profilepicture}`} alt="" />
+                    <div className="friend_suggestion_credentials">
+                      <p>{e?.fullname}</p>
+                      <p className="friend_suggestion_username">
+                        @{e?.username}
+                      </p>
+                    </div>
                   </div>
+                  <p style={{ marginTop: "5px", marginLeft: "50px" }}>
+                    {e?.bio}
+                  </p>
+                </Link>
+                <div className="friend_suggestion_follow_btn">
+                  <button>Visit</button>
                 </div>
-                <p style={{ marginTop: "5px", marginLeft: "50px" }}>{e?.bio}</p>
-              </Link>
-              <div className="friend_suggestion_follow_btn">
-                <button>Visit</button>
               </div>
-            </div>
-          ))
+            );
+          })
         ) : (
           <div>
             <h3 style={{ padding: "0 20px" }}>Search a user</h3>

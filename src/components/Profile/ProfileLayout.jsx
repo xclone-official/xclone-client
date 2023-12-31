@@ -7,6 +7,7 @@ import axios from "axios";
 import { TweetContext } from "../../useContext/TweetContext/TweetContext";
 import { AllTweetContext } from "../../useContext/AllTweetContext/AllTweetContextProvider";
 import DeactivateProfileAcc from "./DeactivatedProfile";
+import NeedsToActivate from "../NeedsToActivate/NeedsToActivate";
 export default function ProfileLayout({
   with_replies,
   highlights,
@@ -20,6 +21,7 @@ export default function ProfileLayout({
   is_deactivated,
   profileData,
   error,
+  is_activated,
 }) {
   const [, , , , userData, setUserData, , , , , , , , , ,] =
     useContext(AuthContext);
@@ -129,6 +131,9 @@ export default function ProfileLayout({
   }
   if (error) {
     return <DeactivateProfileAcc notfound={true} />;
+  }
+  if (!is_activated) {
+    return <NeedsToActivate />;
   }
   return (
     <>

@@ -90,6 +90,7 @@ export default function Layout({
   const [isloading, setLoader] = useState(false);
   const [isUserExist, setIsUserExist] = useState(true);
   const [is_deactivated, setIs_deactivated] = useState(true);
+  const [is_activated, setIs_activated] = useState(true);
   const { username } = useParams();
   const backendURL = process.env.REACT_APP_BACKEND_URL;
 
@@ -120,10 +121,13 @@ export default function Layout({
                 setTimeout(() => {
                   setLoader(false);
                 }, 1000);
-                document.title = `${user?.fullname} (@${user?.username}) / X`;
+                document.title = `${user?.fullname} (@${user?.username}) / Xclone`;
                 if (user.flag) {
-                  return setIs_deactivated(true);
-                } else return setIs_deactivated(false);
+                  setIs_deactivated(true);
+                } else setIs_deactivated(false);
+
+                if (user.isActivated) setIs_activated(true);
+                else setIs_activated(false);
               } else {
                 setIsUserExist(false);
                 setLoader(false);
@@ -223,6 +227,7 @@ export default function Layout({
           allTweets={allTweets}
           likes={likes}
           isUserExist={isUserExist}
+          is_activated={is_activated}
         >
           {profile && !loading && !is_deactivated && (
             <ProfilePost
