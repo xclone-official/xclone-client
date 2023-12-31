@@ -192,13 +192,11 @@ export default function TweetPageCard({ tweetdata, socket }) {
               </div> */}
             </div>
             <div className="tweet_content_text padding_wrap">
-              <p>
-                <RemoveUnnecessaryTag
-                  htmlContent={specifictweetPage?.tweetContent}
-                />
+              <RemoveUnnecessaryTag
+                htmlContent={specifictweetPage?.tweetContent}
+              />
 
-                {/* {specifictweetPage?.tweetContent} */}
-              </p>
+              {/* {specifictweetPage?.tweetContent} */}
             </div>
             <div className="tweet_media padding_wrap">
               {specifictweetPage.video?.length > 0 ? (

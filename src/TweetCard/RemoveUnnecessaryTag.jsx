@@ -6,25 +6,39 @@ const RemoveUnnecessaryTag = ({ htmlContent }) => {
   useEffect(() => {
     try {
       const coloredHtmlContent = htmlContent.replace(
-        /(https?:\/\/[^\s]+)/g,
+        /(https?:\/\/[^\s#]+)/g,
         (match) =>
           `<a href="${decodeURIComponent(match).replace(
             "</p>",
             ""
-          )}" target="_blank" style="color: orange; cursor: pointer;">${match.replace(
+          )}" target="_blank" style="color: var(--theme-color); cursor: pointer;">${match.replace(
             /^(https?:\/\/)/,
             ""
           )}</a>`
       );
+      // Replace #hashtags with orange styling
+      const withHashTagsStyled = coloredHtmlContent.replace(
+        /#(\w+)/g,
+        '<span target="_blank" style="color: var(--theme-color); font-weight:700" class="orange">#$1</span>'
+      );
 
-      // Remove trailing </p> tags
-      const cleanedHtmlContent = coloredHtmlContent.replace(/<\/p>$/, "");
+      // Replace @mentions with orange styling
+      const withMentionsStyled = withHashTagsStyled.replace(
+        /@(\w+)/g,
+        `<a target="_blank" style="color: var(--theme-color); cursor: pointer; font-weight:700" href="/p/$1" class="orange">@$1</a>`
+      );
 
-      setModifiedHtml(cleanedHtmlContent);
+      // Wrap the entire paragraph content with the closing </a> tag
+      const wrappedContent = withMentionsStyled.replace(
+        /<p>(.*?)<\/p>/g,
+        (match, p1) => `<p>${p1}</p>`
+      );
+
+      setModifiedHtml(wrappedContent);
     } catch (error) {}
   }, [htmlContent]);
 
-  return <span dangerouslySetInnerHTML={{ __html: modifiedHtml }} />;
+  return <div dangerouslySetInnerHTML={{ __html: modifiedHtml }} />;
 };
 
 export default RemoveUnnecessaryTag;
